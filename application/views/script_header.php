@@ -13,6 +13,9 @@
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
 		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="<?php echo base_url();?>assets/css/jquery-ui.min.css" />
+		<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-datepicker3.min.css" />
+		<link rel="stylesheet" href="<?php echo base_url();?>assets//css/ui.jqgrid.min.css" />
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/css/fonts.googleapis.com.css" />

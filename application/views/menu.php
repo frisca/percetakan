@@ -63,6 +63,14 @@
 		<b class="arrow"></b>
 	</li>
 	<li class="">
+		<a href="<?php echo base_url('penjualan/index')?>">
+			<i class="menu-icon fa fa-cart-plus"></i>
+			<span class="menu-text"> Penjualan</span>
+		</a>
+
+		<b class="arrow"></b>
+	</li>
+	<li class="">
 		<a href="#" class="dropdown-toggle">
 			<i class="menu-icon fa fa-book"></i>
 			<span class="menu-text"> Report </span>
