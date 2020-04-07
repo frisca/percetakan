@@ -33,7 +33,7 @@ class Login extends CI_Controller {
 			$data_session = array(
 				'username'  => $res->username,
 				'nama'		=> $res->nama,
-				'id'		=> $res->id,
+				'id'		=> $res->id_user,
 				'logged_in' => 1,
 				'role'		=> (int)$res->role
 			);

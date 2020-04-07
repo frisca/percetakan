@@ -32,7 +32,6 @@
 					</form>
 				</div><!-- /.nav-search -->
 			</div>
-
 			<div class="page-content">
 				<div class="page-header">
 					<h1>
