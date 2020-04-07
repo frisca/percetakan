@@ -68,7 +68,7 @@
 							</div>	
 							<?php } ?>
 							<div class="table-header">
-								List Item
+								List Penjualan
 							</div>
 
 							<!-- div.table-responsive -->
