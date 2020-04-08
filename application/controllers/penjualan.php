@@ -62,21 +62,33 @@ class Penjualan extends CI_Controller {
 		$this->form_validation->set_rules('total_harga', 'Total Harga', 'required');
 
 		$datas = array(
-				'id_item' => $this->input->post('id_item'),
-				'id_satuan' => $this->input->post('id_satuan'),
-				'qty' => $this->input->post('qty'),
-				'harga_satuan' => $this->input->post('harga_satuan'),
-				'total_harga' => $this->input->post('total_harga'),
-				'status' => 0,
-				'created_date' => date('Y-m-d'),
-				'created_by' => $this->session->userdata('id'),
-				'id_header_penjualan' => $this->input->post('id_header_penjualan'),
-				'id_user' => $this->session->userdata('id')
+			'id_item' => $this->input->post('id_item'),
+			'id_satuan' => $this->input->post('id_satuan'),
+			'qty' => $this->input->post('qty'),
+			'harga_satuan' => $this->input->post('harga_satuan'),
+			'total_harga' => $this->input->post('total_harga'),
+			'status' => 0,
+			'created_date' => date('Y-m-d'),
+			'created_by' => $this->session->userdata('id'),
+			'id_header_penjualan' => $this->input->post('id_header_penjualan'),
+			'id_user' => $this->session->userdata('id')
 		);
 
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
-		}else{
+		}else{ 
+			$new_name                   = time().$_FILES["line_item"]['name'];
+	        $config['file_name']        = $new_name;
+			$config['upload_path']      = './gambar/';
+			$config['allowed_types']    = 'gif|jpg|png';
+
+			$this->load->library('upload', $config);
+	 
+			if ( ! $this->upload->do_upload('line_item')){
+				$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
+				redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+			}
+
 			$datas = array(
 				'id_item' => $this->input->post('id_item'),
 				'id_satuan' => $this->input->post('id_satuan'),
@@ -87,7 +99,8 @@ class Penjualan extends CI_Controller {
 				'created_date' => date('Y-m-d'),
 				'created_by' => $this->session->userdata('id'),
 				'id_header_penjualan' => $this->input->post('id_header_penjualan'),
-				'id_user' => $this->session->userdata('id')
+				'id_user' => $this->session->userdata('id'),
+				'line_item' => $new_name
 			);
 
 			$result = $this->all_model->insertData("penjualan", $datas);

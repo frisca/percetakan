@@ -46,13 +46,6 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="table-header">
-							Data Penjualan
-						</div>
-					</div>
-
-					<!-- <div class="col-xs-12"> -->
-						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -66,6 +59,16 @@
 								<?php echo $this->session->flashdata('error');?>
 							</div>
 						<?php } ?>
+					</div>
+						
+					<div class="col-xs-12">
+						<div class="table-header">
+							Data Penjualan
+						</div>
+					</div>
+
+					<!-- <div class="col-xs-12"> -->
+						<!-- PAGE CONTENT BEGINS -->
 						
 						<form style="margin-top:50px;">
 							<!-- <div class="form-group">
@@ -189,7 +192,7 @@
 				          	<button type="button" class="close" data-dismiss="modal">&times;</button>
         					<h4 class="modal-title">Tambah Item</h4>
 				        </div>
-				        <form action="<?php echo base_url('penjualan/processAddPenjualan')?>" method="post">
+				        <form action="<?php echo base_url('penjualan/processAddPenjualan')?>" method="post" enctype="multipart/form-data">
 					        <!-- Modal body -->
 					        <div class="modal-body">
 					            <div class="row">
@@ -219,6 +222,10 @@
 												}
 											?>
 										</select>
+									</div>
+									<div class="col-sm-12 form-group images" style="display: none;">
+										<label>Line Item</label>
+										<input type="file" class="form-control" name="line_item" />
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Harga Satuan</label>

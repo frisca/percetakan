@@ -133,6 +133,11 @@
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
+		                if(response.is_design == 0){
+		                	$('.images').css('display', 'none');
+		                }else{
+		                	$('.images').css('display', 'block');
+		                }
 		              }
 		        	});
 		        });
@@ -149,6 +154,11 @@
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
+		                if(response.is_design == 0){
+		                	$('.images').css('display', 'none');
+		                }else{
+		                	$('.images').css('display', 'block');
+		                }
 		              }
 		        	});
 		        }
