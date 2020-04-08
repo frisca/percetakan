@@ -116,6 +116,28 @@
 								</div>
 							</div>
 
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Desain</label>
+
+								<div class="col-sm-9">
+									<select name="is_design"  data-placeholder="Click to Choose...">
+										<?php 
+											if($item->is_design == 0){
+										?>
+											<option value=0 selected>Tidak</option>
+											<option value=1>Ya</option>
+										<?php 
+											}else{
+										?>
+											<option value=0>Tidak</option>
+											<option value=1 selected>Ya</option>
+										<?php 
+											}
+										?>
+									</select>
+								</div>
+							</div>
+
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
 									<button class="btn btn-info" type="submit">

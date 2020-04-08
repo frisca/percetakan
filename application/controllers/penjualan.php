@@ -32,7 +32,8 @@ class Penjualan extends CI_Controller {
 	public function processAdd(){
 		$data = array(
 			'id_header_penjualan' => $this->input->post('id_header_penjualan'),
-			'tgl_penjualan' => date('Y-m-d', strtotime($this->input->post('tgl_penjualan')))
+			'tgl_penjualan' => date('Y-m-d', strtotime($this->input->post('tgl_penjualan'))),
+			'discount' => $this->input->post('discount')
 		);
 
 		$result = $this->all_model->insertData('header_penjualan', $data);
@@ -60,6 +61,19 @@ class Penjualan extends CI_Controller {
 		$this->form_validation->set_rules('qty', 'Jumlah', 'required');
 		$this->form_validation->set_rules('total_harga', 'Total Harga', 'required');
 
+		$datas = array(
+				'id_item' => $this->input->post('id_item'),
+				'id_satuan' => $this->input->post('id_satuan'),
+				'qty' => $this->input->post('qty'),
+				'harga_satuan' => $this->input->post('harga_satuan'),
+				'total_harga' => $this->input->post('total_harga'),
+				'status' => 0,
+				'created_date' => date('Y-m-d'),
+				'created_by' => $this->session->userdata('id'),
+				'id_header_penjualan' => $this->input->post('id_header_penjualan'),
+				'id_user' => $this->session->userdata('id')
+		);
+
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 		}else{
@@ -75,9 +89,26 @@ class Penjualan extends CI_Controller {
 				'id_header_penjualan' => $this->input->post('id_header_penjualan'),
 				'id_user' => $this->session->userdata('id')
 			);
+
 			$result = $this->all_model->insertData("penjualan", $datas);
 			if($result  == true){
-				$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+				$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+				$res = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+
+				$total = $res->total + $this->input->post('total_harga');
+				$grandTotal = $total - $res->discount;
+
+				$dataHeaderPenjualan = array(
+					'total' => $total,
+					'grandtotal' => $grandTotal
+				);
+
+				$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
+				if($headerPenjualan == true){
+					$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+					redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+				}
+				$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
 				redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 			}else{
 				$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
@@ -173,6 +204,12 @@ class Penjualan extends CI_Controller {
 
 		$this->session->set_flashdata('error', 'Data penjualan tidak berhasil dihapus');
 		redirect(base_url() . "penjualan/index/" . $header_penjualan);
+	}
+
+	public function getItem(){
+		$condition = array('id_item' => $this->input->get('id'));
+    	$data = $this->all_model->getDataByCondition('item', $condition)->row();
+    	echo json_encode($data); 
 	}
 
 	// public function edit_penjualan($id)

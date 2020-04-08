@@ -82,6 +82,7 @@
 										<th>Satuan</th>
 										<th>Harga</th>
 										<th>Discount</th>
+										<th>Desain</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -94,6 +95,13 @@
 										<td><?php echo $value->satuan;?></td>
 										<td><?php echo $value->harga;?></td>
 										<td><?php echo $value->discount;?></td>
+										<td><?php 
+											if($value->is_design == 0){ 
+												echo 'Tidak'; 
+											}else{ 
+												echo 'Ya'; 
+											};?>		
+										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
 												<a class="blue" href="<?php echo base_url('item/view/' . $value->id_item);?>">

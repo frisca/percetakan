@@ -109,6 +109,17 @@
 								</div>
 							</div>
 
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Desain</label>
+
+								<div class="col-sm-9">
+									<select name="is_design"  data-placeholder="Click to Choose...">
+										<option value=0>Tidak</option>
+										<option value=1>Ya</option>
+									</select>
+								</div>
+							</div>
+
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
 									<button class="btn btn-info" type="submit">

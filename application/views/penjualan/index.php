@@ -80,6 +80,11 @@
 										<tr>
 											<th>Nomor Penjualan</th>
 											<th>Tanggal Penjualan</th>
+											<th>Total</th>
+											<th>Discount</th>
+											<th>GrandTotal</th>
+											<th>DP 1</th>
+											<th>DP 2</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -89,7 +94,12 @@
 										?>
 										<tr>
 											<td><?php echo $value->id_header_penjualan;?></td>
-											<td><?php echo $value->tgl_penjualan;?></td>
+											<td><?php echo date('d-m-Y', strtotime($value->tgl_penjualan));?></td>
+											<td><?php echo $value->total;?></td>
+											<td><?php echo $value->discount;?></td>
+											<td><?php echo $value->grandtotal;?></td>
+											<td><?php echo $value->dp1;?></td>
+											<td><?php echo $value->dp2;?></td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
 													<a class="blue" href="<?php echo base_url('penjualan/view/' . $value->id_header_penjualan);?>">

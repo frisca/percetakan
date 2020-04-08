@@ -58,7 +58,6 @@
 				});
 
 				$('#qty').keyup(function(){
-					alert('test');
 					$('input[name="total_harga"]').val('');
 					if(this.value.length == 0){
 						$(this).val('');
@@ -121,6 +120,38 @@
 			              }
 		        	});
 		        });
+
+		        $('.id_item').click(function(){
+		        	id = $(this).children("option:selected").val();
+		        	$.ajax({
+		              url : "<?php echo base_url(); ?>penjualan/getItem",
+		              data:{id : id},
+		              method:'GET',
+		              dataType:'json',
+		              success:function(response) {
+		                $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="id_satuan"]').val(response.id_satuan);
+		                $('input[name="harga_satuan"]').val(response.harga);
+		                $('input[name="harga"]').val(response.harga);
+		              }
+		        	});
+		        });
+
+		        item = $('.id_item option:selected').val();
+		        if(item != 0){
+		        	$.ajax({
+		              url : "<?php echo base_url(); ?>penjualan/getItem",
+		              data:{id : item},
+		              method:'GET',
+		              dataType:'json',
+		              success:function(response) {
+		                $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="id_satuan"]').val(response.id_satuan);
+		                $('input[name="harga_satuan"]').val(response.harga);
+		                $('input[name="harga"]').val(response.harga);
+		              }
+		        	});
+		        }
 				// $('#hrga_satuan').click(function(){
 				// 	$('#total_harga').val();
 				// 	if($('#qty').val() == ''){

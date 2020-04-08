@@ -51,7 +51,7 @@
 						</div>
 					</div>
 
-					<div class="col-xs-12">
+					<!-- <div class="col-xs-12"> -->
 						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
@@ -67,24 +67,26 @@
 							</div>
 						<?php } ?>
 						
-						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('penjualan/processAdd');?>">
+						<form method="post" action="<?php echo base_url('penjualan/processAdd');?>" style="margin-top:50px;">
 							<input type="hidden" class="form-control" name="id_header_penjualan" value="<?php echo $id_header_penjualan;?>"/>
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nomor Penjualan</label>
-
-								<div class="col-sm-9">
-									<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $id_header_penjualan;?>" disabled/>
-								</div>
+							<div class="col-sm-6 form-group">
+								<label>Nomor Penjualan</label>
+								<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $id_header_penjualan;?>" disabled/>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Tanggal Penjualan</label>
-
-								<div class="col-sm-9">
-									<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($tgl_penjualan));?>" required/>
-								</div>
+							<div class="col-sm-6 form-group">
+								<label>Tanggal Penjualan</label>
+								<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($tgl_penjualan));?>" required/>
 							</div>
-							<div class="clearfix form-actions">
-								<div class="col-md-offset-3 col-md-9">
+							<div class="col-sm-6 form-group">
+								<label>Discount</label>
+								<input type="text" placeholder="Discount" class="form-control" name="discount" value="">
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>Total</label>
+								<input type="text" placeholder="Total" class="form-control" name="total" value="0" disabled>
+							</div>
+							<div class="col-xs-12">
+								<div class="form-actions">
 									<button class="btn btn-info" type="submit">
 										<i class="ace-icon fa fa-check bigger-110"></i>
 										Simpan
@@ -100,7 +102,7 @@
 								</div>
 							</div>
 						</form>
-					</div>
+					<!-- </div> -->
 				</div>
 			</div><!-- /.page-content -->
 		</div>

@@ -27,7 +27,8 @@ class Item extends CI_Controller {
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'harga' => $this->input->post('harga'),
-			'discount' => $this->input->post('discount')
+			'discount' => $this->input->post('discount'),
+			'is_design' => $this->input->post('is_design')
 		);
 
 		if($this->form_validation->run() == false){
@@ -62,7 +63,8 @@ class Item extends CI_Controller {
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'harga' => $this->input->post('harga'),
-			'discount' => $this->input->post('discount')
+			'discount' => $this->input->post('discount'),
+			'is_design' => $this->input->post('is_design')
 		);
 
 		if($this->form_validation->run() == false){
