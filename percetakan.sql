@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2020 at 08:16 PM
+-- Generation Time: Apr 14, 2020 at 09:20 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -54,15 +54,17 @@ CREATE TABLE `header_penjualan` (
   `dp1` int(11) NOT NULL,
   `dp2` int(11) NOT NULL,
   `grandtotal` int(11) NOT NULL,
-  `metode_pembayaran` int(11) NOT NULL
+  `metode_pembayaran` int(11) NOT NULL,
+  `sisa_pembayaran` bigint(20) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `header_penjualan`
 --
 
-INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`) VALUES
-(1, '2020-04-14', 20000, 1000, 0, 0, 19000, 2);
+INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`) VALUES
+(1, '2020-04-14', 20000, 1000, 13000, 6000, 19000, 2, 0, 1);
 
 -- --------------------------------------------------------
 

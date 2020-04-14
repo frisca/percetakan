@@ -32,7 +32,8 @@ class Penjualan extends CI_Controller {
 	public function processAdd(){
 		$data = array(
 			'id_header_penjualan' => $this->input->post('id_header_penjualan'),
-			'tgl_penjualan' => date('Y-m-d', strtotime($this->input->post('tgl_penjualan')))
+			'tgl_penjualan' => date('Y-m-d', strtotime($this->input->post('tgl_penjualan'))),
+			'status'  => 0
 		);
 
 		$result = $this->all_model->insertData('header_penjualan', $data);
@@ -92,7 +93,8 @@ class Penjualan extends CI_Controller {
 						'total' => $total,
 						'grandtotal' => $grandTotal,
 						'discount' => $this->input->post('discount'),
-						'metode_pembayaran' => $this->input->post('metode_pembayaran')
+						'metode_pembayaran' => $this->input->post('metode_pembayaran'),
+						'status' => ($this->input->post('metode_pembayaran') == 1) ? 1 : 2
 					);
 					// var_dump($dataHeaderPenjualan);exit();
 					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -146,7 +148,8 @@ class Penjualan extends CI_Controller {
 						'grandtotal' => $grandTotal,
 						'discount' => $this->input->post('discount'),
 						'grandtotal' => $this->input->post('grandtotal'),
-						'metode_pembayaran' => $this->input->post('metode_pembayaran')
+						'metode_pembayaran' => $this->input->post('metode_pembayaran'),
+						'status' => ($this->input->post('metode_pembayaran') == 1) ? 1 : 2
 					);
 
 					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -186,7 +189,8 @@ class Penjualan extends CI_Controller {
 		$datas = array(
 			'metode_pembayaran' => $this->input->post('metode_pembayaran'),
 			'discount' => $this->input->post('discount'),
-			'grandtotal' => $this->input->post('grandtotal')
+			'grandtotal' => $this->input->post('grandtotal'),
+			'status' => ($this->input->post('metode_pembayaran') == 1) ? 1 : 2
 		);
 		$result = $this->all_model->updateData('header_penjualan', $condition, $datas);
 		if($result == false){
@@ -227,7 +231,8 @@ class Penjualan extends CI_Controller {
 				'total' => $total,
 				'grandtotal' => $grandTotal,
 				'discount' => $this->input->post('discount'),
-				'metode_pembayaran' => $this->input->post('metode_pembayaran')
+				'metode_pembayaran' => $this->input->post('metode_pembayaran'),
+				'status' => ($this->input->post('metode_pembayaran') == 1) ? 1 : 2
 			);
 			if(!$_FILES['line_item']['name']){
 				unlink(FCPATH."gambar/".$penjualan->line_item);
@@ -355,6 +360,49 @@ class Penjualan extends CI_Controller {
 		$condition = array('id_item' => $this->input->get('id'));
     	$data = $this->all_model->getDataByCondition('item', $condition)->row();
     	echo json_encode($data); 
+	}
+
+	public function editHeaderPenjualan(){
+		$condition = array('id_header_penjualan' => $this->input->get('id'));
+    	$data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+    	echo json_encode($data); 
+	}
+
+	public function processDP1(){
+		$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+    	$h_penjualan = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+    	
+    	$data  = array(
+    		'dp1' => $this->input->post('dp1'),
+    		'sisa_pembayaran' => ($h_penjualan->grandtotal - $this->input->post('dp1'))
+    	);
+
+    	$res = $this->all_model->updateData('header_penjualan', $condition, $data);
+		if($res == true){
+			$this->session->set_flashdata('success', 'Data untuk pembayaran dp berhasil disimpan');
+			redirect(base_url() . "penjualan/index");
+		}
+		$this->session->set_flashdata('error', 'Data untuk pembayaran dp tidak berhasil disimpan');
+		redirect(base_url() . "penjualan/index");
+	}
+
+	public function processDP2(){
+		$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+    	$h_penjualan = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+    	
+    	$data  = array(
+    		'dp2' => $h_penjualan->sisa_pembayaran,
+    		'sisa_pembayaran' => 0,
+    		'status' => 1
+    	);
+
+    	$res = $this->all_model->updateData('header_penjualan', $condition, $data);
+		if($res == true){
+			$this->session->set_flashdata('success', 'Data untuk pembayaran dp berhasil disimpan');
+			redirect(base_url() . "penjualan/index");
+		}
+		$this->session->set_flashdata('error', 'Data untuk pembayaran dp tidak berhasil disimpan');
+		redirect(base_url() . "penjualan/index");
 	}
 
 	// public function edit_penjualan($id)

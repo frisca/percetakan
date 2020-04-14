@@ -238,6 +238,52 @@
 		        	});
 		        }
 			});
+
+		$('.dp1').click(function(){
+          	var id = $(this).attr('headerpenjualan'); //get the attribute value
+          	$.ajax({
+	              url : "<?php echo base_url();?>penjualan/editHeaderPenjualan",
+	              data:{id : id},
+	              method:'GET',
+	              dataType:'json',
+	              success:function(response) {
+	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal);
+	                $('input[name="id_header_penjualan"]').val(response.header_penjualan.id_header_penjualan);
+	                $('#dp1_modal').modal({backdrop: 'static', keyboard: true, show: true});
+	              }
+        	});
+        });
+
+        $(".submit_dp1").click(function(){
+        	if($('input[name="dp1"]').val() > $('input[name="grandtotal"]').val()){
+        		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
+        		return false;
+        	}
+        });
+
+        $('.dp2').click(function(){
+          	var id = $(this).attr('headerpenjualan'); //get the attribute value
+          	$.ajax({
+	              url : "<?php echo base_url();?>penjualan/editHeaderPenjualan",
+	              data:{id : id},
+	              method:'GET',
+	              dataType:'json',
+	              success:function(response) {
+	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal);
+	                $('input[name="id_header_penjualan"]').val(response.header_penjualan.id_header_penjualan);
+	                $('input[name="dp1"]').val(response.header_penjualan.dp1);
+	                $('input[name="dp"]').val(response.header_penjualan.sisa_pembayaran);
+	                $('#dp2_modal').modal({backdrop: 'static', keyboard: true, show: true});
+	              }
+        	});
+        });
+
+        $(".submit_dp2").click(function(){
+        	if($('input[name="dp2"]').val() > $('input[name="grandtotal"]').val()){
+        		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
+        		return false;
+        	}
+        });
 			
 		</script>
 	</body>
