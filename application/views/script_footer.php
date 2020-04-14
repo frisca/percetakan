@@ -104,7 +104,7 @@
 				$('.edit').click(function(){
 		          	var id = $(this).attr('penjualanid'); //get the attribute value
 		          	$.ajax({
-			              url : "<?php echo base_url(); ?>penjualan/edit",
+			              url : "<?php echo base_url();?>penjualan/edit",
 			              data:{id : id},
 			              method:'GET',
 			              dataType:'json',
@@ -116,6 +116,12 @@
 			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan);
 			                $('input[name="qty"]').val(response.penjualan.qty);
 			                $('input[name="total_harga"]').val(response.penjualan.total_harga);
+			                if(response.penjualan.line_item == ""){
+		                		$('.images').css('display', 'none');
+			                }else{
+			                	$("#my_image").attr("src", "<?php echo base_url();?>gambar/" + response.penjualan.line_item);
+			                	$('.images').css('display', 'block');
+			                }
 			                $('#show_modal').modal({backdrop: 'static', keyboard: true, show: true});
 			              }
 		        	});
@@ -171,6 +177,66 @@
 				// 	var total_harga = parseInt($('#hrga_satuan').val(), 10) * parseInt($('#qty').val(), 10);
 				// 	$('#total_harga').val(total_harga);
 				// });
+				$('.checkout').click(function(){
+					metode_pembayaran = $('.metode_pembayaran option:selected').val();
+					if(metode_pembayaran == 0){
+						alert('Metode Pembayaran harus dipilih');
+						return false;
+					}
+				})
+
+				$('.discount').keyup(function(){
+					grandtotal = $('input[name="total"]').val() - $(this).val();
+					$('input[name="grandtotal"]').val(grandtotal);
+					$('input[name="discount"]').val($(this).val());
+				});
+
+				if($('.discount').val() == 0){
+					grandtotal = $('input[name="total"]').val();
+					$('input[name="grandtotal"]').val(grandtotal);
+				}
+
+				$('#item').click(function(){
+		        	id = $(this).children("option:selected").val();
+		        	$.ajax({
+		              url : "<?php echo base_url(); ?>penjualan/getItem",
+		              data:{id : id},
+		              method:'GET',
+		              dataType:'json',
+		              success:function(response) {
+		                $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="id_satuan"]').val(response.id_satuan);
+		                $('input[name="harga_satuan"]').val(response.harga);
+		                $('input[name="harga"]').val(response.harga);
+		                if(response.is_design == 0){
+		                	$('.images').css('display', 'none');
+		                }else{
+		                	$('.images').css('display', 'block');
+		                }
+		              }
+		        	});
+		        });
+
+		        item = $('#item option:selected').val();
+		        if(item != 0){
+		        	$.ajax({
+		              url : "<?php echo base_url(); ?>penjualan/getItem",
+		              data:{id : item},
+		              method:'GET',
+		              dataType:'json',
+		              success:function(response) {
+		                $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="id_satuan"]').val(response.id_satuan);
+		                $('input[name="harga_satuan"]').val(response.harga);
+		                $('input[name="harga"]').val(response.harga);
+		                if(response.is_design == 0){
+		                	$('.images').css('display', 'none');
+		                }else{
+		                	$('.images').css('display', 'block');
+		                }
+		              }
+		        	});
+		        }
 			});
 			
 		</script>

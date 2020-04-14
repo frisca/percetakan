@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2020 at 08:39 PM
+-- Generation Time: Apr 14, 2020 at 08:16 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -53,15 +53,16 @@ CREATE TABLE `header_penjualan` (
   `discount` int(11) NOT NULL,
   `dp1` int(11) NOT NULL,
   `dp2` int(11) NOT NULL,
-  `grandtotal` int(11) NOT NULL
+  `grandtotal` int(11) NOT NULL,
+  `metode_pembayaran` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `header_penjualan`
 --
 
-INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`) VALUES
-(1, '2020-04-08', 50000, 1000, 0, 0, 49000);
+INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`) VALUES
+(1, '2020-04-14', 20000, 1000, 0, 0, 19000, 2);
 
 -- --------------------------------------------------------
 
@@ -133,8 +134,7 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id_penjualan`, `id_item`, `qty`, `id_satuan`, `harga_satuan`, `total_harga`, `id_user`, `created_date`, `created_by`, `updated_date`, `updated_by`, `id_header_penjualan`, `status`, `line_item`) VALUES
-(2, 3, 2, 2, 10000, 20000, 1, '2020-04-08', 1, '0000-00-00', 0, 1, 0, ''),
-(3, 3, 3, 2, 10000, 30000, 1, '2020-04-08', 1, '0000-00-00', 0, 1, 0, '');
+(36, 3, 2, 2, 10000, 20000, 1, '2020-04-14', 1, '0000-00-00', 0, 1, 1, '');
 
 -- --------------------------------------------------------
 
@@ -257,7 +257,7 @@ ALTER TABLE `pengeluaran`
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `satuan`

@@ -77,14 +77,14 @@
 								<label>Tanggal Penjualan</label>
 								<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($tgl_penjualan));?>" required/>
 							</div>
-							<div class="col-sm-6 form-group">
+							<!-- <div class="col-sm-6 form-group">
 								<label>Discount</label>
 								<input type="text" placeholder="Discount" class="form-control" name="discount" value="">
 							</div>
 							<div class="col-sm-6 form-group">
 								<label>Total</label>
 								<input type="text" placeholder="Total" class="form-control" name="total" value="0" disabled>
-							</div>
+							</div> -->
 							<div class="col-xs-12">
 								<div class="form-actions">
 									<button class="btn btn-info" type="submit">
