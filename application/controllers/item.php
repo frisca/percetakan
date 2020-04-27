@@ -26,7 +26,7 @@ class Item extends CI_Controller {
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
-			'harga' => $this->input->post('harga'),
+			'hargas' => $this->input->post('harga'),
 			// 'discount' => $this->input->post('discount'),
 			'is_design' => $this->input->post('is_design')
 		);
@@ -57,12 +57,12 @@ class Item extends CI_Controller {
 
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('id_satuan', 'Satuan', 'required');
-		$this->form_validation->set_rules('harga', 'Harga', 'required');
+		$this->form_validation->set_rules('hargas', 'Harga', 'required');
 
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
-			'harga' => $this->input->post('harga'),
+			'harga' => $this->input->post('hargas'),
 			// 'discount' => $this->input->post('discount'),
 			'is_design' => $this->input->post('is_design')
 		);

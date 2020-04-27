@@ -104,15 +104,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Harga</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control" name="harga" required value="<?php echo $item->harga;?>" disabled/>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Discount</label>
-
-								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Discount" class="form-control" name="discount" value="<?php echo $item->discount;?>" disabled/>
+									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control" name="hargas" required value="<?php echo $item->harga;?>" disabled/>
 								</div>
 							</div>
 

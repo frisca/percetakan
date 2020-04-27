@@ -77,8 +77,19 @@
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Tanggal Penjualan</label>
-						<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>">
+						<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="tgl_transaksi">
 					</div>
+					<div class="col-sm-6 form-group">
+						<label>Dibuat Oleh</label>
+						<input type="text" placeholder="Dibuat Oleh" class="form-control" name="updatedBy" value="<?php echo $user->nama;?>" disabled/>
+					</div>
+					<div class="col-sm-6 form-group">
+						<label>Dibuat Tanggal</label>
+						<input type="text" placeholder="Dibuat Tanggal" class="form-control" name="updatedDates" value="<?php
+						date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>" disabled/>
+					</div>
+					<input type="hidden"  class="form-control" name="updatedDate" value="<?php
+					date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 					<div class="col-sm-6 form-group">
 						<label>Total</label>
 						<input type="text" placeholder="Total" class="form-control" name="total" value="<?php echo $header_penjualan->total;?>">
@@ -93,7 +104,7 @@
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Metode Pembayaran</label>
-						<select name="metode_pembayaran" class="metode_pembayaran" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required>
+						<select name="metode_pembayaran" class="metode_pembayaran" data-placeholder="Click to Choose..." class="form-control metode_pembayaran" style="width: 100%" required>
 							<?php
 								if($header_penjualan->metode_pembayaran == 2){
 							?>
@@ -116,9 +127,6 @@
 								}
 							?>
 						</select>
-					</div>
-					<div class="col-xs-12">
-						
 					</div>
 					<!-- </div> -->
 				</div>
@@ -224,6 +232,8 @@
 					            	<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
 					            	<input type="hidden" class="form-control satuan" name="id_satuan" value="" />
 					            	<input type="hidden" class="form-control harga" name="harga_satuan" value="" />
+					            	<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
+					            	<input type="hidden" id="total_harga" placeholder="Total Harga" class="form-control" name="total_harga" value="" required />
 					            	<div class="col-sm-12 form-group">
 										<label>Nama Item</label>
 										<select name="id_item" class="select2 id_item" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required>
@@ -238,7 +248,8 @@
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Satuan</label>
-										<select name="satuan" class="select2 satuan" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required disabled>
+										<input type="text" class="form-control satuan" name="satuan" value="" disabled />
+										<!-- <select name="satuan" class="select2 satuan" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required disabled>
 											<?php 
 												foreach ($satuan as $key => $value) {
 											?>
@@ -246,7 +257,7 @@
 											<?php 
 												}
 											?>
-										</select>
+										</select> -->
 									</div>
 									<div class="col-sm-12 form-group images" style="display: none;">
 										<label>Line Item</label>
@@ -262,7 +273,7 @@
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Total Harga</label>
-										<input type="text" id="total_harga" placeholder="Total Harga" class="form-control" name="total_harga" value="" required />
+										<input type="text" id="ttl_harga" placeholder="Total Harga" class="form-control" name="ttl_harga" value="" required disabled />
 									</div>
 					            </div>
 					        </div>
@@ -291,6 +302,10 @@
 						            	<input type="hidden" name="discount" value="<?php echo $header_penjualan->discount;?>" class="form-control discount">
 					            		<input type="hidden" name="metode_pembayaran" value="<?php echo $header_penjualan->metode_pembayaran;?>">
 					            		<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
+					            		<input type="hidden" name="harga_satuan" value="" />
+					            		<input type="hidden" name="total_harga" value="" />
+					            		<input type="hidden" class="form-control satuan" name="id_satuan" value="" />
+					            		<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
 						            	<div class="col-sm-12 form-group">
 											<label>Nama Item</label>
 											<select name="id_item" class="select2" id="item" data-placeholder="Click to Choose..." style="width: 100%" required>
@@ -305,15 +320,7 @@
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Satuan</label>
-											<select name="id_satuan" class="select2"  data-placeholder="Click to Choose..." id="satuan" style="width: 100%" required>
-												<?php 
-													foreach ($satuan as $key => $value) {
-												?>
-													<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
-												<?php 
-													}
-												?>
-											</select>
+											<input type="text" class="form-control satuan" name="satuan" value="" disabled />
 										</div>
 										<div class="col-sm-12 images" style="display: none;">
 											<label>Line Item</label>
@@ -324,7 +331,7 @@
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Harga Satuan</label>
-											<input type="text" id="harga_satuan" placeholder="Harga Satuan" class="form-control" name="harga_satuan" required value="" />
+											<input type="text" id="harga_satuan" placeholder="Harga Satuan" class="form-control" name="hargas_satuan" required value="" disabled />
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Jumlah</label>
@@ -332,7 +339,7 @@
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Total Harga</label>
-											<input type="text" id="total_hargas" placeholder="Total Harga" class="form-control" name="total_harga" value="" required />
+											<input type="text" id="total_hargas" placeholder="Total Harga" class="form-control" name="ttls_harga" value="" required disabled />
 										</div>
 						            </div>
 						      	</div>

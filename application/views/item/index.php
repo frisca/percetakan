@@ -81,7 +81,6 @@
 										<th>Nama</th>
 										<th>Satuan</th>
 										<th>Harga</th>
-										<th>Discount</th>
 										<th>Desain</th>
 										<th></th>
 									</tr>
@@ -94,7 +93,6 @@
 										<td><?php echo $value->nama;?></td>
 										<td><?php echo $value->satuan;?></td>
 										<td><?php echo $value->harga;?></td>
-										<td><?php echo $value->discount;?></td>
 										<td><?php 
 											if($value->is_design == 0){ 
 												echo 'Tidak'; 

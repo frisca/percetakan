@@ -35,6 +35,7 @@
 		<script src="<?php echo base_url();?>assets/js/ace.min.js"></script>
 		<script src="<?php echo base_url();?>assets/js/jquery.dataTables.min.js"></script>
 		<script src="<?php echo base_url();?>assets/js/jquery.dataTables.bootstrap.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/js/jquery-ui.min.js"></script>
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
@@ -54,6 +55,7 @@
 					if($('#hrga_satuan').val() != '' && $('#qty').val() != ''){
 						var total_harga = parseInt($('#hrga_satuan').val(), 10) * parseInt($('#qty').val(), 10);
 						$('#total_harga').val(total_harga);
+						$('#ttl_harga').val(total_harga);
 					}
 				});
 
@@ -68,6 +70,7 @@
 					if($('#hrga_satuan').val() != '' && $('#qty').val() != ''){
 						var total_harga = parseInt($('#hrga_satuan').val(), 10) * parseInt($('#qty').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
+						$('input[name="ttl_harga"]').val(total_harga);
 					}
 				});
 
@@ -84,6 +87,7 @@
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
 						var total_harga = parseInt($('#harga_satuan').val(), 10) * parseInt($('#quantity').val(), 10);
 						$('#total_hargas').val(total_harga);
+						$('input[name="total_harga"]').val(total_harga);
 					}
 				});
 
@@ -98,6 +102,7 @@
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
 						var total_harga = parseInt($('#harga_satuan').val(), 10) * parseInt($('#quantity').val(), 10);
 						$('#total_hargas').val(total_harga);
+						$('input[name="total_harga"]').val(total_harga);
 					}
 				});
 
@@ -114,7 +119,9 @@
 			                $("#item option[value="+response.penjualan.id_item+"]").attr('selected', 'selected');
 			                $("#satuan option[value="+response.penjualan.id_satuan+"]").attr('selected', 'selected');
 			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan);
+			                $('input[name="hargas_satuan"]').val(response.penjualan.harga_satuan);
 			                $('input[name="qty"]').val(response.penjualan.qty);
+			                $('input[name="ttls_harga"]').val(response.penjualan.total_harga);
 			                $('input[name="total_harga"]').val(response.penjualan.total_harga);
 			                if(response.penjualan.line_item == ""){
 		                		$('.images').css('display', 'none');
@@ -135,7 +142,8 @@
 		              method:'GET',
 		              dataType:'json',
 		              success:function(response) {
-		                $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                // $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
@@ -156,7 +164,8 @@
 		              method:'GET',
 		              dataType:'json',
 		              success:function(response) {
-		                $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                // $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
@@ -197,6 +206,8 @@
 				}
 
 				$('#item').click(function(){
+					$('option:selected', this).remove();
+
 		        	id = $(this).children("option:selected").val();
 		        	$.ajax({
 		              url : "<?php echo base_url(); ?>penjualan/getItem",
@@ -204,7 +215,8 @@
 		              method:'GET',
 		              dataType:'json',
 		              success:function(response) {
-		                $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
@@ -225,7 +237,8 @@
 		              method:'GET',
 		              dataType:'json',
 		              success:function(response) {
-		                $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
@@ -255,7 +268,7 @@
         });
 
         $(".submit_dp1").click(function(){
-        	if($('input[name="dp1"]').val() > $('input[name="grandtotal"]').val()){
+        	if(parseInt($('input[name="dp1"]').val(), 10) > parseInt($('input[name="grandtotal"]').val(), 10)){
         		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
         		return false;
         	}
@@ -284,7 +297,19 @@
         		return false;
         	}
         });
-			
+
+        $('.metode_pembayaran').change(function(){
+        	console.log('metode pembayaran:', $('.metode_pembayaran option:selected').val());
+        	$('input[name="metode_pembayaran"]').val($('.metode_pembayaran option:selected').val());
+        });
+
+  //       $("#tgl_transaksi").datepicker({dateFormat: 'dd-mm-yy'});
+		// $('input[name="tgl_penjualan"]').val($("#tgl_transaksi").datepicker());
+		$('#tgl_transaksi').datepicker({dateFormat: 'dd-mm-yy',
+		    onSelect: function(dateText, inst) {
+		      $('input[name="tgl_penjualan"]').val(dateText);
+		    }
+		});
 		</script>
 	</body>
 </html>

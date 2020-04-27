@@ -108,7 +108,7 @@
 														DP 1
 													</button>
 												<?php 
-														}else{
+														}else if($value->dp1 != 0 && $value->dp2 == 0){
 												?>
 													<button type="button" class="btn btn-sm btn-success" headerpenjualan="<?php echo $value->id_header_penjualan;?>" style="margin-bottom: 10px;">
 														Print
@@ -128,7 +128,7 @@
 														DP 2
 													</button>
 												<?php 
-														}else{
+														}else if($value->dp1 != 0 && $value->dp2 != 0){
 												?>
 													<button type="button" class="btn btn-sm btn-success" headerpenjualan="<?php echo $value->id_header_penjualan;?>" style="margin-bottom: 10px;">
 														Print

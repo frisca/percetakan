@@ -75,16 +75,19 @@
 							</div>
 							<div class="col-sm-6 form-group">
 								<label>Tanggal Penjualan</label>
-								<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($tgl_penjualan));?>" required/>
-							</div>
-							<!-- <div class="col-sm-6 form-group">
-								<label>Discount</label>
-								<input type="text" placeholder="Discount" class="form-control" name="discount" value="">
+								<input type="text" placeholder="Tanggal Penjualan" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($tgl_penjualan));?>" required id="tgl_transaksi"/>
 							</div>
 							<div class="col-sm-6 form-group">
-								<label>Total</label>
-								<input type="text" placeholder="Total" class="form-control" name="total" value="0" disabled>
-							</div> -->
+								<label>Dibuat Oleh</label>
+								<input type="text" placeholder="Dibuat Oleh" class="form-control" name="createdBy" value="<?php echo $user->nama;?>" disabled/>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>Dibuat Tanggal</label>
+								<input type="text" placeholder="Dibuat Tanggal" class="form-control" name="createdDates" value="<?php
+								date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>" disabled/>
+							</div>
+							<input type="hidden"  class="form-control" name="createdDate" value="<?php
+							date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 							<div class="col-xs-12">
 								<div class="form-actions">
 									<button class="btn btn-info" type="submit">

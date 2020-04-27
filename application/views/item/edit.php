@@ -74,7 +74,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" value="<?php echo $item->nama;?>" />
+									<input type="text"  placeholder="Nama" class="form-control" required name="nama" value="<?php echo $item->nama;?>" />
 								</div>
 							</div>
 
@@ -104,7 +104,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Harga</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control" name="harga" required value="<?php echo $item->harga;?>" />
+									<input type="text" placeholder="Harga" class="form-control" name="hargas" required value="<?php echo $item->harga;?>" />
 								</div>
 							</div>
 
