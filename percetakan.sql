@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2020 at 09:20 PM
+-- Generation Time: Apr 28, 2020 at 08:13 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -56,15 +56,21 @@ CREATE TABLE `header_penjualan` (
   `grandtotal` int(11) NOT NULL,
   `metode_pembayaran` int(11) NOT NULL,
   `sisa_pembayaran` bigint(20) NOT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) NOT NULL,
+  `createdBy` bigint(20) NOT NULL,
+  `createdDate` datetime NOT NULL,
+  `updatedBy` bigint(20) NOT NULL,
+  `updatedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `header_penjualan`
 --
 
-INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`) VALUES
-(1, '2020-04-14', 20000, 1000, 13000, 6000, 19000, 2, 0, 1);
+INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`) VALUES
+(1, '2020-04-14', 20000, 1000, 13000, 6000, 19000, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+(2, '2020-04-27', 10000, 0, 5000, 0, 10000, 2, 5000, 2, 1, '2020-04-27 23:56:43', 1, '1970-01-01 01:00:00'),
+(3, '2020-04-27', 20000, 0, 0, 0, 20000, 1, 0, 1, 1, '2020-04-28 00:08:30', 1, '2020-04-28 00:08:39');
 
 -- --------------------------------------------------------
 
@@ -86,7 +92,7 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_design`) VALUES
-(3, 2, 10000, 0, 'Pulpen', 0),
+(3, 1, 10000, 0, 'Pulpen', 0),
 (4, 2, 10000, 0, 'desain1', 1);
 
 -- --------------------------------------------------------
@@ -136,7 +142,9 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id_penjualan`, `id_item`, `qty`, `id_satuan`, `harga_satuan`, `total_harga`, `id_user`, `created_date`, `created_by`, `updated_date`, `updated_by`, `id_header_penjualan`, `status`, `line_item`) VALUES
-(36, 3, 2, 2, 10000, 20000, 1, '2020-04-14', 1, '0000-00-00', 0, 1, 1, '');
+(36, 3, 2, 2, 10000, 20000, 1, '2020-04-14', 1, '0000-00-00', 0, 1, 1, ''),
+(46, 3, 1, 1, 10000, 10000, 1, '2020-04-27', 1, '0000-00-00', 0, 2, 0, ''),
+(47, 3, 2, 1, 10000, 20000, 1, '2020-04-27', 1, '0000-00-00', 0, 3, 1, '');
 
 -- --------------------------------------------------------
 
@@ -241,7 +249,7 @@ ALTER TABLE `header_pengeluaran`
 -- AUTO_INCREMENT for table `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
-  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `item`
@@ -259,7 +267,7 @@ ALTER TABLE `pengeluaran`
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `satuan`

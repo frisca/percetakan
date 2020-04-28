@@ -158,7 +158,7 @@
 													<a class="blue" href="<?php echo base_url('penjualan/view/' . $value->id_header_penjualan);?>">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
-
+													<?php if($value->status != 1){ ?>
 													<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
 														<i class="ace-icon fa fa-pencil bigger-130"></i>
 													</a>
@@ -166,6 +166,7 @@
 													<a class="red" href="<?php echo base_url('penjualan/deletes/' . $value->id_header_penjualan);?>">
 														<i class="ace-icon fa fa-trash-o bigger-130"></i>
 													</a>
+													<?php } ?>
 												</div>
 											</td>
 										</tr>

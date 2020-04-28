@@ -92,7 +92,8 @@
 					date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 					<div class="col-sm-6 form-group">
 						<label>Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="total" value="<?php echo $header_penjualan->total;?>">
+						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo $header_penjualan->total;?>" disabled>
+						<input type="hidden"  name="total" value="<?php echo $header_penjualan->total;?>">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Discount</label>
@@ -100,7 +101,8 @@
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Grand Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
+						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo $header_penjualan->grandtotal;?>" disabled>
+						<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Metode Pembayaran</label>
