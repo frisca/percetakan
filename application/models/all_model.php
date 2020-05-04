@@ -51,4 +51,10 @@ class All_model extends CI_Model {
 		$query = "SELECT p.*, i.nama, s.satuan from penjualan p left join item i on i.id_item = p.id_item left join satuan s on s.id_satuan = p.id_satuan where p.status = 0  and p.id_header_penjualan = " . $id;
 		return $this->db->query($query);
 	}
+
+	public function getListDataByNama($table, $column, $name){
+		$result = $this->db->like('LOWER('.$column.')', strtolower($name))
+						   ->get($table);
+		return $result;
+	}
 }

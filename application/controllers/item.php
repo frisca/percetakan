@@ -26,22 +26,35 @@ class Item extends CI_Controller {
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
-			'hargas' => $this->input->post('harga'),
-			// 'discount' => $this->input->post('discount'),
+			'harga' => $this->input->post('harga'),
 			'is_design' => $this->input->post('is_design')
 		);
 
 		if($this->form_validation->run() == false){
 			$this->load->view('item/add');
 		}else{
-			$result = $this->all_model->insertData("item", $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data item berhasil disimpan');
-				redirect(base_url() . 'item/index');
+			$check = $this->all_model->getListDataByNama('item', 'nama', $this->input->post('nama'))->num_rows();
+			if($check <= 0){
+				$result = $this->all_model->insertData("item", $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+					redirect(base_url() . 'item/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
+					redirect(base_url() . 'item/add');
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
-				redirect(base_url() . 'item/add');
+				$this->session->set_flashdata('error', 'Nama item sudah tersedia');
+					redirect(base_url() . 'item/add');
 			}
+			// $result = $this->all_model->insertData("item", $data);
+			// if($result  == true){
+			// 	$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+			// 	redirect(base_url() . 'item/index');
+			// }else{
+			// 	$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
+			// 	redirect(base_url() . 'item/add');
+			// }
 		}
 	}
 
@@ -68,15 +81,21 @@ class Item extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
-			$this->load->view('item/edit');
+			$this->load->view('item/edit/' . $this->input->post('id'));
 		}else{
-			$result = $this->all_model->updateData("item", $condition, $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data item berhasil diubah');
-				redirect(base_url() . 'item/index');
+			$name = $this->all_model->getListDataByNama('item', 'nama', $this->input->post('nama'))->row();
+			if(($name->nama == $this->input->post('nama') && $name->id_item == $this->input->post('id')) || empty($name)){
+				$result = $this->all_model->updateData("item", $condition, $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data item berhasil diubah');
+					redirect(base_url() . 'item/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data item tidak berhasil diubah');
+					redirect(base_url() . 'item/edit/' . $this->input->post('id'));
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data item tidak berhasil diubah');
-				redirect(base_url() . 'item/add');
+				$this->session->set_flashdata('error', 'Nama sudah tersedia.');
+				redirect(base_url() . 'item/edit/' . $this->input->post('id'));
 			}
 		}
 	}

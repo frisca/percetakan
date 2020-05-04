@@ -27,12 +27,18 @@ class Satuan extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('satuan/add');
 		}else{
-			$result = $this->all_model->insertData("satuan", $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data satuan berhasil disimpan');
-				redirect(base_url() . 'satuan/index');
+			$check = $this->all_model->getListDataByNama('satuan', 'satuan', $this->input->post('satuan'))->num_rows();
+			if($check <= 0){
+				$result = $this->all_model->insertData("satuan", $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data satuan berhasil disimpan');
+					redirect(base_url() . 'satuan/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data satuan tidak berhasil disimpan');
+					redirect(base_url() . 'satuan/add');
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data satuan tidak berhasil disimpan');
+				$this->session->set_flashdata('error', 'Satuan sudah tersedia');
 				redirect(base_url() . 'satuan/add');
 			}
 		}
@@ -54,17 +60,23 @@ class Satuan extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('satuan/edit');
 		}else{
-			$data = array(
-				'satuan' => $this->input->post('satuan')
-			);
+			$satuan = $this->all_model->getListDataByNama('satuan', 'satuan', $this->input->post('satuan'))->row();
+			if(($satuan->satuan == $this->input->post('satuan') && $name->id_item == $this->input->post('id')) || empty($satuan)){
+				$data = array(
+					'satuan' => $this->input->post('satuan')
+				);
 
-			$result = $this->all_model->updateData("satuan", $condition, $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data satuan berhasil diubah');
-				redirect(base_url() . 'satuan/index');
+				$result = $this->all_model->updateData("satuan", $condition, $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data satuan berhasil diubah');
+					redirect(base_url() . 'satuan/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data satuan tidak berhasil diubah');
+					redirect(base_url() . 'satuan/edit');
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data satuan tidak berhasil diubah');
-				redirect(base_url() . 'satuan/edit');
+				$this->session->set_flashdata('error', 'Satuan sudah tersedia');
+				redirect(base_url() . 'satuan/add');
 			}
 		}
 		redirect(base_url() . 'satuan/edit');

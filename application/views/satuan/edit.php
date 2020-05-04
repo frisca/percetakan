@@ -47,13 +47,6 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="table-header">
-							Ubah Data Satuan
-						</div>
-					</div>
-
-					<div class="col-xs-12">
-						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -67,7 +60,13 @@
 								<?php echo $this->session->flashdata('error');?>
 							</div>
 						<?php } ?>
-						
+						<div class="table-header">
+							Ubah Data Satuan
+						</div>
+					</div>
+
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('satuan/processEdit');?>">
 							<input type="hidden" value="<?php echo $satuan->id_satuan?>" name="id" />
 							<div class="form-group">

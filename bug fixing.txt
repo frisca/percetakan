@@ -1,0 +1,12 @@
+1. validasi duplicate data di master satuan,item, user, location
+2. error pas add item
+3. di view penjualan setelah transaksi di checkout, header nya belum di update field nya
+4. file upload di simpan di mana ?
+5. ada bug saat edit item (di video)
+6. penomoran invoice pada saat checkout belum terbentuk
+7. button print posisi nya di mana ya?
+8. tambah field keterangan di line item transaksi penjualan
+9. tambah master location (id, nama lokasi, alamat lokasi)
+10. tambah field id_location di master user
+11. tambah table history price untuk log jika ada perubahan harga di master item
+12. kata " pada application fotocopy " harap di hapus
