@@ -7,6 +7,16 @@
 
 		<b class="arrow"></b>
 	</li>
+	
+	<li class="">
+		<a href="<?php echo base_url('location/index')?>">
+			<i class="menu-icon fa fa-map-marker"></i>
+			<span class="menu-text"> Location</span>
+		</a>
+
+		<b class="arrow"></b>
+	</li>
+	
 	<li class="">
 		<a href="#" class="dropdown-toggle">
 			<i class="menu-icon fa fa-users"></i>

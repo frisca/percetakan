@@ -40,7 +40,7 @@
 						Admin
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Admin pada application fotocopy
+							Admin
 						</small>
 					</h1>
 				</div>
@@ -90,6 +90,22 @@
 
 								<div class="col-sm-9">
 									<input type="password" id="form-field-1-1" placeholder="Password" class="form-control" name="password" required />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
+
+								<div class="col-sm-9">
+									<select name="id_location" class="select2" data-placeholder="Click to Choose...">
+										<?php 
+											foreach ($location as $key => $value) {
+										?>
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
+										<?php 
+											}
+										?>
+									</select>
 								</div>
 							</div>
 

@@ -39,7 +39,7 @@
 						Pengeluaran
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Pengeluaran pada application fotocopy
+							Pengeluaran
 						</small>
 					</h1>
 				</div>

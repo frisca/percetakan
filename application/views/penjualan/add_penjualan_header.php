@@ -39,7 +39,7 @@
 						Penjualan
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Penjualan pada application fotocopy
+							Penjualan
 						</small>
 					</h1>
 				</div>

@@ -40,7 +40,7 @@
 						Satuan
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Satuan pada application fotocopy
+							Satuan
 						</small>
 					</h1>
 				</div>

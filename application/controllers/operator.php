@@ -15,13 +15,16 @@ class Operator extends CI_Controller {
 
 	public function add()
 	{
-		$this->load->view('operator/add');
+		$location = array('status' => 1);
+		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
+		$this->load->view('operator/add', $data);
 	}
 
 	public function processAdd(){
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
+		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		$data = array(
 			'nama' => $this->input->post('nama'),
@@ -48,6 +51,9 @@ class Operator extends CI_Controller {
 	{
 		$condition = array('role' => 3, 'id_user' => $id);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+
+		$location = array('status' => 1);
+		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
 		$this->load->view('operator/view', $data);
 	}
 
@@ -56,6 +62,9 @@ class Operator extends CI_Controller {
 	{
 		$condition = array('role' => 3, 'id_user' => $id);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+
+		$condition = array('status' => 1);
+		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
 		$this->load->view('operator/edit', $data);
 	}
 
@@ -65,6 +74,7 @@ class Operator extends CI_Controller {
 
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
+		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		if($this->form_validation->run() == false){
 			$this->load->view('operator/edit');

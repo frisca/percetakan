@@ -40,7 +40,7 @@
 						Item
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Item pada application fotocopy
+							Item
 						</small>
 					</h1>
 				</div>

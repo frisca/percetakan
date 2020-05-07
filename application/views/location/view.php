@@ -20,8 +20,7 @@
 						<i class="ace-icon fa fa-home home-icon"></i>
 						<a href="#">Home</a>
 					</li>
-					<li class="active">User</li>
-					<li class="active">Administrator</li>
+					<li class="active">Location</li>
 				</ul><!-- /.breadcrumb -->
 
 				<div class="nav-search" id="nav-search">
@@ -38,10 +37,10 @@
 
 				<div class="page-header">
 					<h1>
-						Administrator
+						Location
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Administrator
+							Location
 						</small>
 					</h1>
 				</div>
@@ -49,7 +48,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="table-header">
-							Lihat Data Administrator
+							Lihat Data Location
 						</div>
 					</div>
 
@@ -60,51 +59,37 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" disabled name="nama" value="<?php echo $user->nama;?>" />
+									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" disabled name="nama" value="<?php echo $location->nama_location;?>" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Username</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Alamat</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Username" class="form-control" name="username" value="<?php echo $user->username;?>" disabled/>
+									<textarea name="alamat" rows="10" cols="50" style="width: 100%" disabled><?php echo $location->alamat_location?></textarea>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Passsword</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Status</label>
 
 								<div class="col-sm-9">
-									<input type="password" id="form-field-1-1" placeholder="Password" class="form-control" name="password" disabled />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
-
-								<div class="col-sm-9">
-									<select name="id_location" class="select2" data-placeholder="Click to Choose...">
-										<?php 
-											foreach ($location as $key => $value) {
-												if($user->id_location == $value->id_location){
-										?>
-											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>
-										<?php 
-											}else{ 
-										?>
-											<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
-										<?php 
-												}
-											}
-										?>
+									<select name="status"  data-placeholder="Click to Choose..." disabled>
+										<?php if($location->status == 0){ ?>
+											<option value="0" selected>Tidak Aktif</option>
+											<option value="1">Aktif</option>
+										<?php }else{ ?>
+											<option value="0">Tidak Aktif</option>
+											<option value="1" selected>Aktif</option>
+										<?php } ?>
 									</select>
 								</div>
 							</div>
 
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
-									<a href="<?php echo base_url('administrator/index');?>">
+									<a href="<?php echo base_url('location/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo"></i>
 											Back

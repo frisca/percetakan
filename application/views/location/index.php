@@ -20,8 +20,7 @@
 						<i class="ace-icon fa fa-home home-icon"></i>
 						<a href="#">Home</a>
 					</li>
-					<li class="active">User</li>
-					<li class="active">Admin</li>
+					<li class="active">Location</li>
 				</ul><!-- /.breadcrumb -->
 
 				<div class="nav-search" id="nav-search">
@@ -37,10 +36,10 @@
 			<div class="page-content">
 				<div class="page-header">
 					<h1>
-						Admin
+						Location
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Admin
+							Location
 						</small>
 					</h1>
 				</div>
@@ -50,9 +49,9 @@
 						<div class="clearfix">
 							<div class="pull-right tableTools-container">
 								<div class="dt-buttons btn-overlap btn-group">
-									<a class="dt-button buttons-collection buttons-colvis btn btn-white btn-primary btn-bold" tabindex="0" aria-controls="dynamic-table" data-original-title="" title="" href="<?php echo base_url('admin/add');?>">
+									<a class="dt-button buttons-collection buttons-colvis btn btn-white btn-primary btn-bold" tabindex="0" aria-controls="dynamic-table" data-original-title="" title="" href="<?php echo base_url('location/add');?>">
 										<span><i class="fa fa-plus bigger-110 blue"></i> 
-											<span class="hidden">Add Data Admin</span>
+											<span class="hidden">Add Data Location</span>
 										</span>
 									</a>
 								</div>
@@ -70,7 +69,7 @@
 						</div>	
 						<?php } ?>
 						<div class="table-header">
-							List Admin
+							List Location
 						</div>
 
 						<!-- div.table-responsive -->
@@ -81,28 +80,37 @@
 								<thead>
 									<tr>
 										<th>Nama</th>
-										<th>Username</th>
+										<th>Alamat</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-										foreach ($user as $key => $value) {
+										foreach ($location as $key => $value) {
 									?>
 									<tr>
-										<td><?php echo $value->nama;?></td>
-										<td><?php echo $value->username?></td>
+										<td><?php echo $value->nama_location;?></td>
+										<td><?php echo $value->alamat_location?></td>
+										<td>
+											<?php 
+												if($value->status == 0){ 
+													echo "Tidak Aktif";
+												}else{
+													echo "Aktif";
+												}
+											?></td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
-												<a class="blue" href="<?php echo base_url('admin/view/' . $value->id_user);?>">
+												<a class="blue" href="<?php echo base_url('location/view/' . $value->id_location);?>">
 													<i class="ace-icon fa fa-search-plus bigger-130"></i>
 												</a>
 
-												<a class="green" href="<?php echo base_url('admin/edit/' . $value->id_user)?>">
+												<a class="green" href="<?php echo base_url('location/edit/' . $value->id_location)?>">
 													<i class="ace-icon fa fa-pencil bigger-130"></i>
 												</a>
 
-												<a class="red" href="<?php echo base_url('admin/delete/' . $value->id_user);?>">
+												<a class="red" href="<?php echo base_url('location/delete/' . $value->id_location);?>">
 													<i class="ace-icon fa fa-trash-o bigger-130"></i>
 												</a>
 											</div>

@@ -15,19 +15,23 @@ class Admin extends CI_Controller {
 
 	public function add()
 	{
-		$this->load->view('admin/add');
+		$condition = array('status' => 1);
+		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
+		$this->load->view('admin/add', $data);
 	}
 
 	public function processAdd(){
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
+		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
-			'role' => 2
+			'role' => 2,
+			'id_location' => $this->input->post('id_location')
 		);
 
 		if($this->form_validation->run() == false){
@@ -48,6 +52,9 @@ class Admin extends CI_Controller {
 	{
 		$condition = array('role' => 2, 'id_user' => $id);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+
+		$location = array('status' => 1);
+		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
 		$this->load->view('admin/view', $data);
 	}
 
@@ -56,6 +63,10 @@ class Admin extends CI_Controller {
 	{
 		$condition = array('role' => 2,"id_user" => $id);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+
+		$location = array('status' => 1);
+		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
+		
 		$this->load->view('admin/edit', $data);
 	}
 
@@ -65,6 +76,7 @@ class Admin extends CI_Controller {
 
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
+		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		if($this->form_validation->run() == false){
 			$this->load->view('admin/edit');
@@ -72,7 +84,8 @@ class Admin extends CI_Controller {
 			$data = array(
 				'nama' => $this->input->post('nama'),
 				'username' => $this->input->post('username'),
-				'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password'))
+				'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password')),
+				'id_location' => $this->input->post('id_location')
 			);
 
 			$result = $this->all_model->updateData("user", $condition, $data);

@@ -20,8 +20,7 @@
 						<i class="ace-icon fa fa-home home-icon"></i>
 						<a href="#">Home</a>
 					</li>
-					<li class="active">User</li>
-					<li class="active">Administrator</li>
+					<li class="active">Location</li>
 				</ul><!-- /.breadcrumb -->
 
 				<div class="nav-search" id="nav-search">
@@ -35,13 +34,12 @@
 			</div>
 
 			<div class="page-content">
-
 				<div class="page-header">
 					<h1>
-						Administrator
+						Location
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Administrator
+							Location
 						</small>
 					</h1>
 				</div>
@@ -49,62 +47,63 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="table-header">
-							Lihat Data Administrator
+							Tambah Data Location
 						</div>
 					</div>
 
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
-						<form class="form-horizontal" role="form" style="margin: 15px 0px;">
+						<?php if(validation_errors() != ""){?>
+							<div class="alert alert-danger form-group">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								<?php echo validation_errors();?>
+							</div>
+						<?php } ?>
+
+						<?php if($this->session->flashdata('error') != ""){?>
+							<div class="alert alert-danger form-group">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								<?php echo $this->session->flashdata('error');?>
+							</div>
+						<?php } ?>
+						
+						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('location/processAdd');?>">
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" disabled name="nama" value="<?php echo $user->nama;?>" />
+									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Username</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Alamat</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Username" class="form-control" name="username" value="<?php echo $user->username;?>" disabled/>
+									<textarea name="alamat" rows="10" cols="50" style="width: 100%"></textarea>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Passsword</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Status</label>
 
 								<div class="col-sm-9">
-									<input type="password" id="form-field-1-1" placeholder="Password" class="form-control" name="password" disabled />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
-
-								<div class="col-sm-9">
-									<select name="id_location" class="select2" data-placeholder="Click to Choose...">
-										<?php 
-											foreach ($location as $key => $value) {
-												if($user->id_location == $value->id_location){
-										?>
-											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>
-										<?php 
-											}else{ 
-										?>
-											<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
-										<?php 
-												}
-											}
-										?>
+									<select name="status"  data-placeholder="Click to Choose...">
+										<option value="0">Tidak Aktif</option>
+										<option value="1">Aktif</option>
 									</select>
 								</div>
 							</div>
 
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
-									<a href="<?php echo base_url('administrator/index');?>">
+									<button class="btn btn-info" type="submit">
+										<i class="ace-icon fa fa-check bigger-110"></i>
+										Simpan
+									</button>
+
+									&nbsp; &nbsp; &nbsp;
+									<a href="<?php echo base_url('location/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo"></i>
 											Back

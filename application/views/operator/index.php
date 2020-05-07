@@ -40,7 +40,7 @@
 						Operator
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Operator pada application fotocopy
+							Operator
 						</small>
 					</h1>
 				</div>

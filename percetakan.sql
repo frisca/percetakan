@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2020 at 07:00 PM
+-- Generation Time: May 07, 2020 at 08:20 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -60,18 +60,19 @@ CREATE TABLE `header_penjualan` (
   `createdBy` bigint(20) NOT NULL,
   `createdDate` datetime NOT NULL,
   `updatedBy` bigint(20) NOT NULL,
-  `updatedDate` datetime NOT NULL
+  `updatedDate` datetime NOT NULL,
+  `nomor_penjualan` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `header_penjualan`
 --
 
-INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`) VALUES
-(1, '2020-04-14', 20000, 1000, 13000, 6000, 19000, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-(2, '2020-04-27', 10000, 0, 5000, 0, 10000, 2, 5000, 2, 1, '2020-04-27 23:56:43', 1, '1970-01-01 01:00:00'),
-(3, '2020-04-27', 20000, 0, 0, 0, 20000, 1, 0, 1, 1, '2020-04-28 00:08:30', 1, '2020-04-28 00:08:39'),
-(4, '2020-05-04', 10000, 0, 0, 0, 10000, 0, 0, 2, 1, '2020-05-04 22:36:28', 1, '1970-01-01 01:00:00');
+INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`, `nomor_penjualan`) VALUES
+(1, '2020-04-14', 20000, 1000, 13000, 6000, 19000, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', ''),
+(2, '2020-04-27', 10000, 0, 5000, 0, 10000, 2, 5000, 2, 1, '2020-04-27 23:56:43', 1, '1970-01-01 01:00:00', ''),
+(3, '2020-04-27', 20000, 0, 0, 0, 20000, 1, 0, 1, 1, '2020-04-28 00:08:30', 1, '2020-04-28 00:08:39', ''),
+(4, '2020-05-04', 10000, 0, 0, 0, 10000, 0, 0, 2, 1, '2020-05-04 22:36:28', 1, '1970-01-01 01:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -95,6 +96,26 @@ CREATE TABLE `item` (
 INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_design`) VALUES
 (3, 1, 10000, 0, 'Pulpen', 0),
 (6, 1, 10000, 0, 'test', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE `location` (
+  `id_location` bigint(20) NOT NULL,
+  `nama_location` varchar(200) NOT NULL,
+  `alamat_location` varchar(500) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `status`) VALUES
+(2, 'test', 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -178,18 +199,19 @@ CREATE TABLE `user` (
   `username` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
   `role` int(11) NOT NULL,
-  `nama` varchar(200) NOT NULL
+  `nama` varchar(200) NOT NULL,
+  `id_location` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`) VALUES
-(1, 'administrator', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'Administrator'),
-(4, 'test1', '827ccb0eea8a706c4c34a16891f84e7b', 2, 'test'),
-(5, 'administrator1', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator1'),
-(6, 'operator', '827ccb0eea8a706c4c34a16891f84e7b', 3, 'operator');
+INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_location`) VALUES
+(4, 'test1', '827ccb0eea8a706c4c34a16891f84e7b', 2, 'test', 0),
+(5, 'administrator1', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator1', 0),
+(6, 'operator', '827ccb0eea8a706c4c34a16891f84e7b', 3, 'operator', 0),
+(7, 'test1', 'e10adc3949ba59abbe56e057f20f883e', 2, 'test', 2);
 
 --
 -- Indexes for dumped tables
@@ -212,6 +234,12 @@ ALTER TABLE `header_penjualan`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id_item`);
+
+--
+-- Indexes for table `location`
+--
+ALTER TABLE `location`
+  ADD PRIMARY KEY (`id_location`);
 
 --
 -- Indexes for table `pengeluaran`
@@ -260,6 +288,12 @@ ALTER TABLE `item`
   MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `location`
+--
+ALTER TABLE `location`
+  MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
@@ -281,7 +315,7 @@ ALTER TABLE `satuan`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

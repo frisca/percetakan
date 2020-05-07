@@ -40,7 +40,7 @@
 						Administrator
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Administrator pada application fotocopy
+							Administrator
 						</small>
 					</h1>
 				</div>
