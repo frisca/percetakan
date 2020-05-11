@@ -92,7 +92,7 @@
 									<tr>
 										<td><?php echo $value->nama;?></td>
 										<td><?php echo $value->satuan;?></td>
-										<td><?php echo $value->harga;?></td>
+										<td><?php echo number_format($value->harga,2,',','.');?></td>
 										<td><?php 
 											if($value->is_design == 0){ 
 												echo 'Tidak'; 

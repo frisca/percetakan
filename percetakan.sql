@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2020 at 08:20 PM
+-- Generation Time: May 11, 2020 at 07:37 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -209,7 +209,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_location`) VALUES
 (4, 'test1', '827ccb0eea8a706c4c34a16891f84e7b', 2, 'test', 0),
-(5, 'administrator1', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator1', 0),
+(5, 'administrator', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator1', 0),
 (6, 'operator', '827ccb0eea8a706c4c34a16891f84e7b', 3, 'operator', 0),
 (7, 'test1', 'e10adc3949ba59abbe56e057f20f883e', 2, 'test', 2);
 
