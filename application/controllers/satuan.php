@@ -72,14 +72,13 @@ class Satuan extends CI_Controller {
 					redirect(base_url() . 'satuan/index');
 				}else{
 					$this->session->set_flashdata('error', 'Data satuan tidak berhasil diubah');
-					redirect(base_url() . 'satuan/edit');
+					redirect(base_url() . 'satuan/edit/' . $this->input->post('id'));
 				}
 			}else{
 				$this->session->set_flashdata('error', 'Satuan sudah tersedia');
-				redirect(base_url() . 'satuan/add');
+				redirect(base_url() . 'satuan/edit/' . $this->input->post('id'));
 			}
 		}
-		redirect(base_url() . 'satuan/edit');
 	}
 
 	public function view($id)

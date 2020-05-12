@@ -31,12 +31,18 @@ class Location extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('location/add');
 		}else{
-			$result = $this->all_model->insertData("location", $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data location berhasil disimpan');
-				redirect(base_url() . 'location/index');
+			$check = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->num_rows();
+			if($check <= 0){
+				$result = $this->all_model->insertData("location", $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data location berhasil disimpan');
+					redirect(base_url() . 'location/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data location tidak berhasil disimpan');
+					redirect(base_url() . 'location/add');
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data location tidak berhasil disimpan');
+				$this->session->set_flashdata('error', 'Nama sudah tersedia');
 				redirect(base_url() . 'location/add');
 			}
 		}
@@ -63,25 +69,30 @@ class Location extends CI_Controller {
 		$this->form_validation->set_rules('status', 'Status', 'required');
 
 		if($this->form_validation->run() == false){
-			$this->load->view('location/edit');
+			$this->load->view('location/edit/' . $this->input->post('id'));
 		}else{
-			$condition = array("id_location" => $this->input->post('id'));
-			$data = array(
-				'nama_location' => $this->input->post('nama'),
-				'alamat_location' => $this->input->post('alamat'),
-				'status' => $this->input->post('status')
-			);
+			$location = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->row();
+			if(($location->nama_location == $this->input->post('nama') && $location->id_location == $this->input->post('id')) || empty($location)){
+				$condition = array("id_location" => $this->input->post('id'));
+				$data = array(
+					'nama_location' => $this->input->post('nama'),
+					'alamat_location' => $this->input->post('alamat'),
+					'status' => $this->input->post('status')
+				);
 
-			$result = $this->all_model->updateData("location", $condition, $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data location berhasil diubah');
-				redirect(base_url() . 'location/index');
+				$result = $this->all_model->updateData("location", $condition, $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data location berhasil diubah');
+					redirect(base_url() . 'location/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data location tidak berhasil diubah');
+					redirect(base_url() . 'location/edit/' . $this->input->post('id'));
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data location tidak berhasil diubah');
-				redirect(base_url() . 'location/edit');
+				$this->session->set_flashdata('error', 'Nama sudah tersedia');
+				redirect(base_url() . 'location/edit/' . $this->input->post('id'));
 			}
 		}
-		redirect(base_url() . 'location/edit');
 	}
 
 	public function delete($id){

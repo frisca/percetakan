@@ -51,7 +51,7 @@
 						</div>
 					</div>
 
-					<div class="col-xs-12">
+					<!-- <div class="col-xs-12"> -->
 						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
@@ -67,31 +67,36 @@
 							</div>
 						<?php } ?>
 						
-						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('pengeluaran/processAdd');?>">
+						<form method="post" action="<?php echo base_url('pengeluaran/processAdd');?>" style="margin-top:50px;">
 							<input type="hidden" class="form-control" name="id_header_pengeluaran" value="<?php echo $id_header_pengeluaran;?>"/>
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nomor Pengeluaran</label>
-
-								<div class="col-sm-9">
-									<input type="text" placeholder="Nomor Pengeluaran" class="form-control" name="id_head" value="<?php echo $id_header_pengeluaran;?>" disabled/>
-								</div>
+							<div class="col-sm-6 form-group">
+								<label>Nomor Pengeluaran</label>
+								<input type="text" placeholder="Nomor Pengeluaran" class="form-control" name="id_head" value="<?php echo $id_header_pengeluaran;?>" disabled/>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Tanggal Pengeluaran</label>
-
-								<div class="col-sm-9">
-									<input type="text" placeholder="Tanggal Pengeluaran" class="form-control" name="tgl_pengeluaran" value="<?php echo date('d-m-Y', strtotime($tgl_pengeluaran));?>" required/>
-								</div>
+							<div class="col-sm-6 form-group">
+								<label>Tanggal Pengeluaran</label>
+								<input type="text" placeholder="Tanggal Pengeluaran" class="form-control" name="tgl_pengeluaran" value="<?php echo date('d-m-Y', strtotime($tgl_pengeluaran));?>" required id="tgl_transaksi"/>
 							</div>
-							<div class="clearfix form-actions">
-								<div class="col-md-offset-3 col-md-9">
+							<div class="col-sm-6 form-group">
+								<label>Dibuat Oleh</label>
+								<input type="text" placeholder="Dibuat Oleh" class="form-control" name="createdBy" value="<?php echo $user->nama;?>" disabled/>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>Dibuat Tanggal</label>
+								<input type="text" placeholder="Dibuat Tanggal" class="form-control" name="createdDates" value="<?php
+								date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>" disabled/>
+							</div>
+							<input type="hidden"  class="form-control" name="createdDate" value="<?php
+							date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
+							<div class="col-xs-12">
+								<div class="form-actions">
 									<button class="btn btn-info" type="submit">
 										<i class="ace-icon fa fa-check bigger-110"></i>
 										Simpan
 									</button>
 
 									&nbsp; &nbsp; &nbsp;
-									<a href="<?php echo base_url('Pengeluaran/index');?>">
+									<a href="<?php echo base_url('pengeluaran/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo bigger-110"></i>
 											Kembali
@@ -100,7 +105,7 @@
 								</div>
 							</div>
 						</form>
-					</div>
+					<!-- </div> -->
 				</div>
 			</div><!-- /.page-content -->
 		</div>

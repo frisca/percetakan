@@ -46,13 +46,6 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="table-header">
-							Tambah Data Location
-						</div>
-					</div>
-
-					<div class="col-xs-12">
-						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -67,6 +60,13 @@
 							</div>
 						<?php } ?>
 						
+						<div class="table-header">
+							Tambah Data Location
+						</div>
+					</div>
+
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('location/processEdit');?>">
 							<input type="hidden" name="id" value="<?php echo $location->id_location;?>">
 							<div class="form-group">

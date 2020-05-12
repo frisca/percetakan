@@ -92,7 +92,7 @@
 					date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 					<div class="col-sm-6 form-group">
 						<label>Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo $header_penjualan->total;?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,2,',','.');?>" disabled>
 						<input type="hidden"  name="total" value="<?php echo $header_penjualan->total;?>">
 					</div>
 					<div class="col-sm-6 form-group">
@@ -101,7 +101,7 @@
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Grand Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo $header_penjualan->grandtotal;?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,2,',','.');?>" disabled>
 						<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
 					</div>
 					<div class="col-sm-6 form-group">
@@ -165,8 +165,8 @@
 											<td><?php echo $value->nama;?></td>
 											<td><?php echo $value->satuan;?></td>
 											<td><?php echo $value->qty;?></td>
-											<td><?php echo $value->harga_satuan;?></td>
-											<td><?php echo $value->total_harga;?></td>
+											<td><?php echo number_format($value->harga_satuan,2,',','.');?></td>
+											<td><?php echo number_format($value->total_harga,2,',','.');?></td>
 											<td>
 												<?php 
 													if($value->status == 0){
@@ -267,22 +267,26 @@
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Harga Satuan</label>
-										<input type="text" id="hrga_satuan" placeholder="Harga Satuan" class="form-control" name="harga" required disabled />
+										<input type="text" id="hrga_satuan" placeholder="Harga Satuan" class="form-control" name="harga" required disabled data-a-dec="," data-a-sep="."/>
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Jumlah</label>
-										<input type="text" id="qty" placeholder="Jumlah" class="form-control" name="qty" required />
+										<input type="text" id="qty" placeholder="Jumlah" class="form-control" name="jmlh" required />
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Total Harga</label>
-										<input type="text" id="ttl_harga" placeholder="Total Harga" class="form-control" name="ttl_harga" value="" required disabled />
+										<input type="text" id="ttl_harga" placeholder="Total Harga" class="form-control" name="ttl_harga" value="" required disabled data-a-dec="," data-a-sep="."/>
+									</div>
+									<div class="col-sm-12 form-group description" style="display: none;">
+										<label>Keterangan</label>
+										<input type="text" class="form-control" name="keterangan" />
 									</div>
 					            </div>
 					        </div>
 					        <!-- Modal footer -->
 					        <div class="modal-footer">
-					        	<button type="submit" class="btn btn-primary">Simpan</button>
-					            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+					        	<button type="submit" class="btn btn-primary" id="savePenjualan">Simpan</button>
+					            <button type="button" class="btn btn-danger" data-dismiss="modal" id="batalPenjualan">Batal</button>
 					        </div>
 				        </form>
 				      </div>
@@ -314,7 +318,7 @@
 												<?php 
 													foreach ($item as $key => $value) {
 												?>
-													<option value="<?php echo $value->id_item;?>"><?php echo $value->nama;?></option>
+													<option value="<?php echo $value->id_item;?>" data-id="<?php echo $value->id_item;?>"><?php echo $value->nama;?></option>
 												<?php 
 													}
 												?>
@@ -327,13 +331,13 @@
 										<div class="col-sm-12 images" style="display: none;">
 											<label>Line Item</label>
 											<div>
-												<img id="my_image" src="" style="width: 150px;height: 150px;margin-bottom: 10px;" />
+												<img id="my_image" src="<?php echo base_url('gambar/no_img.png');?>" style="width: 150px;height: 150px;margin-bottom: 10px;" />
 											</div>
 											<input type="file" class="form-control" name="line_item" />
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Harga Satuan</label>
-											<input type="text" id="harga_satuan" placeholder="Harga Satuan" class="form-control" name="hargas_satuan" required value="" disabled />
+											<input type="text" id="harga_satuan" placeholder="Harga Satuan" class="form-control" name="hargas_satuan" required value="" disabled data-a-dec="," data-a-sep="."/>
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Jumlah</label>
@@ -341,7 +345,11 @@
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Total Harga</label>
-											<input type="text" id="total_hargas" placeholder="Total Harga" class="form-control" name="ttls_harga" value="" required disabled />
+											<input type="text" id="total_hargas" placeholder="Total Harga" class="form-control" name="ttls_harga" value="" required disabled data-a-dec="," data-a-sep="."/>
+										</div>
+										<div class="col-sm-12 form-group description" style="display: none;">
+											<label>Keterangan</label>
+											<input type="text" class="form-control" name="keterangan" value="" />
 										</div>
 						            </div>
 						      	</div>

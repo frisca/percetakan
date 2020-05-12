@@ -57,4 +57,9 @@ class All_model extends CI_Model {
 						   ->get($table);
 		return $result;
 	}
+
+	public function getIsDesign($id){
+		$query = "SELECT i.is_design from penjualan p left join item i on i.id_item = p.id_item left join satuan s on s.id_satuan = p.id_satuan where p.id_penjualan = " . $id;
+		return $this->db->query($query);
+	}
 }

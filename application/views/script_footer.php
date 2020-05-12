@@ -36,72 +36,43 @@
 		<script src="<?php echo base_url();?>assets/js/jquery.dataTables.min.js"></script>
 		<script src="<?php echo base_url();?>assets/js/jquery.dataTables.bootstrap.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/js/jquery-ui.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/js/autoNumeric.js"></script>
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#example').DataTable();
 
-				$('#hrga_satuan').keyup(function(event){
-					// console.log(this.value.length);
-					$('#total_harga').val('');
-					if(this.value.length == 0){
-						$(this).val('');
-						$('#total_harga').val('');
-						alert('Tidak boleh kosonog');
-						return false;
-					}
-
-					if($('#hrga_satuan').val() != '' && $('#qty').val() != ''){
-						var total_harga = parseInt($('#hrga_satuan').val(), 10) * parseInt($('#qty').val(), 10);
-						$('#total_harga').val(total_harga);
-						$('#ttl_harga').val(total_harga);
-					}
-				});
+				// $('#savePenjualan').click(function(){
+				// 	if($('#qty').val()){
+				// 		alert('Jumlah Tidak boleh kosonog');
+				// 		return false;
+				// 	}
+				// });
 
 				$('#qty').keyup(function(){
-					$('input[name="total_harga"]').val('');
+					// $('input[name="total_harga"]').val('');
 					if(this.value.length == 0){
-						$(this).val('');
-						$('#total_harga').val('');
-						alert('Tidak boleh kosong');
-						return false;
+						$('input[name="total_harga"]').val('');
+						$('input[name="ttl_harga"]').val('');
 					}
 					if($('#hrga_satuan').val() != '' && $('#qty').val() != ''){
-						var total_harga = parseInt($('#hrga_satuan').val(), 10) * parseInt($('#qty').val(), 10);
+						var total_harga = parseInt($('#hrga_satuan').autoNumeric('get'), 10) * parseInt($('#qty').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
-						$('input[name="ttl_harga"]').val(total_harga);
-					}
-				});
-
-				$('#harga_satuan').keyup(function(event){
-					// console.log(this.value.length);
-					$('#total_hargas').val('');
-					if(this.value.length == 0){
-						$(this).val('');
-						$('#total_hargas').val('');
-						alert('Tidak boleh kosonog');
-						return false;
-					}
-
-					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
-						var total_harga = parseInt($('#harga_satuan').val(), 10) * parseInt($('#quantity').val(), 10);
-						$('#total_hargas').val(total_harga);
-						$('input[name="total_harga"]').val(total_harga);
+						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('init');
 					}
 				});
 
 				$('#quantity').keyup(function(){
 					$('#total_hargas').val('');
 					if(this.value.length == 0){
-						$(this).val('');
 						$('#total_hargas').val('');
-						alert('Tidak boleh kosong');
+						$('input[name="total_harga"]').val('');
 						return false;
 					}
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
-						var total_harga = parseInt($('#harga_satuan').val(), 10) * parseInt($('#quantity').val(), 10);
-						$('#total_hargas').val(total_harga);
+						var total_harga = parseInt($('#harga_satuan').autoNumeric('get'), 10) * parseInt($('#quantity').val(), 10);
+						$('#total_hargas').val(total_harga).autoNumeric('init');
 						$('input[name="total_harga"]').val(total_harga);
 					}
 				});
@@ -123,12 +94,15 @@
 			                $('input[name="qty"]').val(response.penjualan.qty);
 			                $('input[name="ttls_harga"]').val(response.penjualan.total_harga);
 			                $('input[name="total_harga"]').val(response.penjualan.total_harga);
-			                if(response.penjualan.line_item == ""){
+			                $('input[name="keterangan"]').val(response.penjualan.keterangan);
+			                if(response.design.is_design == 0){
 		                		$('.images').css('display', 'none');
 			                }else{
 			                	$("#my_image").attr("src", "<?php echo base_url();?>gambar/" + response.penjualan.line_item);
 			                	$('.images').css('display', 'block');
+			                	$('.description').css('display', 'block');
 			                }
+			                console.log('design: ', response.design.is_design);
 			                $('#show_modal').modal({backdrop: 'static', keyboard: true, show: true});
 			              }
 		        	});
@@ -151,6 +125,7 @@
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
+		                	$('.description').css('display', 'block');
 		                }
 		              }
 		        	});
@@ -169,10 +144,12 @@
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
+
 		                if(response.is_design == 0){
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
+		                	$('.description').css('display', 'block');
 		                }
 		              }
 		        	});
@@ -205,10 +182,8 @@
 					$('input[name="grandtotal"]').val(grandtotal);
 				}
 
-				$('#item').click(function(){
-					$('option:selected', this).remove();
-
-		        	id = $(this).children("option:selected").val();
+				$('#item').change(function(){
+				    id = $('#item option:selected').data('id');
 		        	$.ajax({
 		              url : "<?php echo base_url(); ?>penjualan/getItem",
 		              data:{id : id},
@@ -224,10 +199,11 @@
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
+		                	$('.description').css('display', 'block');
 		                }
 		              }
 		        	});
-		        });
+				});
 
 		        item = $('#item option:selected').val();
 		        if(item != 0){
@@ -247,6 +223,7 @@
 		                }else{
 		                	$('.images').css('display', 'block');
 		                }
+		                console.log("design: ",response.is_design);
 		              }
 		        	});
 		        }
@@ -310,6 +287,9 @@
 		      $('input[name="tgl_penjualan"]').val(dateText);
 		    }
 		});
+
+		$('.harga').autoNumeric('init');
+		$('#hrga_satuan').autoNumeric('init');
 		</script>
 	</body>
 </html>

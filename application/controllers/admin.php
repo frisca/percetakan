@@ -37,13 +37,20 @@ class Admin extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('admin/add');
 		}else{
-			$result = $this->all_model->insertData("user", $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data admin berhasil disimpan');
-				redirect(base_url() . 'admin/index');
+			$con = array('username' => $this->input->post('username'), 'role' => 2);
+			$check = $this->all_model->getDataByCondition('user', $con)->num_rows();
+			if($check > 0){
+				$this->session->set_flashdata('error', 'Username sudah tersedia');
+					redirect(base_url() . 'admin/add');
 			}else{
-				$this->session->set_flashdata('error', 'Data admin tidak berhasil disimpan');
-				redirect(base_url() . 'admin/add');
+				$result = $this->all_model->insertData("user", $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data admin berhasil disimpan');
+					redirect(base_url() . 'admin/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data admin tidak berhasil disimpan');
+					redirect(base_url() . 'admin/add');
+				}
 			}
 		}
 	}
@@ -81,23 +88,30 @@ class Admin extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('admin/edit');
 		}else{
-			$data = array(
-				'nama' => $this->input->post('nama'),
-				'username' => $this->input->post('username'),
-				'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password')),
-				'id_location' => $this->input->post('id_location')
-			);
+			$con = array('username' => $this->input->post('username'), 'role' => 2);
+			$users = $this->all_model->getDataByCondition('user', $con)->row();
+			
+			if(($users->username == $this->input->post('username') && $users->id_user == $this->input->post('id') && (int)$users->role == 2) || empty($users)){
+				$data = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password')),
+					'id_location' => $this->input->post('id_location')
+				);
 
-			$result = $this->all_model->updateData("user", $condition, $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data admin berhasil diubah');
-				redirect(base_url() . 'admin/index');
+				$result = $this->all_model->updateData("user", $condition, $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data admin berhasil diubah');
+					redirect(base_url() . 'admin/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data admin tidak berhasil diubah');
+					redirect(base_url() . 'admin/edit/' . $this->input->post('id'));
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data admin tidak berhasil diubah');
-				redirect(base_url() . 'admin/edit');
+				$this->session->set_flashdata('error', 'Username sudah tersedia');
+				redirect(base_url() . 'admin/edit/' . $this->input->post('id'));
 			}
 		}
-		redirect(base_url() . 'admin/edit');
 	}
 
 	public function delete($id){

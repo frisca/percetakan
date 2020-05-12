@@ -48,13 +48,6 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="table-header">
-							Ubah Data Admin
-						</div>
-					</div>
-
-					<div class="col-xs-12">
-						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -69,6 +62,13 @@
 							</div>
 						<?php } ?>
 						
+						<div class="table-header">
+							Ubah Data Admin
+						</div>
+					</div>
+
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;" action="<?php echo base_url('admin/processEdit');?>" method="post">
 							<input type="hidden" class="form-control" name="id" value="<?php echo $user->id_user;?>" />
 							<div class="form-group">

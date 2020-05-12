@@ -8,7 +8,8 @@ class Pengeluaran extends CI_Controller {
 
 	public function index()
 	{
-		$data['header_pengeluaran'] = $this->all_model->getAllData('header_pengeluaran')->result();
+		$condition = array('status' => 1);
+		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->result();
 		$this->load->view('pengeluaran/index', $data);
 	}
 
@@ -33,13 +34,19 @@ class Pengeluaran extends CI_Controller {
 
 		$data['item'] = $this->all_model->getAllData('item')->result();
 		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$condition = array('id_user' => $this->session->userdata('id'));
+		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 		$this->load->view('pengeluaran/add_pengeluaran_header', $data);
 	}
 
 	public function processAdd(){
 		$data = array(
 			'id_header_pengeluaran' => $this->input->post('id_header_pengeluaran'),
-			'tgl_pengeluaran' => date('Y-m-d', strtotime($this->input->post('tgl_pengeluaran')))
+			'tgl_pengeluaran' => date('Y-m-d', strtotime($this->input->post('tgl_pengeluaran'))),
+			'status'  => 1,
+			'created_by' => $this->session->userdata('id'),
+			'created_date' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('createdDate'), '-', '-')))
 		);
 
 		$result = $this->all_model->insertData('header_pengeluaran', $data);
@@ -49,5 +56,14 @@ class Pengeluaran extends CI_Controller {
 		    return redirect(base_url().'pengeluaran/detail/' . $header_pengeluaran->id_header_pengeluaran);
 		}
 		return redirect(base_url() . 'pengeluaran/add');
+	}
+
+	public function detail($id){
+		$condition = array('id_header_pengeluaran' => $id);
+		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
+
+		$condition = array('id_user' => $this->session->userdata('id'));
+		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		$this->load->view('pengeluaran/add_pengeluaran', $data);
 	}
 }

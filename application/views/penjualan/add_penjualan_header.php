@@ -46,13 +46,6 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="table-header">
-							Tambah Data Penjualan
-						</div>
-					</div>
-
-					<!-- <div class="col-xs-12"> -->
-						<!-- PAGE CONTENT BEGINS -->
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -66,7 +59,13 @@
 								<?php echo $this->session->flashdata('error');?>
 							</div>
 						<?php } ?>
-						
+						<div class="table-header">
+							Tambah Data Penjualan
+						</div>
+					</div>
+
+					<!-- <div class="col-xs-12"> -->
+						<!-- PAGE CONTENT BEGINS -->						
 						<form method="post" action="<?php echo base_url('penjualan/processAdd');?>" style="margin-top:50px;">
 							<input type="hidden" class="form-control" name="id_header_penjualan" value="<?php echo $id_header_penjualan;?>"/>
 							<div class="col-sm-6 form-group">

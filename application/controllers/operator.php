@@ -36,13 +36,20 @@ class Operator extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('operator/add');
 		}else{
-			$result = $this->all_model->insertData("user", $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data operator berhasil disimpan');
-				redirect(base_url() . 'operator/index');
-			}else{
-				$this->session->set_flashdata('error', 'Data operator tidak berhasil disimpan');
+			$con = array('username' => $this->input->post('username'), 'role' => 3);
+			$check = $this->all_model->getDataByCondition('user', $con)->num_rows();
+			if($check > 0){
+				$this->session->set_flashdata('error', 'Username sudah tersedia');
 				redirect(base_url() . 'operator/add');
+			}else{
+				$result = $this->all_model->insertData("user", $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data operator berhasil disimpan');
+					redirect(base_url() . 'operator/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data operator tidak berhasil disimpan');
+					redirect(base_url() . 'operator/add');
+				}
 			}
 		}
 	}
@@ -79,22 +86,29 @@ class Operator extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('operator/edit');
 		}else{
-			$data = array(
-				'nama' => $this->input->post('nama'),
-				'username' => $this->input->post('username'),
-				'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password'))
-			);
+			$con = array('username' => $this->input->post('username'), 'role' => 3);
+			$users = $this->all_model->getDataByCondition('user', $con)->row();
+			
+			if(($users->username == $this->input->post('username') && $users->id_user == $this->input->post('id') && (int)$users->role == 3) || empty($users)){
+				$data = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password'))
+				);
 
-			$result = $this->all_model->updateData("user", $condition, $data);
-			if($result  == true){
-				$this->session->set_flashdata('success', 'Data operator berhasil diubah');
-				redirect(base_url() . 'operator/index');
+				$result = $this->all_model->updateData("user", $condition, $data);
+				if($result  == true){
+					$this->session->set_flashdata('success', 'Data operator berhasil diubah');
+					redirect(base_url() . 'operator/index');
+				}else{
+					$this->session->set_flashdata('error', 'Data operator tidak berhasil diubah');
+					redirect(base_url() . 'operator/edit/' . $this->input->post('id'));
+				}
 			}else{
-				$this->session->set_flashdata('error', 'Data operator tidak berhasil diubah');
-				redirect(base_url() . 'operator/edit');
+				$this->session->set_flashdata('error', 'Username sudah tersedia');
+				redirect(base_url() . 'operator/edit/' . $this->input->post('id'));
 			}
 		}
-		redirect(base_url() . 'operator/edit');
 	}
 
 	public function delete($id){

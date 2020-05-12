@@ -23,10 +23,13 @@ class Item extends CI_Controller {
 		$this->form_validation->set_rules('id_satuan', 'Satuan', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
 
+		$str = explode(',', $this->input->post('harga'));
+		$harga = str_replace(".", "", $str[0]);
+
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
-			'harga' => $this->input->post('harga'),
+			'harga' => $harga,
 			'is_design' => $this->input->post('is_design')
 		);
 
@@ -44,17 +47,9 @@ class Item extends CI_Controller {
 					redirect(base_url() . 'item/add');
 				}
 			}else{
-				$this->session->set_flashdata('error', 'Nama item sudah tersedia');
-					redirect(base_url() . 'item/add');
+				$this->session->set_flashdata('error', 'Nama sudah tersedia');
+				redirect(base_url() . 'item/add');
 			}
-			// $result = $this->all_model->insertData("item", $data);
-			// if($result  == true){
-			// 	$this->session->set_flashdata('success', 'Data item berhasil disimpan');
-			// 	redirect(base_url() . 'item/index');
-			// }else{
-			// 	$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
-			// 	redirect(base_url() . 'item/add');
-			// }
 		}
 	}
 
@@ -72,10 +67,13 @@ class Item extends CI_Controller {
 		$this->form_validation->set_rules('id_satuan', 'Satuan', 'required');
 		$this->form_validation->set_rules('hargas', 'Harga', 'required');
 
+		$str = explode(',', $this->input->post('hargas'));
+		$harga = str_replace(".", "", $str[0]);
+
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
-			'harga' => $this->input->post('hargas'),
+			'harga' => $harga,
 			// 'discount' => $this->input->post('discount'),
 			'is_design' => $this->input->post('is_design')
 		);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2020 at 07:37 AM
+-- Generation Time: May 12, 2020 at 04:37 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -30,15 +30,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `header_pengeluaran` (
   `id_header_pengeluaran` bigint(20) NOT NULL,
-  `tgl_pengeluaran` date NOT NULL
+  `tgl_pengeluaran` date NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `updated_date` datetime NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `keterangan` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `header_pengeluaran`
 --
 
-INSERT INTO `header_pengeluaran` (`id_header_pengeluaran`, `tgl_pengeluaran`) VALUES
-(1, '2020-04-07');
+INSERT INTO `header_pengeluaran` (`id_header_pengeluaran`, `tgl_pengeluaran`, `created_by`, `created_date`, `updated_by`, `updated_date`, `status`, `keterangan`) VALUES
+(1, '2020-05-11', 5, '2020-05-11 23:52:50', 0, '0000-00-00 00:00:00', 1, '');
 
 -- --------------------------------------------------------
 
@@ -69,10 +75,7 @@ CREATE TABLE `header_penjualan` (
 --
 
 INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`, `nomor_penjualan`) VALUES
-(1, '2020-04-14', 20000, 1000, 13000, 6000, 19000, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', ''),
-(2, '2020-04-27', 10000, 0, 5000, 0, 10000, 2, 5000, 2, 1, '2020-04-27 23:56:43', 1, '1970-01-01 01:00:00', ''),
-(3, '2020-04-27', 20000, 0, 0, 0, 20000, 1, 0, 1, 1, '2020-04-28 00:08:30', 1, '2020-04-28 00:08:39', ''),
-(4, '2020-05-04', 10000, 0, 0, 0, 10000, 0, 0, 2, 1, '2020-05-04 22:36:28', 1, '1970-01-01 01:00:00', '');
+(1, '2020-05-11', 20000, 0, 0, 0, 20000, 0, 0, 2, 5, '2020-05-12 02:32:11', 5, '1970-01-01 01:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -95,7 +98,8 @@ CREATE TABLE `item` (
 
 INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_design`) VALUES
 (3, 1, 10000, 0, 'Pulpen', 0),
-(6, 1, 10000, 0, 'test', 0);
+(6, 1, 10000, 0, 'test', 1),
+(7, 1, 10000, 0, 'Buku', 0);
 
 -- --------------------------------------------------------
 
@@ -115,7 +119,8 @@ CREATE TABLE `location` (
 --
 
 INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `status`) VALUES
-(2, 'test', 'test', 1);
+(2, 'test', 'test', 1),
+(3, 'test2', 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -156,18 +161,16 @@ CREATE TABLE `penjualan` (
   `updated_by` bigint(20) NOT NULL,
   `id_header_penjualan` bigint(20) NOT NULL,
   `status` int(11) NOT NULL,
-  `line_item` varchar(200) NOT NULL
+  `line_item` varchar(200) DEFAULT NULL,
+  `keterangan` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `penjualan`
 --
 
-INSERT INTO `penjualan` (`id_penjualan`, `id_item`, `qty`, `id_satuan`, `harga_satuan`, `total_harga`, `id_user`, `created_date`, `created_by`, `updated_date`, `updated_by`, `id_header_penjualan`, `status`, `line_item`) VALUES
-(36, 3, 2, 2, 10000, 20000, 1, '2020-04-14', 1, '0000-00-00', 0, 1, 1, ''),
-(46, 3, 1, 1, 10000, 10000, 1, '2020-04-27', 1, '0000-00-00', 0, 2, 0, ''),
-(47, 3, 2, 1, 10000, 20000, 1, '2020-04-27', 1, '0000-00-00', 0, 3, 1, ''),
-(48, 3, 1, 1, 10000, 10000, 1, '2020-05-04', 1, '0000-00-00', 0, 4, 0, '');
+INSERT INTO `penjualan` (`id_penjualan`, `id_item`, `qty`, `id_satuan`, `harga_satuan`, `total_harga`, `id_user`, `created_date`, `created_by`, `updated_date`, `updated_by`, `id_header_penjualan`, `status`, `line_item`, `keterangan`) VALUES
+(52, 3, 2, 1, 10000, 20000, 5, '2020-05-11', 5, '0000-00-00', 0, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -211,7 +214,8 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_locat
 (4, 'test1', '827ccb0eea8a706c4c34a16891f84e7b', 2, 'test', 0),
 (5, 'administrator', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator1', 0),
 (6, 'operator', '827ccb0eea8a706c4c34a16891f84e7b', 3, 'operator', 0),
-(7, 'test1', 'e10adc3949ba59abbe56e057f20f883e', 2, 'test', 2);
+(8, 'test', '827ccb0eea8a706c4c34a16891f84e7b', 2, 'test2', 2),
+(9, 'administrator2', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator2', 2);
 
 --
 -- Indexes for dumped tables
@@ -279,19 +283,19 @@ ALTER TABLE `header_pengeluaran`
 -- AUTO_INCREMENT for table `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
-  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengeluaran`
@@ -303,7 +307,7 @@ ALTER TABLE `pengeluaran`
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `satuan`
@@ -315,7 +319,7 @@ ALTER TABLE `satuan`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
