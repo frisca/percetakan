@@ -63,17 +63,36 @@
 					}
 				});
 
+				// $('#quantity').keyup(function(){
+				// 	$('#total_hargas').val('');
+				// 	if(this.value.length == 0){
+				// 		$('input[name="ttls_harga"]').val('');
+				// 		$('input[name="total_harga"]').val('');
+				// 		return false;
+				// 	}
+				// 	if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
+				// 		var total_harga = parseInt($('#harga_satuan').autoNumeric('get'), 10) * parseInt($('#quantity').val(), 10);
+				// 		$('input[name="ttls_harga"]').val(total_harga).autoNumeric('init');
+				// 		$('input[name="total_harga"]').val(total_harga);
+				// 	}
+				// });
+
+				$('#total_hargas').autoNumeric("init");
+
 				$('#quantity').keyup(function(){
-					$('#total_hargas').val('');
+					// $('input[name="total_harga"]').val('');
 					if(this.value.length == 0){
-						$('#total_hargas').val('');
+						$('input[name="ttls_harga"]').val('');
 						$('input[name="total_harga"]').val('');
-						return false;
 					}
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
-						var total_harga = parseInt($('#harga_satuan').autoNumeric('get'), 10) * parseInt($('#quantity').val(), 10);
-						$('#total_hargas').val(total_harga).autoNumeric('init');
+						// var total_harga = parseInt($('#harga_satuan').autoNumeric('get'), 10) * parseInt($('#quantity').val(), 10);
+						var harga_satuan = $('#harga_satuan').val().split(",");
+						var harga = harga_satuan[0].replace(".", "");
+						var total_harga = parseInt(harga, 10) * parseInt($('#quantity').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
+						$('#total_hargas').autoNumeric('set', total_harga);
+						
 					}
 				});
 
@@ -89,11 +108,15 @@
 			                $('input[name="id_header_penjualan"]').val(response.penjualan.id_header_penjualan);
 			                $("#item option[value="+response.penjualan.id_item+"]").attr('selected', 'selected');
 			                $("#satuan option[value="+response.penjualan.id_satuan+"]").attr('selected', 'selected');
-			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan);
 			                $('input[name="hargas_satuan"]').val(response.penjualan.harga_satuan);
+							var harga_satuan = response.penjualan.harga_satuan.split(",");
+							var harga = harga_satuan[0].replace(".", "");
+							$('input[name="harga_satuan"]').val(harga);
 			                $('input[name="qty"]').val(response.penjualan.qty);
 			                $('input[name="ttls_harga"]').val(response.penjualan.total_harga);
-			                $('input[name="total_harga"]').val(response.penjualan.total_harga);
+							var total_harga = response.penjualan.total_harga.split(",");
+							var total = total_harga[0].replace(".", "");
+			                $('input[name="total_harga"]').val(total);
 			                $('input[name="keterangan"]').val(response.penjualan.keterangan);
 			                if(response.design.is_design == 0){
 		                		$('.images').css('display', 'none');
@@ -193,8 +216,11 @@
 		                // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
 		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
-		                $('input[name="harga_satuan"]').val(response.harga);
+		                // $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
+						var harga_satuan = response.harga.split(",");
+						var harga = harga_satuan[0].replace(".", "");
+						$('input[name="harga_satuan"]').val(harga);
 		                if(response.is_design == 0){
 		                	$('.images').css('display', 'none');
 		                }else{
@@ -216,8 +242,10 @@
 		                // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
 		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
-		                $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
+						var harga_satuan = response.harga.split(",");
+						var harga = harga_satuan[0].replace(".", "");
+						$('input[name="harga_satuan"]').val(harga);
 		                if(response.is_design == 0){
 		                	$('.images').css('display', 'none');
 		                }else{

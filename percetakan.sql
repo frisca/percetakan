@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 12, 2020 at 04:37 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 5.6.36
+-- Host: localhost
+-- Waktu pembuatan: 12 Bulan Mei 2020 pada 07.44
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 5.6.39
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `header_pengeluaran`
+-- Struktur dari tabel `header_pengeluaran`
 --
 
 CREATE TABLE `header_pengeluaran` (
@@ -40,7 +40,7 @@ CREATE TABLE `header_pengeluaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `header_pengeluaran`
+-- Dumping data untuk tabel `header_pengeluaran`
 --
 
 INSERT INTO `header_pengeluaran` (`id_header_pengeluaran`, `tgl_pengeluaran`, `created_by`, `created_date`, `updated_by`, `updated_date`, `status`, `keterangan`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `header_pengeluaran` (`id_header_pengeluaran`, `tgl_pengeluaran`, `c
 -- --------------------------------------------------------
 
 --
--- Table structure for table `header_penjualan`
+-- Struktur dari tabel `header_penjualan`
 --
 
 CREATE TABLE `header_penjualan` (
@@ -71,16 +71,16 @@ CREATE TABLE `header_penjualan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `header_penjualan`
+-- Dumping data untuk tabel `header_penjualan`
 --
 
 INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`, `nomor_penjualan`) VALUES
-(1, '2020-05-11', 20000, 0, 0, 0, 20000, 0, 0, 2, 5, '2020-05-12 02:32:11', 5, '1970-01-01 01:00:00', '');
+(1, '2020-05-11', 90000, 0, 0, 0, 90000, 1, 0, 1, 5, '2020-05-12 02:32:11', 5, '2020-05-12 12:37:37', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Struktur dari tabel `item`
 --
 
 CREATE TABLE `item` (
@@ -93,7 +93,7 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `item`
+-- Dumping data untuk tabel `item`
 --
 
 INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_design`) VALUES
@@ -104,7 +104,7 @@ INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_des
 -- --------------------------------------------------------
 
 --
--- Table structure for table `location`
+-- Struktur dari tabel `location`
 --
 
 CREATE TABLE `location` (
@@ -115,7 +115,7 @@ CREATE TABLE `location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `location`
+-- Dumping data untuk tabel `location`
 --
 
 INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `status`) VALUES
@@ -125,7 +125,7 @@ INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `stat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengeluaran`
+-- Struktur dari tabel `pengeluaran`
 --
 
 CREATE TABLE `pengeluaran` (
@@ -144,7 +144,7 @@ CREATE TABLE `pengeluaran` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penjualan`
+-- Struktur dari tabel `penjualan`
 --
 
 CREATE TABLE `penjualan` (
@@ -166,16 +166,17 @@ CREATE TABLE `penjualan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `penjualan`
+-- Dumping data untuk tabel `penjualan`
 --
 
 INSERT INTO `penjualan` (`id_penjualan`, `id_item`, `qty`, `id_satuan`, `harga_satuan`, `total_harga`, `id_user`, `created_date`, `created_by`, `updated_date`, `updated_by`, `id_header_penjualan`, `status`, `line_item`, `keterangan`) VALUES
-(52, 3, 2, 1, 10000, 20000, 5, '2020-05-11', 5, '0000-00-00', 0, 1, 0, NULL, NULL);
+(52, 3, 6, 1, 10000, 60000, 5, '2020-05-11', 5, '2020-05-12', 5, 1, 1, '', ''),
+(53, 7, 3, 1, 10000, 30000, 5, '2020-05-12', 5, '2020-05-12', 5, 1, 1, '', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `satuan`
+-- Struktur dari tabel `satuan`
 --
 
 CREATE TABLE `satuan` (
@@ -184,7 +185,7 @@ CREATE TABLE `satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `satuan`
+-- Dumping data untuk tabel `satuan`
 --
 
 INSERT INTO `satuan` (`satuan`, `id_satuan`) VALUES
@@ -194,7 +195,7 @@ INSERT INTO `satuan` (`satuan`, `id_satuan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -207,7 +208,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_location`) VALUES
@@ -222,101 +223,101 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_locat
 --
 
 --
--- Indexes for table `header_pengeluaran`
+-- Indeks untuk tabel `header_pengeluaran`
 --
 ALTER TABLE `header_pengeluaran`
   ADD PRIMARY KEY (`id_header_pengeluaran`);
 
 --
--- Indexes for table `header_penjualan`
+-- Indeks untuk tabel `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
   ADD PRIMARY KEY (`id_header_penjualan`);
 
 --
--- Indexes for table `item`
+-- Indeks untuk tabel `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id_item`);
 
 --
--- Indexes for table `location`
+-- Indeks untuk tabel `location`
 --
 ALTER TABLE `location`
   ADD PRIMARY KEY (`id_location`);
 
 --
--- Indexes for table `pengeluaran`
+-- Indeks untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id_pengeluaran`);
 
 --
--- Indexes for table `penjualan`
+-- Indeks untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
   ADD PRIMARY KEY (`id_penjualan`);
 
 --
--- Indexes for table `satuan`
+-- Indeks untuk tabel `satuan`
 --
 ALTER TABLE `satuan`
   ADD PRIMARY KEY (`id_satuan`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `header_pengeluaran`
+-- AUTO_INCREMENT untuk tabel `header_pengeluaran`
 --
 ALTER TABLE `header_pengeluaran`
   MODIFY `id_header_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `header_penjualan`
+-- AUTO_INCREMENT untuk tabel `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
   MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT untuk tabel `item`
 --
 ALTER TABLE `item`
   MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `location`
+-- AUTO_INCREMENT untuk tabel `location`
 --
 ALTER TABLE `location`
   MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `pengeluaran`
+-- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
   MODIFY `id_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `penjualan`
+-- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
--- AUTO_INCREMENT for table `satuan`
+-- AUTO_INCREMENT untuk tabel `satuan`
 --
 ALTER TABLE `satuan`
   MODIFY `id_satuan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;

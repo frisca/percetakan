@@ -85,6 +85,7 @@
 											<th>GrandTotal</th>
 											<th>DP 1</th>
 											<th>DP 2</th>
+											<th>Lunas</th>
 											<th>Status</th>
 											<th></th>
 										</tr>
@@ -96,9 +97,9 @@
 										<tr>
 											<td><?php echo $value->id_header_penjualan;?></td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_penjualan));?></td>
-											<td><?php echo $value->total;?></td>
+											<td><?php echo number_format($value->total,2,',','.');?></td>
 											<td><?php echo $value->discount;?></td>
-											<td><?php echo $value->grandtotal;?></td>
+											<td><?php echo number_format($value->grandtotal,2,',','.');?></td>
 											<td>
 												<?php 
 													if($value->metode_pembayaran == 2){
@@ -136,6 +137,17 @@
 													<p>Total : <?php if(!empty($value->dp2)){ echo $value->dp2; } ?></p>
 												<?php
 														}
+													} 
+												?>
+											</td>
+											<td>
+												<?php 
+													if($value->metode_pembayaran == 1){
+												?>
+													<button type="button" class="btn btn-sm btn-primary dp2" headerpenjualan="<?php echo $value->id_header_penjualan;?>">
+														Print
+													</button>
+												<?php
 													} 
 												?>
 											</td>
