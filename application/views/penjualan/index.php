@@ -156,7 +156,7 @@
 													Print
 												</button>
 												<?php
-													}
+													} 
 												?>
 											</td>
 											<td>
