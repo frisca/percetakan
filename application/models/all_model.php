@@ -42,8 +42,15 @@ class All_model extends CI_Model {
 		return $this->db->get($table);
 	}
 
+	public function getDataByLimitPengeluaran($condition,$limit, $order, $table){
+		$this->db->where($condition);
+		$this->db->limit($limit);
+		$this->db->order_by($order);
+		return $this->db->get($table);
+	}
+
 	public function getPenjualanByHeaderPenjualan($id){
-		$query = "SELECT p.*, i.nama, s.satuan from penjualan p left join item i on i.id_item = p.id_item left join satuan s on s.id_satuan = p.id_satuan where p.id_header_penjualan = " . $id;
+		$query = "SELECT p.*, i.nama, s.satuan from penjualan p left join item i on i.id_item = p.id_item left join satuan s on s.id_satuan = p.id_satuan where p.status_delete =0 and p.id_header_penjualan = " . $id;
 		return $this->db->query($query);
 	}
 

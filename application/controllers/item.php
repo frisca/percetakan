@@ -70,11 +70,18 @@ class Item extends CI_Controller {
 		$str = explode(',', $this->input->post('hargas'));
 		$harga = str_replace(".", "", $str[0]);
 
+		$old_item = $this->all_model->getDataByCondition('item', $condition)->row();
+		$old_harga = $old_item->harga;
+
+		$history = array(
+			'harga' => $old_harga,
+			'id_item' => $this->input->post('id')
+		);
+
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'harga' => $harga,
-			// 'discount' => $this->input->post('discount'),
 			'is_design' => $this->input->post('is_design')
 		);
 
@@ -85,6 +92,11 @@ class Item extends CI_Controller {
 			if(($name->nama == $this->input->post('nama') && $name->id_item == $this->input->post('id')) || empty($name)){
 				$result = $this->all_model->updateData("item", $condition, $data);
 				if($result  == true){
+					// $insert_history = $this->all_model->insertData('history_price', $history);
+					if($harga != $old_harga){
+						$insert_history = $this->all_model->insertData('history_price', $history);
+					}
+
 					$this->session->set_flashdata('success', 'Data item berhasil diubah');
 					redirect(base_url() . 'item/index');
 				}else{

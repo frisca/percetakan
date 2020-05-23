@@ -85,6 +85,7 @@
 											<th>GrandTotal</th>
 											<th>DP 1</th>
 											<th>DP 2</th>
+											<th>Lunas</th>
 											<th>Status</th>
 											<th></th>
 										</tr>
@@ -94,11 +95,19 @@
 											foreach ($header_penjualan as $key => $value) {
 										?>
 										<tr>
-											<td><?php echo $value->id_header_penjualan;?></td>
+											<td>
+												<?php 
+													if($value->status_pembayaran != 0){
+														echo $value->nomor_penjualan;
+													}else{
+														echo $value->id_header_penjualan;
+													}
+												?>	
+											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_penjualan));?></td>
-											<td><?php echo $value->total;?></td>
-											<td><?php echo $value->discount;?></td>
-											<td><?php echo $value->grandtotal;?></td>
+											<td><?php echo number_format($value->total, 0, '', '.');?></td>
+											<td><?php echo number_format($value->discount, 0, '', '.');?></td>
+											<td><?php echo number_format($value->grandtotal, 0, '', '.');?></td>
 											<td>
 												<?php 
 													if($value->metode_pembayaran == 2){
@@ -108,12 +117,12 @@
 														DP 1
 													</button>
 												<?php 
-														}else if($value->dp1 != 0 && $value->dp2 == 0){
+														}else if($value->dp1 != 0 && $value->dp2 != 0){
 												?>
-													<button type="button" class="btn btn-sm btn-success" headerpenjualan="<?php echo $value->id_header_penjualan;?>" style="margin-bottom: 10px;">
+													<button type="button" class="btn btn-sm btn-success"  style="margin-bottom: 10px;">
 														Print
 													</button>
-													<p>Total : <?php if(!empty($value->dp1)){ echo $value->dp1; } ?></p>
+													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
 												<?php
 														}
 													} 
@@ -130,22 +139,33 @@
 												<?php 
 														}else if($value->dp1 != 0 && $value->dp2 != 0){
 												?>
-													<button type="button" class="btn btn-sm btn-success" headerpenjualan="<?php echo $value->id_header_penjualan;?>" style="margin-bottom: 10px;">
+													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
 														Print
 													</button>
-													<p>Total : <?php if(!empty($value->dp2)){ echo $value->dp2; } ?></p>
+													<p>Total : <?php if(!empty($value->dp2)){ echo number_format($value->dp2, 0, '', '.'); } ?></p>
 												<?php
 														}
 													} 
 												?>
 											</td>
 											<td>
+												<?php 
+													if($value->metode_pembayaran == 1){
+												?>
+												<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+													Print
+												</button>
 												<?php
-													if($value->status == 0){
+													}
+												?>
+											</td>
+											<td>
+												<?php
+													if($value->status_pembayaran == 0){
 												?>
 													Belum Bayar
 												<?php
-													}else if($value->status == 1){
+													}else if($value->status_pembayaran == 1){
 												?>
 													Lunas
 												<?php }else{ ?>
@@ -158,12 +178,12 @@
 													<a class="blue" href="<?php echo base_url('penjualan/view/' . $value->id_header_penjualan);?>">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
-													<?php if($value->status != 1){ ?>
+													<?php if($value->status_pembayaran != 1){ ?>
 													<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
 														<i class="ace-icon fa fa-pencil bigger-130"></i>
 													</a>
 
-													<a class="red" href="<?php echo base_url('penjualan/deletes/' . $value->id_header_penjualan);?>">
+													<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
 														<i class="ace-icon fa fa-trash-o bigger-130"></i>
 													</a>
 													<?php } ?>
@@ -194,9 +214,10 @@
 					        <div class="modal-body">
 					            <div class="row">
 					            	<input type="hidden" class="form-control" name="id_header_penjualan" value="" />
+					            	<input type="hidden" id="grand_total" placeholder="Grand Total" class="form-control" name="grandtotal" required disabled />
 									<div class="col-sm-12 form-group">
 										<label>Grand Total</label>
-										<input type="text" id="grand_total" placeholder="Grand Total" class="form-control" name="grandtotal" required disabled />
+										<input type="text" id="grand_total" placeholder="Grand Total" class="form-control" name="grandtotals" required disabled />
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Pembayaran Untuk DP</label>
@@ -216,39 +237,66 @@
 
 				<div id="dp2_modal" class="modal">
 				    <div class="modal-dialog">
-				      <div class="modal-content">
-				      
-				        <!-- Modal Header -->
-				        <div class="modal-header">
-				          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-        					<h4 class="modal-title">Pembayaran Untuk DP</h4>
-				        </div>
-				        <form action="<?php echo base_url('penjualan/processDP2');?>" method="post">
-					        <!-- Modal body -->
-					        <div class="modal-body">
-					            <div class="row">
-					            	<input type="hidden" class="form-control" name="id_header_penjualan" value="" />
-									<div class="col-sm-12 form-group">
-										<label>Grand Total</label>
-										<input type="text" id="grand_total" placeholder="Grand Total" class="form-control" name="grandtotal" required disabled />
-									</div>
-									<div class="col-sm-12 form-group">
-										<label>Pembayaran Untuk DP</label>
-										<input type="text" placeholder="DP" id="dp1" class="form-control" name="dp1" required disabled />
-									</div>
-									<div class="col-sm-12 form-group">
-										<label>Sisa Pembayaran</label>
-										<input type="text" placeholder="DP" id="dp2" class="form-control" name="dp" required disabled />
-									</div>
+				      	<div class="modal-content">
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	        					<h4 class="modal-title">Pembayaran Untuk DP</h4>
+					        </div>
+					        <form action="<?php echo base_url('penjualan/processDP2');?>" method="post">
+						        <!-- Modal body -->
+						        <div class="modal-body">
+						            <div class="row">
+						            	<input type="hidden" class="form-control" name="id_header_penjualan" value="" />
+										<div class="col-sm-12 form-group">
+											<label>Grand Total</label>
+											<input type="text" id="grand_total" placeholder="Grand Total" class="form-control" name="grandtotal" required disabled />
+										</div>
+										<div class="col-sm-12 form-group">
+											<label>Pembayaran Untuk DP</label>
+											<input type="text" placeholder="DP" id="dp1" class="form-control" name="dp1" required disabled />
+										</div>
+										<div class="col-sm-12 form-group">
+											<label>Sisa Pembayaran</label>
+											<input type="text" placeholder="DP" id="dp2" class="form-control" name="dp" required disabled />
+										</div>
+						            </div>
+						        </div>
+						        <!-- Modal footer -->
+						        <div class="modal-footer">
+						        	<button type="submit" class="btn btn-primary submit_dp1">Simpan</button>
+						            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+						        </div>
+					        </form>
+				      	</div>
+				    </div>
+				</div>
+
+				<!-- The Modal -->
+				<div id="delete_modal" class="modal">
+				    <div class="modal-dialog">
+					    <div class="modal-content">
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	        					<h4 class="modal-title">Delete Data Penjualan</h4>
+					        </div>
+					        <form action="<?php echo base_url('penjualan/delete')?>" method="post">
+					        	<div class="modal-body">
+					            	<div class="row">
+					            		<input type="hidden" class="form-control" name="id" value="" />
+										<div class="col-sm-12 form-group">
+											<label>Keterangan</label>
+											<input type="text" class="form-control" name="keterangan_delete" value="" required/>
+										</div>
+					            	</div>
 					            </div>
-					        </div>
-					        <!-- Modal footer -->
-					        <div class="modal-footer">
-					        	<button type="submit" class="btn btn-primary submit_dp1">Simpan</button>
-					            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-					        </div>
-				        </form>
-				      </div>
+					            <div class="modal-footer">
+						        	<button type="submit" class="btn btn-primary">Hapus</button>
+						            <button type="button" class="btn btn-danger" data-dismiss="modal" id="batalPenjualan">Batal</button>
+						        </div>
+					        </form>
+					    </div>
 				    </div>
 				</div>
 			</div>

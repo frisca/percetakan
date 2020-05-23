@@ -59,6 +59,13 @@
 								<?php echo $this->session->flashdata('error');?>
 							</div>
 						<?php } ?>
+
+						<?php if($this->session->flashdata('success') != ""){?>
+							<div class="alert alert-success form-group">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								<?php echo $this->session->flashdata('success');?>
+							</div>
+						<?php } ?>
 					</div>
 						
 					<div class="col-xs-12">
@@ -73,7 +80,17 @@
 				<form style="margin-top:50px;" method="post" action="<?php echo base_url('penjualan/checkout/' . $header_penjualan->id_header_penjualan);?>">
 					<div class="col-sm-6 form-group">
 						<label>Nomor Penjualan</label>
-						<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $header_penjualan->id_header_penjualan;?>" disabled/>
+						<?php
+							if((int)$header_penjualan->metode_pembayaran == 2 || (int)$header_penjualan->metode_pembayaran == 1){
+						?>
+							<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $header_penjualan->nomor_penjualan;?>" disabled/>
+						<?php
+							}else{
+						?>
+							<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $header_penjualan->id_header_penjualan;?>" disabled/>
+						<?php
+							}
+						?>
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Tanggal Penjualan</label>
@@ -92,16 +109,16 @@
 					date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 					<div class="col-sm-6 form-group">
 						<label>Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,2,',','.');?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,0,'','.');?>" disabled>
 						<input type="hidden"  name="total" value="<?php echo $header_penjualan->total;?>">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Discount</label>
-						<input type="text" placeholder="Discount" class="form-control discount" name="discount" value="<?php echo $header_penjualan->discount;?>">
+						<input type="text" placeholder="Discount" class="form-control discount" name="discounts" value="<?php echo number_format($header_penjualan->discount, 0, '', '.');?>">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Grand Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,2,',','.');?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,0,'','.');?>" disabled>
 						<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
 					</div>
 					<div class="col-sm-6 form-group">
@@ -151,6 +168,8 @@
 									<tr>
 										<th>Nama Item</th>
 										<th>Satuan</th>
+										<th>Line Item</th>
+										<th>Keterangan</th>
 										<th>Jumlah</th>
 										<th>Harga Satuan</th>
 										<th>Total Harga</th>
@@ -164,9 +183,23 @@
 										<tr>
 											<td><?php echo $value->nama;?></td>
 											<td><?php echo $value->satuan;?></td>
+											<td>
+												<?php
+													if($value->line_item == ""){
+												?>
+													<img id="my_image" src="<?php echo base_url('gambar/no_img.png');?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
+												<?php 
+													}else{
+												?>
+													<img id="my_image" src="<?php echo base_url('gambar/' . $value->line_item);?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
+												<?php
+													}
+												?>
+											</td>
+											<td><?php echo $value->keterangan;?></td>
 											<td><?php echo $value->qty;?></td>
-											<td><?php echo number_format($value->harga_satuan,2,',','.');?></td>
-											<td><?php echo number_format($value->total_harga,2,',','.');?></td>
+											<td><?php echo number_format($value->harga_satuan,0,'','.');?></td>
+											<td><?php echo number_format($value->total_harga,0,'','.');?></td>
 											<td>
 												<?php 
 													if($value->status == 0){
@@ -176,7 +209,7 @@
 															<i class="ace-icon fa fa-pencil bigger-130"></i>
 														</a>
 
-														<a class="red" href="<?php echo base_url('penjualan/delete/' . $value->id_penjualan . '/' . $value->id_header_penjualan);?>">
+														<a class="red delete" href="#" deleteid="<?php echo $value->id_penjualan;?>">
 															<i class="ace-icon fa fa-trash-o bigger-130"></i>
 														</a>
 													</div>
@@ -275,9 +308,9 @@
 									</div>
 									<div class="col-sm-12 form-group">
 										<label>Total Harga</label>
-										<input type="text" id="ttl_harga" placeholder="Total Harga" class="form-control" name="ttl_harga" value="" required disabled data-a-dec="," data-a-sep="."/>
+										<input type="text" id="ttl_harga" placeholder="Total Harga" class="form-control" name="ttl_harga" value="" required disabled/>
 									</div>
-									<div class="col-sm-12 form-group description" style="display: none;">
+									<div class="col-sm-12 form-group description">
 										<label>Keterangan</label>
 										<input type="text" class="form-control" name="keterangan" />
 									</div>
@@ -345,9 +378,9 @@
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Total Harga</label>
-											<input type="text" id="total_hargas" placeholder="Total Harga" class="form-control" name="ttls_harga" value="" required disabled data-a-dec="," data-a-sep="."/>
+											<input type="text" id="total_hargas" placeholder="Total Harga" class="form-control" name="ttls_harga" value="" required/>
 										</div>
-										<div class="col-sm-12 form-group description" style="display: none;">
+										<div class="col-sm-12 form-group description">
 											<label>Keterangan</label>
 											<input type="text" class="form-control" name="keterangan" value="" />
 										</div>
@@ -360,6 +393,34 @@
 					        </form>
 					    </div>
 				  	</div>
+				</div>
+
+				<!-- The Modal -->
+				<div id="delete_modal" class="modal">
+				    <div class="modal-dialog">
+					    <div class="modal-content">
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	        					<h4 class="modal-title">Delete Item</h4>
+					        </div>
+					        <form action="<?php echo base_url('penjualan/deleteItem')?>" method="post">
+					        	<div class="modal-body">
+					            	<div class="row">
+					            		<input type="hidden" class="form-control" name="id" value="" />
+										<div class="col-sm-12 form-group">
+											<label>Keterangan</label>
+											<input type="text" class="form-control" name="keterangan_delete" value="" required />
+										</div>
+					            	</div>
+					            </div>
+					            <div class="modal-footer">
+						        	<button type="submit" class="btn btn-primary">Hapus</button>
+						            <button type="button" class="btn btn-danger" data-dismiss="modal" id="batalPenjualan">Batal</button>
+						        </div>
+					        </form>
+					    </div>
+				    </div>
 				</div>
 			</div><!-- /.page-content -->
 		</div>

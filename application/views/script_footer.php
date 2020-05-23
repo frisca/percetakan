@@ -56,24 +56,30 @@
 						$('input[name="total_harga"]').val('');
 						$('input[name="ttl_harga"]').val('');
 					}
-					if($('#hrga_satuan').val() != '' && $('#qty').val() != ''){
+
+					if($('#hrga_satuan').val() != '' && this.value.length > 0){
 						var total_harga = parseInt($('#hrga_satuan').autoNumeric('get'), 10) * parseInt($('#qty').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
-						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('init');
+						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+						// $('input[name="ttl_harga"]').each(function(){
+						// 	$('input[name="ttl_harga"]').val(total_harga).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+						// })
 					}
 				});
 
 				$('#quantity').keyup(function(){
-					$('#total_hargas').val('');
 					if(this.value.length == 0){
 						$('#total_hargas').val('');
 						$('input[name="total_harga"]').val('');
 						return false;
 					}
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
-						var total_harga = parseInt($('#harga_satuan').autoNumeric('get'), 10) * parseInt($('#quantity').val(), 10);
-						$('#total_hargas').val(total_harga).autoNumeric('init');
+						console.log('harga: ', $('input[name="harga_satuan"]').val());
+						var total_harga = parseInt($('input[name="harga_satuan"]').val(), 10) * parseInt($('#quantity').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
+						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
 					}
 				});
 
@@ -89,7 +95,7 @@
 			                $('input[name="id_header_penjualan"]').val(response.penjualan.id_header_penjualan);
 			                $("#item option[value="+response.penjualan.id_item+"]").attr('selected', 'selected');
 			                $("#satuan option[value="+response.penjualan.id_satuan+"]").attr('selected', 'selected');
-			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan);
+			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan.replace('.', ''));
 			                $('input[name="hargas_satuan"]').val(response.penjualan.harga_satuan);
 			                $('input[name="qty"]').val(response.penjualan.qty);
 			                $('input[name="ttls_harga"]').val(response.penjualan.total_harga);
@@ -100,7 +106,7 @@
 			                }else{
 			                	$("#my_image").attr("src", "<?php echo base_url();?>gambar/" + response.penjualan.line_item);
 			                	$('.images').css('display', 'block');
-			                	$('.description').css('display', 'block');
+			                	// $('.description').css('display', 'block');
 			                }
 			                console.log('design: ', response.design.is_design);
 			                $('#show_modal').modal({backdrop: 'static', keyboard: true, show: true});
@@ -125,7 +131,7 @@
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
-		                	$('.description').css('display', 'block');
+		                	// $('.description').css('display', 'block');
 		                }
 		              }
 		        	});
@@ -149,7 +155,7 @@
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
-		                	$('.description').css('display', 'block');
+		                	// $('.description').css('display', 'block');
 		                }
 		              }
 		        	});
@@ -172,14 +178,39 @@
 				})
 
 				$('.discount').keyup(function(){
-					grandtotal = $('input[name="total"]').val() - $(this).val();
-					$('input[name="grandtotal"]').val(grandtotal);
-					$('input[name="discount"]').val($(this).val());
+					// grandtotal = $('input[name="total"]').val() - $(this).val();
+					// $('input[name="grandtotal"]').val(grandtotal);
+					if($('input[name="total"]').val() == 0){
+						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="discount"]').val($(this).val().replace('.', ''));
+					}else{
+						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="discount"]').val($(this).val().replace(',', ''));
+						grandtotal = parseInt($('input[name="total"]').val(),10) - parseInt($(this).val().replace('.', ''), 10);
+						$('input[name="grandtotal"]').val(grandtotal);
+						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+					}
 				});
 
 				if($('.discount').val() == 0){
 					grandtotal = $('input[name="total"]').val();
 					$('input[name="grandtotal"]').val(grandtotal);
+					$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+					$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+					// grandtotal = $('input[name="total"]').val();
+					// $('input[name="grandtotal"]').val(grandtotal);
+					// if($('input[name="total"]').val() == 0){
+					// 	$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+					// 	$('input[name="discount"]').val($(this).val().replace('.', ''));
+					// }else{
+					// 	$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+					// 	$('input[name="discount"]').val($(this).val().replace(',', ''));
+					// 	grandtotal = parseInt($('input[name="total"]').val(),10) - parseInt($(this).val().replace('.', ''), 10);
+					// 	$('input[name="grandtotal"]').val(grandtotal);
+					// 	$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+					// 	$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+					// }
 				}
 
 				$('#item').change(function(){
@@ -199,7 +230,7 @@
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
-		                	$('.description').css('display', 'block');
+		                	// $('.description').css('display', 'block');
 		                }
 		              }
 		        	});
@@ -237,6 +268,8 @@
 	              method:'GET',
 	              dataType:'json',
 	              success:function(response) {
+	                $('input[name="grandtotals"]').val(response.header_penjualan.grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+	                $('input[name="grandtotals"]').val(response.header_penjualan.grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
 	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal);
 	                $('input[name="id_header_penjualan"]').val(response.header_penjualan.id_header_penjualan);
 	                $('#dp1_modal').modal({backdrop: 'static', keyboard: true, show: true});
@@ -245,7 +278,7 @@
         });
 
         $(".submit_dp1").click(function(){
-        	if(parseInt($('input[name="dp1"]').val(), 10) > parseInt($('input[name="grandtotal"]').val(), 10)){
+        	if(parseInt($('input[name="dp1"]').val().replace('.', ''), 10) > parseInt($('input[name="grandtotal"]').val().replace('.', ''), 10)){
         		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
         		return false;
         	}
@@ -259,17 +292,17 @@
 	              method:'GET',
 	              dataType:'json',
 	              success:function(response) {
-	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal);
+	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
 	                $('input[name="id_header_penjualan"]').val(response.header_penjualan.id_header_penjualan);
-	                $('input[name="dp1"]').val(response.header_penjualan.dp1);
-	                $('input[name="dp"]').val(response.header_penjualan.sisa_pembayaran);
+	                $('input[name="dp1"]').val(response.header_penjualan.dp1).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+	                $('input[name="dp"]').val(response.header_penjualan.sisa_pembayaran).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
 	                $('#dp2_modal').modal({backdrop: 'static', keyboard: true, show: true});
 	              }
         	});
         });
 
         $(".submit_dp2").click(function(){
-        	if($('input[name="dp2"]').val() > $('input[name="grandtotal"]').val()){
+        	if(parseInt($('input[name="dp2"]').val().replace('.', ''), 10) > parseInt($('input[name="grandtotal"]').val().replace('.', ''),10)){
         		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
         		return false;
         	}
@@ -288,8 +321,41 @@
 		    }
 		});
 
-		$('.harga').autoNumeric('init');
-		$('#hrga_satuan').autoNumeric('init');
+		// $('.harga_item').keyup(function(){
+		// 	grandtotal = $('input[name="total"]').val() + $(this).val();
+		// 	$('.harga_item').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+		// 	$('input[name="total"]').val(grandtotal);
+		// 	$('input[name="totals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+		// });
+
+		$('.harga_item').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+		$('#hrga_satuan').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+		$('#dp1').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+
+		$('.edit_pengeluaran').click(function(){
+	      	var id = $(this).attr('pengeluaranid'); //get the attribute value
+	      	$.ajax({
+              url : "<?php echo base_url();?>pengeluaran/edit",
+              data:{id : id},
+              method:'GET',
+              dataType:'json',
+              success:function(response) {
+                $('input[name="id_pengeluaran"]').val(response.pengeluaran.id_pengeluaran);
+                $('input[name="item"]').val(response.pengeluaran.item);
+                $('input[name="keterangan"]').val(response.pengeluaran.keterangan);
+                $('input[name="id_header_pengeluaran"]').val(response.pengeluaran.id_header_pengeluaran);
+                $('input[name="harga"]').val(response.pengeluaran.price).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+                $('input[name="harga"]').val(response.pengeluaran.price).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+                $('#show_modal').modal({backdrop: 'static', keyboard: true, show: true});
+              }
+	    	});
+	    });
+
+	    $('.delete').click(function(){
+	      	var id = $(this).attr('deleteid'); //get the attribute value
+	      	$('input[name="id"]').val(id);
+            $('#delete_modal').modal({backdrop: 'static', keyboard: true, show: true});
+	    });
 		</script>
 	</body>
 </html>

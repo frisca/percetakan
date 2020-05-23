@@ -80,6 +80,7 @@
 										<tr>
 											<th>Nomor Pengeluaran</th>
 											<th>Tanggal Pengeluaran</th>
+											<th>Total</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -89,21 +90,23 @@
 										?>
 										<tr>
 											<td><?php echo $value->id_header_pengeluaran;?></td>
-											<td><?php echo $value->tgl_pengeluaran;?></td>
+											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
+											<td><?php echo number_format($value->total, 0, '', '.');?></td>
 											<td>
-												<!-- <div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="<?php echo base_url('penjualan/view/' . $value->id_header_penjualan);?>">
+												<div class="hidden-sm hidden-xs action-buttons">
+													<a class="blue" href="<?php echo base_url('pengeluaran/view/' . $value->id_header_pengeluaran);?>">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
+													<?php if($value->status == 0){ ?>
+														<a class="green" href="<?php echo base_url('pengeluaran/detail/' . $value->id_header_pengeluaran)?>">
+															<i class="ace-icon fa fa-pencil bigger-130"></i>
+														</a>
 
-													<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
-														<i class="ace-icon fa fa-pencil bigger-130"></i>
-													</a>
-
-													<a class="red" href="<?php echo base_url('penjualan/deletes/' . $value->id_header_penjualan);?>">
-														<i class="ace-icon fa fa-trash-o bigger-130"></i>
-													</a>
-												</div> -->
+														<a class="red delete" href="#" deleteid="<?php echo $value->id_header_pengeluaran;?>">
+															<i class="ace-icon fa fa-trash-o bigger-130"></i>
+														</a>
+													<?php } ?>
+												</div>
 											</td>
 										</tr>
 										<?php 
@@ -115,6 +118,33 @@
 						</div>
 					</div>
 				</div><!-- /.page-content -->
+				<!-- The Modal -->
+				<div id="delete_modal" class="modal">
+				    <div class="modal-dialog">
+					    <div class="modal-content">
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	        					<h4 class="modal-title">Delete Data Pengeluaran</h4>
+					        </div>
+					        <form action="<?php echo base_url('pengeluaran/delete')?>" method="post">
+					        	<div class="modal-body">
+					            	<div class="row">
+					            		<input type="hidden" class="form-control" name="id" value="" />
+										<div class="col-sm-12 form-group">
+											<label>Keterangan</label>
+											<input type="text" class="form-control" name="keterangan_delete" value="" required/>
+										</div>
+					            	</div>
+					            </div>
+					            <div class="modal-footer">
+						        	<button type="submit" class="btn btn-primary">Hapus</button>
+						            <button type="button" class="btn btn-danger" data-dismiss="modal" id="batalPenjualan">Batal</button>
+						        </div>
+					        </form>
+					    </div>
+				    </div>
+				</div>
 			</div>
 		</div><!-- /.main-content -->
 
