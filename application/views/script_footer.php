@@ -205,7 +205,7 @@
 						$('input[name="discount"]').val($(this).val().replace('.', ''));
 					}else{
 						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="discount"]').val($(this).val().replace(',', ''));
+						$('input[name="discount"]').val($(this).val().replace('.', ''));
 						grandtotal = parseInt($('input[name="total"]').val(),10) - parseInt($(this).val().replace('.', ''), 10);
 						$('input[name="grandtotal"]').val(grandtotal);
 						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
@@ -253,7 +253,6 @@
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
-		                	// $('.description').css('display', 'block');
 		                }
 		              }
 		        	});

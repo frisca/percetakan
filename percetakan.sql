@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 23, 2020 at 03:06 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 5.6.36
+-- Host: localhost
+-- Waktu pembuatan: 05 Jun 2020 pada 17.00
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 5.6.39
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `header_pengeluaran`
+-- Struktur dari tabel `customer`
+--
+
+CREATE TABLE `customer` (
+  `id_customer` int(11) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `address_1` varchar(200) NOT NULL,
+  `address_2` varchar(200) NOT NULL,
+  `phone_1` varchar(20) NOT NULL,
+  `phone_2` varchar(20) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_date` date NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_date` date NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `customer`
+--
+
+INSERT INTO `customer` (`id_customer`, `first_name`, `last_name`, `address_1`, `address_2`, `phone_1`, `phone_2`, `status`, `created_date`, `created_by`, `updated_date`, `updated_by`, `email`) VALUES
+(1, 'testt', 'test', 'tes', '', '0432', '', 1, '0000-00-00', 5, '0000-00-00', 0, 'test@gmail.com'),
+(2, 'test', 'testing', '123', '', '01212', '', 1, '2020-06-05', 5, '0000-00-00', 0, 'test@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `header_pengeluaran`
 --
 
 CREATE TABLE `header_pengeluaran` (
@@ -43,10 +73,17 @@ CREATE TABLE `header_pengeluaran` (
   `deleted_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `header_pengeluaran`
+--
+
+INSERT INTO `header_pengeluaran` (`id_header_pengeluaran`, `tgl_pengeluaran`, `created_by`, `created_date`, `updated_by`, `updated_date`, `status`, `keterangan_delete`, `total`, `status_delete`, `deleted_date`, `deleted_by`) VALUES
+(1, '2020-06-05', 5, '2020-06-05 20:00:45', 5, '2020-06-05 00:00:00', 0, '', 3000, 0, '0000-00-00', 0);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `header_penjualan`
+-- Struktur dari tabel `header_penjualan`
 --
 
 CREATE TABLE `header_penjualan` (
@@ -69,13 +106,25 @@ CREATE TABLE `header_penjualan` (
   `keterangan_delete` varchar(200) NOT NULL,
   `deleted_by` int(11) NOT NULL,
   `deleted_date` date NOT NULL,
-  `status_pembayaran` int(11) NOT NULL
+  `status_pembayaran` int(11) NOT NULL,
+  `id_customer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `header_penjualan`
+--
+
+INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`, `nomor_penjualan`, `status_delete`, `keterangan_delete`, `deleted_by`, `deleted_date`, `status_pembayaran`, `id_customer`) VALUES
+(1, '2020-06-05', 40000, 0, 0, 0, 40000, 0, 0, 0, 5, '2020-06-05 19:22:13', 5, '1970-01-01 01:00:00', '', 1, '0', 5, '2020-06-05', 0, 0),
+(2, '2020-06-05', 20000, 0, 0, 0, 20000, 0, 0, 0, 5, '2020-06-05 19:22:33', 5, '1970-01-01 01:00:00', '', 1, '0', 5, '2020-06-05', 0, 0),
+(3, '2020-06-05', 50000, 1000, 10000, 39000, 49000, 2, 0, 1, 5, '2020-06-05 19:23:13', 5, '2020-06-05 19:34:42', 'INV/20/06/0003', 0, '', 0, '0000-00-00', 1, 0),
+(4, '2020-06-05', 40000, 0, 0, 0, 40000, 0, 0, 0, 5, '2020-06-05 19:35:02', 5, '1970-01-01 01:00:00', '', 0, '', 0, '0000-00-00', 0, 0),
+(5, '2020-06-05', 0, 0, 0, 0, 0, 0, 0, 0, 5, '2020-06-05 21:43:57', 0, '0000-00-00 00:00:00', '', 0, '', 0, '0000-00-00', 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `history_price`
+-- Struktur dari tabel `history_price`
 --
 
 CREATE TABLE `history_price` (
@@ -85,7 +134,7 @@ CREATE TABLE `history_price` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `history_price`
+-- Dumping data untuk tabel `history_price`
 --
 
 INSERT INTO `history_price` (`id_history`, `harga`, `id_item`) VALUES
@@ -94,7 +143,7 @@ INSERT INTO `history_price` (`id_history`, `harga`, `id_item`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Struktur dari tabel `item`
 --
 
 CREATE TABLE `item` (
@@ -107,7 +156,7 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `item`
+-- Dumping data untuk tabel `item`
 --
 
 INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_design`) VALUES
@@ -118,7 +167,7 @@ INSERT INTO `item` (`id_item`, `id_satuan`, `harga`, `discount`, `nama`, `is_des
 -- --------------------------------------------------------
 
 --
--- Table structure for table `location`
+-- Struktur dari tabel `location`
 --
 
 CREATE TABLE `location` (
@@ -129,7 +178,7 @@ CREATE TABLE `location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `location`
+-- Dumping data untuk tabel `location`
 --
 
 INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `status`) VALUES
@@ -139,7 +188,7 @@ INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `stat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengeluaran`
+-- Struktur dari tabel `pengeluaran`
 --
 
 CREATE TABLE `pengeluaran` (
@@ -159,10 +208,18 @@ CREATE TABLE `pengeluaran` (
   `keterangan_delete` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `pengeluaran`
+--
+
+INSERT INTO `pengeluaran` (`id_pengeluaran`, `item`, `price`, `keterangan`, `created_date`, `created_by`, `updated_date`, `updated_by`, `status`, `id_header_pengeluaran`, `status_delete`, `deleted_date`, `deleted_by`, `keterangan_delete`) VALUES
+(11, 'bensin', 1000, '', '2020-06-05', 5, '2020-06-05', 5, 0, 1, 0, '0000-00-00', 0, ''),
+(12, 'rokok', 2000, '', '2020-06-05', 5, '0000-00-00', 0, 0, 1, 0, '0000-00-00', 0, '');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penjualan`
+-- Struktur dari tabel `penjualan`
 --
 
 CREATE TABLE `penjualan` (
@@ -187,10 +244,22 @@ CREATE TABLE `penjualan` (
   `deleted_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `penjualan`
+--
+
+INSERT INTO `penjualan` (`id_penjualan`, `id_item`, `qty`, `id_satuan`, `harga_satuan`, `total_harga`, `id_user`, `created_date`, `created_by`, `updated_date`, `updated_by`, `id_header_penjualan`, `status`, `line_item`, `keterangan`, `status_delete`, `keterangan_delete`, `deleted_by`, `deleted_date`) VALUES
+(80, 3, 4, 1, 10000, 40000, 5, '2020-06-05', 5, '0000-00-00', 0, 1, 0, NULL, '', 0, '', 0, '0000-00-00'),
+(81, 6, 2, 1, 10000, 20000, 5, '2020-06-05', 5, '0000-00-00', 0, 2, 0, NULL, '', 0, '', 0, '0000-00-00'),
+(82, 3, 1, 1, 10000, 10000, 5, '2020-06-05', 5, '0000-00-00', 0, 3, 1, NULL, '', 0, '', 0, '0000-00-00'),
+(83, 3, 3, 1, 10000, 30000, 5, '2020-06-05', 5, '0000-00-00', 0, 3, 1, NULL, '', 0, '', 0, '0000-00-00'),
+(84, 3, 1, 1, 10000, 10000, 5, '2020-06-05', 5, '0000-00-00', 0, 3, 1, NULL, '', 0, '', 0, '0000-00-00'),
+(85, 6, 4, 1, 10000, 40000, 5, '2020-06-05', 5, '2020-06-05', 5, 4, 0, '1591361940example.png', '', 0, '', 0, '0000-00-00');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `satuan`
+-- Struktur dari tabel `satuan`
 --
 
 CREATE TABLE `satuan` (
@@ -199,7 +268,7 @@ CREATE TABLE `satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `satuan`
+-- Dumping data untuk tabel `satuan`
 --
 
 INSERT INTO `satuan` (`satuan`, `id_satuan`) VALUES
@@ -209,7 +278,7 @@ INSERT INTO `satuan` (`satuan`, `id_satuan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -222,7 +291,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_location`) VALUES
@@ -237,113 +306,125 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_locat
 --
 
 --
--- Indexes for table `header_pengeluaran`
+-- Indeks untuk tabel `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id_customer`);
+
+--
+-- Indeks untuk tabel `header_pengeluaran`
 --
 ALTER TABLE `header_pengeluaran`
   ADD PRIMARY KEY (`id_header_pengeluaran`);
 
 --
--- Indexes for table `header_penjualan`
+-- Indeks untuk tabel `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
   ADD PRIMARY KEY (`id_header_penjualan`);
 
 --
--- Indexes for table `history_price`
+-- Indeks untuk tabel `history_price`
 --
 ALTER TABLE `history_price`
   ADD PRIMARY KEY (`id_history`);
 
 --
--- Indexes for table `item`
+-- Indeks untuk tabel `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id_item`);
 
 --
--- Indexes for table `location`
+-- Indeks untuk tabel `location`
 --
 ALTER TABLE `location`
   ADD PRIMARY KEY (`id_location`);
 
 --
--- Indexes for table `pengeluaran`
+-- Indeks untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id_pengeluaran`);
 
 --
--- Indexes for table `penjualan`
+-- Indeks untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
   ADD PRIMARY KEY (`id_penjualan`);
 
 --
--- Indexes for table `satuan`
+-- Indeks untuk tabel `satuan`
 --
 ALTER TABLE `satuan`
   ADD PRIMARY KEY (`id_satuan`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `header_pengeluaran`
+-- AUTO_INCREMENT untuk tabel `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `header_pengeluaran`
 --
 ALTER TABLE `header_pengeluaran`
   MODIFY `id_header_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `header_penjualan`
+-- AUTO_INCREMENT untuk tabel `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
-  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `history_price`
+-- AUTO_INCREMENT untuk tabel `history_price`
 --
 ALTER TABLE `history_price`
   MODIFY `id_history` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT untuk tabel `item`
 --
 ALTER TABLE `item`
   MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `location`
+-- AUTO_INCREMENT untuk tabel `location`
 --
 ALTER TABLE `location`
   MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `pengeluaran`
+-- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `penjualan`
+-- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
--- AUTO_INCREMENT for table `satuan`
+-- AUTO_INCREMENT untuk tabel `satuan`
 --
 ALTER TABLE `satuan`
   MODIFY `id_satuan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;

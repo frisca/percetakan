@@ -85,6 +85,18 @@
 								<input type="text" placeholder="Dibuat Tanggal" class="form-control" name="createdDates" value="<?php
 								date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>" disabled/>
 							</div>
+							<div class="col-sm-6 form-group">
+								<label>Customer</label>
+								<select name="id_customer" class="select2" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required>
+								<?php
+									foreach($customer as $key=>$value){
+								?>
+								<option value="<?php echo $value->id_customer;?>"><?php echo $value->nama_customer;?></option>
+								<?php
+									}
+								?>
+								</select>
+							</div>
 							<input type="hidden"  class="form-control" name="createdDate" value="<?php
 							date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 							<div class="col-xs-12">

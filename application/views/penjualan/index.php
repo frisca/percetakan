@@ -117,7 +117,7 @@
 														DP 1
 													</button>
 												<?php 
-														}else if($value->dp1 != 0 && $value->dp2 != 0){
+														}else if($value->dp1 != 0){
 												?>
 													<button type="button" class="btn btn-sm btn-success"  style="margin-bottom: 10px;">
 														Print

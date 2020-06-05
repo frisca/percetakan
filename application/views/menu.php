@@ -65,6 +65,14 @@
 		<b class="arrow"></b>
 	</li>
 	<li class="">
+		<a href="<?php echo base_url('customer/index')?>">
+			<i class="menu-icon fa fa-user"></i>
+			<span class="menu-text"> Customer</span>
+		</a>
+
+		<b class="arrow"></b>
+	</li>
+	<li class="">
 		<a href="<?php echo base_url('item/index')?>">
 			<i class="menu-icon fa fa-list"></i>
 			<span class="menu-text"> Item</span>

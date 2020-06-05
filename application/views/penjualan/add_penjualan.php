@@ -115,6 +115,7 @@
 					<div class="col-sm-6 form-group">
 						<label>Discount</label>
 						<input type="text" placeholder="Discount" class="form-control discount" name="discounts" value="<?php echo number_format($header_penjualan->discount, 0, '', '.');?>">
+						<input type="hidden" name="discount" value="<?php echo $header_penjualan->discount;?>" class="form-control discount">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Grand Total</label>
@@ -147,7 +148,25 @@
 							?>
 						</select>
 					</div>
-					<!-- </div> -->
+					<div class="col-sm-6 form-group">
+						<label>Customer</label>
+						<select name="id_customer" class="select2" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required
+						disabled>
+						<?php
+							foreach($customer as $key=>$value){
+								if($value->id_customer == $header_penjualan->id_customer){
+						?>
+								<option value="<?php echo $value->id_customer;?>" selected><?php echo $value->first_name;?></option>
+						<?php
+								}else{
+						?>
+								<option value="<?php echo $value->id_customer;?>"><?php echo $value->first_name;?></option>
+						<?php
+								}
+							}
+						?>
+						</select>
+					</div>
 				</div>
 
 				<div class="row">

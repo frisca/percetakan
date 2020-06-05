@@ -26,6 +26,7 @@ class Penjualan extends CI_Controller {
 
 		$data['item'] = $this->all_model->getAllData('item')->result();
 		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
@@ -38,7 +39,8 @@ class Penjualan extends CI_Controller {
 			'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
 			'status'  => 0,
 			'createdBy' => $this->session->userdata('id'),
-			'createdDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('createdDate'), '-', '-')))
+			'createdDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('createdDate'), '-', '-'))),
+			'id_customer' => $this->input->post('id_customer')
 		);
 
 		$result = $this->all_model->insertData('header_penjualan', $data);
@@ -61,6 +63,7 @@ class Penjualan extends CI_Controller {
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
 		$this->load->view('penjualan/add_penjualan', $data);
 	}
 
