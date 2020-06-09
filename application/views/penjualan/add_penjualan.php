@@ -156,11 +156,11 @@
 							foreach($customer as $key=>$value){
 								if($value->id_customer == $header_penjualan->id_customer){
 						?>
-								<option value="<?php echo $value->id_customer;?>" selected><?php echo $value->first_name;?></option>
+								<option value="<?php echo $value->id_customer;?>" selected><?php echo $value->first_name . ' ' . $value->last_name ;?></option>
 						<?php
 								}else{
 						?>
-								<option value="<?php echo $value->id_customer;?>"><?php echo $value->first_name;?></option>
+								<option value="<?php echo $value->id_customer;?>"><?php echo $value->first_name . ' ' . $value->last_name ;?></option>
 						<?php
 								}
 							}
@@ -383,7 +383,7 @@
 										<div class="col-sm-12 images" style="display: none;">
 											<label>Line Item</label>
 											<div>
-												<img id="my_image" src="<?php echo base_url('gambar/no_img.png');?>" style="width: 150px;height: 150px;margin-bottom: 10px;" />
+												<img id="my_image" src="" style="width: 150px;height: 150px;margin-bottom: 10px;" />
 											</div>
 											<input type="file" class="form-control" name="line_item" />
 										</div>

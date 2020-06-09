@@ -91,7 +91,7 @@
 								<?php
 									foreach($customer as $key=>$value){
 								?>
-								<option value="<?php echo $value->id_customer;?>"><?php echo $value->nama_customer;?></option>
+								<option value="<?php echo $value->id_customer;?>"><?php echo $value->first_name . ' ' . $value->last_name;?></option>
 								<?php
 									}
 								?>

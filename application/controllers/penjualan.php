@@ -565,7 +565,7 @@ class Penjualan extends CI_Controller {
 				'keterangan_delete' => $this->input->post('keterangan_delete')
 			);
 
-			$res_penjualan = $this->all_model->updateData("penjualan", $condition, $data);
+			$res_penjualan = $this->all_model->updateData("penjualan", $con, $data);
 			if($res_penjualan == true){
 				$this->session->set_flashdata('success', 'Data item berhasil dihapus');
 				redirect(base_url() . 'penjualan/detail/' . $penjualan->id_header_penjualan);

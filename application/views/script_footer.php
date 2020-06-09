@@ -122,9 +122,11 @@
 			                $('input[name="total_harga"]').val(total);
 			                $('input[name="keterangan"]').val(response.penjualan.keterangan);
 			                if(response.design.is_design == 0){
+			                	$("img#my_image").attr("src", "<?php echo base_url();?>gambar/no_img.png");
 		                		$('.images').css('display', 'none');
 			                }else{
-			                	$("#my_image").attr("src", "<?php echo base_url();?>gambar/" + response.penjualan.line_item);
+			                	console.log('line item: ', response.penjualan.line_item);
+			                	$("img#my_image").attr("src", "<?php echo base_url();?>gambar/" + response.penjualan.line_item);
 			                	$('.images').css('display', 'block');
 			                	// $('.description').css('display', 'block');
 			                }
