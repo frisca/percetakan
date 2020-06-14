@@ -235,33 +235,71 @@
 					// }
 				}
 
-				$('#item').change(function(){
+				$('#item').on('change', function(){
+					$(this).removeAttr("selected");
+					$(this).attr('selected', 'selected');
 				    id = $('#item option:selected').data('id');
-		        	$.ajax({
-		              url : "<?php echo base_url(); ?>penjualan/getItem",
-		              data:{id : id},
-		              method:'GET',
-		              dataType:'json',
-		              success:function(response) {
-		                // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
-		                $('input[name="satuan"]').val(response.satuan);
+				    console.log('id: ', id);
+				    $.get("<?php echo base_url('penjualan/getItem');?>" + "?id= " + id,function(response){
+				    	console.log("response: ", response);
+				    	$('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                // $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
 						var harga_satuan = response.harga.split(",");
 						var harga = harga_satuan[0].replace(".", "");
+						console.log("harga : ", harga);
+						$('input[name="hargas_satuan"]').val(response.harga);
 						$('input[name="harga_satuan"]').val(harga);
+						var total = parseInt($('#quantity').val(), 10) * harga;
+						$('input[name="total_harga"]').val(total);
+						$('input[name="ttls_harga"]').val(total).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="ttls_harga"]').val(total).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
 		                if(response.is_design == 0){
 		                	$('.images').css('display', 'none');
 		                }else{
 		                	$('.images').css('display', 'block');
 		                }
-		              }
-		        	});
+				    }, "json");
+		    //     	$.ajax({
+		    //           url : "<?php echo base_url(); ?>penjualan/getItem",
+		    //           data:{id : id},
+		    //           method:'GET',
+		    //           dataType:'json',
+		    //           success:function(response) {
+		    //           	console.log('response: ' + response);
+		    //             // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+		    //             $('input[name="satuan"]').val(response.satuan);
+		    //             $('input[name="id_satuan"]').val(response.id_satuan);
+		    //             // $('input[name="harga_satuan"]').val(response.harga);
+		    //             $('input[name="harga"]').val(response.harga);
+						// var harga_satuan = response.harga.split(",");
+						// var harga = harga_satuan[0].replace(".", "");
+						// $('input[name="harga_satuan"]').val(harga);
+		    //             if(response.is_design == 0){
+		    //             	$('.images').css('display', 'none');
+		    //             }else{
+		    //             	$('.images').css('display', 'block');
+		    //             }
+		    //           }
+		    //     	});
 				});
 
-		        item = $('#item option:selected').val();
-		        if(item != 0){
+				$('.closes').click(function(){
+					$('#item option:selected').removeAttr("selected");
+					$('#show_modal').modal('hide');
+				});
+
+				$('.customers').on('change', function(){
+					console.log('customer: ', $(this).val());
+					var customer = $(this).val();
+					$('input[name="customers"]').val(customer);
+				});
+
+		        // console.log("items: " + $('#item option:selected').data('id'));
+		    //     console.log("items: " + item);
+		    	items = $('#item option:selected').val();
+		        if(items != 0){
 		        	$.ajax({
 		              url : "<?php echo base_url(); ?>penjualan/getItem",
 		              data:{id : item},

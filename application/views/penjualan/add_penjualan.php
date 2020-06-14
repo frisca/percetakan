@@ -148,7 +148,31 @@
 							?>
 						</select>
 					</div>
-					<div class="col-sm-6 form-group">
+					<div class="col-sm-6 form-group" style="margin-left: 1px;">
+						<label>Customer</label>
+						<select name="id_customer" class="select2 customers" data-placeholder="Click to Choose..."  style="width: 100%" required>
+						<?php
+							foreach($customer as $key=>$value){
+								if($value->id_customer == $header_penjualan->id_customer){
+						?>
+								<option value="<?php echo $value->id_customer;?>" selected><?php echo $value->first_name . ' ' . $value->last_name ;?></option>
+						<?php
+								}else{
+						?>
+								<option value="<?php echo $value->id_customer;?>"><?php echo $value->first_name . ' ' . $value->last_name ;?></option>
+						<?php
+								}
+							}
+						?>
+						</select>
+					</div>
+					<input type="hidden" name="customers" value="<?php echo $header_penjualan->id_customer;?>">
+					<!-- <div class="col-sm-6 form-group" style="margin-right: -1px;">
+						<label>Dibuat Oleh</label>
+						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,0,'','.');?>" disabled>
+						<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
+					</div> -->
+					<!-- <div class="col-sm-6 form-group">
 						<label>Customer</label>
 						<select name="id_customer" class="select2" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required
 						disabled>
@@ -166,7 +190,7 @@
 							}
 						?>
 						</select>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="row">
@@ -287,6 +311,7 @@
 					            	<input type="hidden" class="form-control satuan" name="id_satuan" value="" />
 					            	<input type="hidden" class="form-control harga" name="harga_satuan" value="" />
 					            	<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
+					            	<input type="hidden" name="customers" value="<?php echo $header_penjualan->id_customer;?>">
 					            	<input type="hidden" id="total_harga" placeholder="Total Harga" class="form-control" name="total_harga" value="" required />
 					            	<div class="col-sm-12 form-group">
 										<label>Nama Item</label>
@@ -364,6 +389,7 @@
 					            		<input type="hidden" name="total_harga" value="" />
 					            		<input type="hidden" class="form-control satuan" name="id_satuan" value="" />
 					            		<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
+					            		<input type="hidden" name="customers" value="<?php echo $header_penjualan->id_customer;?>">
 						            	<div class="col-sm-12 form-group">
 											<label>Nama Item</label>
 											<select name="id_item" class="select2" id="item" data-placeholder="Click to Choose..." style="width: 100%" required>
@@ -407,7 +433,7 @@
 						      	</div>
 						      	<div class="modal-footer">
 						        	<button type="submit" class="btn btn-primary">Simpan</button>
-						            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+						            <button type="button" class="btn btn-danger closes" data-dismiss="modal">Batal</button>
 						      	</div>
 					        </form>
 					    </div>

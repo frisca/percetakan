@@ -184,7 +184,7 @@ class Pengeluaran extends CI_Controller {
 				'keterangan_delete' => $this->input->post('keterangan_delete')
 			);
 
-			$res_pengeluaran = $this->all_model->updateData("pengeluaran", $condition, $data);
+			$res_pengeluaran = $this->all_model->updateData("pengeluaran", $con, $data);
 			if($res_pengeluaran == true){
 				$this->session->set_flashdata('success', 'Data item berhasil dihapus');
 				redirect(base_url() . 'pengeluaran/detail/' . $pengeluaran->id_header_pengeluaran);

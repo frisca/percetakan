@@ -140,6 +140,24 @@
 							?>
 						</select>
 					</div>
+					<div class="col-sm-6 form-group" style="margin-left: 1px;">
+						<label>Customer</label>
+						<select name="id_customer" class="select2 customers" data-placeholder="Click to Choose..."  style="width: 100%" disabled>
+						<?php
+							foreach($customer as $key=>$value){
+								if($value->id_customer == $header_penjualan->id_customer){
+						?>
+								<option value="<?php echo $value->id_customer;?>" selected><?php echo $value->first_name . ' ' . $value->last_name ;?></option>
+						<?php
+								}else{
+						?>
+								<option value="<?php echo $value->id_customer;?>"><?php echo $value->first_name . ' ' . $value->last_name ;?></option>
+						<?php
+								}
+							}
+						?>
+						</select>
+					</div>
 					<!-- </div> -->
 				</div>
 

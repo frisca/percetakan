@@ -78,10 +78,12 @@ class Penjualan extends CI_Controller {
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 		}else{ 
+
 			$str = explode(',', $this->input->post('harga_satuan'));
 			$harga = str_replace(".", "", $str[0]);
 
 			if(!$_FILES['line_item']['name']){
+
 				if((int)$this->input->post('metode_pembayaran') == 0){
 					$status_pembayaran = 0;
 				}else if((int)$this->input->post('metode_pembayaran') == 1){
@@ -120,7 +122,8 @@ class Penjualan extends CI_Controller {
 						'status_pembayaran' => $status_pembayaran,
 						'updatedBy' => $this->session->userdata('id'),
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
-						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-')))
+						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
+						'id_customer' => $this->input->post('customers')
 					);
 					// var_dump($dataHeaderPenjualan);exit();
 					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -187,7 +190,8 @@ class Penjualan extends CI_Controller {
 						'status_pembayaran' => $status_pembayaran,
 						'updatedBy' => $this->session->userdata('id'),
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
-						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-')))
+						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
+						'id_customer' => $this->input->post('customers')
 					);
 
 					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -235,6 +239,12 @@ class Penjualan extends CI_Controller {
 			$status_pembayaran = 2;
 		}
 
+		$con = array('id_user' => $this->session->userdata('id'));
+		$user = $this->all_model->getDataByCondition('user', $con)->row();
+
+		// $cons = array('id_location' => $user->id_location);
+		// $location = $this->all_model->getDataByCondition('location', $cons)->row();
+
 		$datas = array(
 			'metode_pembayaran' => $this->input->post('metode_pembayaran'),
 			'discount' => $this->input->post('discount'),
@@ -244,7 +254,8 @@ class Penjualan extends CI_Controller {
 			'updatedBy' => $this->session->userdata('id'),
 			'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 			'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-			'nomor_penjualan' => 'INV/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', $id)
+			'nomor_penjualan' => sprintf('%02d', $user->id_location) . '/INV/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', $id),
+			'id_customer' => $this->input->post('customers')
 		);
 		$result = $this->all_model->updateData('header_penjualan', $condition, $datas);
 		if($result == false){
@@ -303,7 +314,8 @@ class Penjualan extends CI_Controller {
 						'status_pembayaran' => $status_pembayaran,
 						'updatedBy' => $this->session->userdata('id'),
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
-						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-')))
+						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
+						'id_customer' => $this->input->post('customers')
 					);
 				}else{
 					$dataHeaderPenjualan = array(
@@ -315,7 +327,8 @@ class Penjualan extends CI_Controller {
 						'updatedBy' => $this->session->userdata('id'),
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-						'sisa_pembayaran' => $grandTotal - $res->dp1
+						'sisa_pembayaran' => $grandTotal - $res->dp1,
+						'id_customer' => $this->input->post('customers')
 					);
 				}
 			}
@@ -471,6 +484,7 @@ class Penjualan extends CI_Controller {
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
 		$this->load->view('penjualan/view_penjualan', $data);
 	}
 
@@ -552,8 +566,10 @@ class Penjualan extends CI_Controller {
 		$res = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
 
 		$total = $res->grandtotal - $penjualan->total_harga;
+		$grandTotal = $total - $res->diskon;
 		$dataHeaderPenjualan = array(
-			'total' => $total
+			'total' => $total,
+			'grandtotal' => $grandTotal
 		);
 
 		$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);

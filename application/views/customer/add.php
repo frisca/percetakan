@@ -142,7 +142,7 @@
 									</button>
 
 									&nbsp; &nbsp; &nbsp;
-									<a href="<?php echo base_url('location/index');?>">
+									<a href="<?php echo base_url('customer/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo"></i>
 											Back

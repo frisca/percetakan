@@ -69,4 +69,9 @@ class All_model extends CI_Model {
 		$query = "SELECT i.is_design from penjualan p left join item i on i.id_item = p.id_item left join satuan s on s.id_satuan = p.id_satuan where p.id_penjualan = " . $id;
 		return $this->db->query($query);
 	}
+
+	public function getFirstAndLast($first, $last){
+		$query = "SELECT c.* from customer c where c.first_name = '" . $first . "' and c.last_name = '" . $last ."'";
+		return $this->db->query($query);
+	}
 }

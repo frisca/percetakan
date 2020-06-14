@@ -37,21 +37,35 @@ class Customer extends CI_Controller {
 		if($this->form_validation->run() == false){
 			$this->load->view('customer/add');
 		}else{
-            $result = $this->all_model->insertData("customer", $data);
-            if($result  == true){
-                $this->session->set_flashdata('success', 'Data customer berhasil disimpan');
-                redirect(base_url() . 'customer/index');
+            // $result = $this->all_model->insertData("customer", $data);
+            // if($result  == true){
+            //     $this->session->set_flashdata('success', 'Data customer berhasil disimpan');
+            //     redirect(base_url() . 'customer/index');
+            // }else{
+            //     $this->session->set_flashdata('error', 'Data customer tidak berhasil disimpan');
+            //     redirect(base_url() . 'customer/add');
+            // }
+            $cek = $this->all_model->getFirstAndLast($this->input->post('first_name'), $this->input->post('last_name'))->row();
+            if(empty($cek)){
+            	$result = $this->all_model->insertData("customer", $data);
+	            if($result  == true){
+	                $this->session->set_flashdata('success', 'Data customer berhasil disimpan');
+	                redirect(base_url() . 'customer/index');
+	            }else{
+	                $this->session->set_flashdata('error', 'Data customer tidak berhasil disimpan');
+	                redirect(base_url() . 'customer/add');
+	            }
             }else{
-                $this->session->set_flashdata('error', 'Data customer tidak berhasil disimpan');
-                redirect(base_url() . 'customer/add');
+            	$this->session->set_flashdata('error', 'First and last name sudah tersedia');
+            	redirect(base_url() . 'customer/add');
             }
 		}
 	}
 
 	public function view($id)
 	{
-		$condition = array('id_location' => $id);
-		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->row();
+		$condition = array('id_customer' => $id);
+		$data['customer'] = $this->all_model->getDataByCondition('customer', $condition)->row();
 		$this->load->view('location/view', $data);
 	}
 
@@ -91,27 +105,37 @@ class Customer extends CI_Controller {
 			// 	$this->session->set_flashdata('error', 'Nama sudah tersedia');
 			// 	redirect(base_url() . 'location/edit/' . $this->input->post('id'));
             // }
-            $condition = array("id_customer" => $this->input->post('id'));
-            $data = array(
-                'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'),
-                'address_1' => $this->input->post('address_1'),
-                'address_2' => $this->input->post('address_2'),
-                'phone_1' => $this->input->post('phone_1'),
-                'phone_2' => $this->input->post('phone_2'),
-                'status' => $this->input->post('status'),
-                'email' => $this->input->post('email'),
-                'updated_date' => date('Y-m-d'),
-                'updated_by' => $this->session->userdata('id')
-            );
-            $result = $this->all_model->updateData("customer", $condition, $data);
-            if($result  == true){
-                $this->session->set_flashdata('success', 'Data customer berhasil diubah');
-                redirect(base_url() . 'customer/index');
-            }else{
-                $this->session->set_flashdata('error', 'Data customer tidak berhasil diubah');
-                redirect(base_url() . 'customer/edit/' . $this->input->post('id'));
-            }
+            $cek = $this->all_model->getFirstAndLast($this->input->post('first_name'), $this->input->post('last_name'))->row();
+
+            $condition = array('id_customer' => $this->input->post('id'));
+			$customer = $this->all_model->getDataByCondition('customer', $condition)->row();
+
+			if($customer->first_name == $this->input->post('first_name') && $customer->last_name == $this->input->post('last_name') && $customer->id_customer == $this->input->post('id') || empty($cek)){
+	            $condition = array("id_customer" => $this->input->post('id'));
+	            $data = array(
+	                'first_name' => $this->input->post('first_name'),
+	                'last_name' => $this->input->post('last_name'),
+	                'address_1' => $this->input->post('address_1'),
+	                'address_2' => $this->input->post('address_2'),
+	                'phone_1' => $this->input->post('phone_1'),
+	                'phone_2' => $this->input->post('phone_2'),
+	                'status' => $this->input->post('status'),
+	                'email' => $this->input->post('email'),
+	                'updated_date' => date('Y-m-d'),
+	                'updated_by' => $this->session->userdata('id')
+	            );
+	            $result = $this->all_model->updateData("customer", $condition, $data);
+	            if($result  == true){
+	                $this->session->set_flashdata('success', 'Data customer berhasil diubah');
+	                redirect(base_url() . 'customer/index');
+	            }else{
+	                $this->session->set_flashdata('error', 'Data customer tidak berhasil diubah');
+	                redirect(base_url() . 'customer/edit/' . $this->input->post('id'));
+	            }
+	        }else{
+	        	$this->session->set_flashdata('error', 'First and last name sudah tersedia');
+            	redirect(base_url() . 'customer/edit/' . $this->input->post('id'));
+	        }
 		}
 	}
 
