@@ -74,4 +74,9 @@ class All_model extends CI_Model {
 		$query = "SELECT c.* from customer c where c.first_name = '" . $first . "' and c.last_name = '" . $last ."'";
 		return $this->db->query($query);
 	}
+
+	public function getReportPenjualan(){
+		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0";
+		return $this->db->query($query);
+	}
 }

@@ -108,17 +108,17 @@
 
 		<ul class="submenu">
 			<li class="">
-				<a href="<?php echo base_url('admin/index');?>">
+				<a href="<?php echo base_url('report_penjualan/index');?>">
 					<i class="menu-icon fa fa-caret-right"></i>
-					In
+					Penjualan
 				</a>
 
 				<b class="arrow"></b>
 			</li>
 			<li class="">
-				<a href="<?php echo base_url('operator/index');?>">
+				<a href="<?php echo base_url('report_pengeluaran/index');?>">
 					<i class="menu-icon fa fa-caret-right"></i>
-					Out
+					Pengeluaran
 				</a>
 
 				<b class="arrow"></b>
