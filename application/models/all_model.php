@@ -75,8 +75,43 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getReportPenjualan(){
-		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0";
+	public function getReportPenjualan($from, $to){
+		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
+		and (p.tgl_penjualan between '".$from."' and '".$to."')";
+		return $this->db->query($query);
+	}
+
+	public function getReportPengeluaranByCondition($from_date, $to, $status){
+		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 and p.status = $status  and p.tgl_pengeluaran between '".$from_date."' and '".$to."' ";
+		return $this->db->query($query);
+	}
+
+	public function getReportPenjualanByCondition($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
+		// var_dump($status_invoice);exit();
+		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
+				and (c.id_customer = $customer or p.nomor_penjualan = '".$no_invoice."'
+				or p.status = $status_invoice and p.status_pembayaran = $status_pembayaran) and p.tgl_penjualan between '".$from_date."' and '".$to."' ";
+		return $this->db->query($query);
+	}
+
+	public function getReportPenjualanByDate($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
+		// var_dump($from_date);exit();
+		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
+				and p.tgl_penjualan between '".$from_date."' and '".$to."' ";
+		return $this->db->query($query);
+	}
+
+	public function getSearchNama($nama){
+		// $this->db->like('nama', $nama , 'both');
+        // $this->db->order_by('nama_project', 'ASC');
+		// return $this->db->get($table);
+		$query = "SELECT c.* from customer c where first_name = '".$nama."' or last_name = '".$nama."' 
+		order by first_name or last_name asc";
+		return $this->db->query($query);
+	}
+
+	public function getReportPengeluaranDate($from, $to){
+		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 and p.tgl_pengeluaran between '".$from."' and '".$to."'";
 		return $this->db->query($query);
 	}
 }

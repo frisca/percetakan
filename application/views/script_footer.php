@@ -419,7 +419,42 @@
 	      	var id = $(this).attr('deleteid'); //get the attribute value
 	      	$('input[name="id"]').val(id);
             $('#delete_modal').modal({backdrop: 'static', keyboard: true, show: true});
-	    });
+		});
+		
+		$('#from_date').datepicker({dateFormat: 'dd-mm-yy',
+		    onSelect: function(dateText, inst) {
+		      $('input[name="from_date"]').val(dateText);
+		    }
+		});
+
+		$('#to_date').datepicker({dateFormat: 'dd-mm-yy',
+		    onSelect: function(dateText, inst) {
+		      $('input[name="to_date"]').val(dateText);
+		    }
+		});
+
+		$('.customer').autocomplete({
+			source: "<?php echo site_url('report_penjualan/get_autocomplete?');?>",
+			// select: function(event, ui) {
+			// 	// console.log("ui: " + ui.item.label);
+			// 	$('input[name="customers"]').val(ui.item.label);
+			// }
+			focus: function (event, ui) {
+				event.preventDefault();
+				$(".customer").val(ui.item.label);
+			},
+			select: function (event, ui) {
+				event.preventDefault();
+				$("input[name='customer']").val(ui.item.value);
+				$(".customer").val(ui.item.label);
+			},
+			close: function(el){
+				$("input[name='customer']").attr('value', '');
+				$(".customer").val('');
+			}
+		});
+
+		
 		</script>
 	</body>
 </html>
