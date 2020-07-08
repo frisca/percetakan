@@ -69,12 +69,12 @@
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 								<!-- <input type="text" placeholder="Customer" class="form-control customer" name="customer" value="<?php if(!empty($customer)){ echo $customer;}?>" id="customer"/> -->
 								<input type="text" placeholder="Customer" class="form-control customer" name="customers" value="<? if(!empty($customer)){ echo $customer->first_name . ' ' . $customer->last_name;}?>">
-								<input type="hidden" class="form-control customers" name="customer" value="<? if(!empty($customer)){ echo $customer->id_customer;}?>">
+								<input type="hidden" class="form-control customers" name="customer" value="<? if(!empty($customer)){ echo $customer->id_customer;}?>" id="customer">
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 								<!-- <input type="text" placeholder="Status Invoice" class="form-control" name="status_invoice" value=""/> -->
-								<select name="invoice" class="form-control" data-placeholder="Pilih status invoice ..." id="invoice" style="width: 100%">
+								<select name="invoice" class="form-control" data-placeholder="Pilih status invoice ..." id="status" style="width: 100%">
 									<?php if($status_invoice == "0"){?>
 										<option value="-99">Pilih Status Invoice</option>
 										<option value="0" selected>Belum checkout</option>
@@ -116,6 +116,9 @@
 							<div class="col-xs-1" style="margin-top:10px;margin-bottom:10px;">
 								<button type="submit" class="search btn btn-sm btn-success" style="margin-bottom: 10px;">
 								Cari
+								</button>
+								<button type="button" class="csv_penjualan btn btn-sm btn-info" style="margin-bottom: 10px;">
+								Print
 								</button>
 							</div>
 						</form>

@@ -90,6 +90,9 @@
 									<button type="submit" class="search btn btn-sm btn-success" style="margin-bottom: 10px;">
 									Cari
 									</button>
+									<button type="button" class="csv_pengeluaran btn btn-sm btn-info" style="margin-bottom: 10px;">
+									Print
+									</button>
 								</div>
 							</form>
 							<div class="col-xs-12">

@@ -454,6 +454,49 @@
 			}
 		});
 
+		$('.csv_penjualan').on('click',function(){
+			var from_date = $('#from_date').val();
+			var to_date = $('#to_date').val();
+			var no_invoice = $('#no_invoice').val();
+			var customer = $('#customer').val();
+			var status = $('#status').val();
+			var status_pembayaran = $('#status_pembayaran').val();
+
+			// $.ajax({
+            //   url : "<?php echo base_url();?>report_penjualan/export",
+            //   data:{from_date : from_date, to_date: to_date, no_invoice: no_invoice, customer: customer, status: status, 
+			//   status_pembayaran: status_pembayaran},
+            //   method:'POST',
+            //   dataType:'json',
+            //   success:function(response) {
+			// 	window.location = "<?php echo base_url('report_penjualan/export');?>" + "?from=" + from_date;
+            //   }
+	    	// });
+			// console.log('status : ' + status + 'status pembayaran : ' + status_pembayaran);
+			window.location = "<?php echo base_url('report_penjualan/export');?>" + "?from_date=" + from_date + "&to_date=" + to_date + 
+			"&no_invoice=" + no_invoice + "&customer=" + customer + "&invoice=" + status + "&status_pembayaran=" + status_pembayaran;
+		});
+
+		$('.csv_pengeluaran').on('click',function(){
+			var from_date = $('#from_date').val();
+			var to_date = $('#to_date').val();
+			var status = $('#status').val();
+
+			// $.ajax({
+            //   url : "<?php echo base_url();?>report_penjualan/export",
+            //   data:{from_date : from_date, to_date: to_date, no_invoice: no_invoice, customer: customer, status: status, 
+			//   status_pembayaran: status_pembayaran},
+            //   method:'POST',
+            //   dataType:'json',
+            //   success:function(response) {
+			// 	window.location = "<?php echo base_url('report_penjualan/export');?>" + "?from=" + from_date;
+            //   }
+	    	// });
+			// console.log('status : ' + status + 'status pembayaran : ' + status_pembayaran);
+			window.location = "<?php echo base_url('report_pengeluaran/export');?>" + "?from_date=" + from_date + "&to_date=" + to_date + 
+			"&status=" + status;
+		});
+
 		
 		</script>
 	</body>
