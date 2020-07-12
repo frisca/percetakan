@@ -119,9 +119,11 @@
 												<?php 
 														}else if($value->dp1 != 0){
 												?>
-													<button type="button" class="btn btn-sm btn-success"  style="margin-bottom: 10px;">
+													<a href="<?php echo base_url('penjualan/prints');?>">
+													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
 														Print
 													</button>
+													</a>
 													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
 												<?php
 														}
@@ -139,9 +141,11 @@
 												<?php 
 														}else if($value->dp1 != 0 && $value->dp2 != 0){
 												?>
+													<a href="<?php echo base_url('penjualan/prints');?>">
 													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
 														Print
 													</button>
+													</a>
 													<p>Total : <?php if(!empty($value->dp2)){ echo number_format($value->dp2, 0, '', '.'); } ?></p>
 												<?php
 														}
@@ -152,9 +156,11 @@
 												<?php 
 													if($value->metode_pembayaran == 1){
 												?>
+												<a href="<?php echo base_url('penjualan/prints');?>">
 												<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
 													Print
 												</button>
+												</a>
 												<?php
 													} 
 												?>
