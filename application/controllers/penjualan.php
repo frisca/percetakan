@@ -877,7 +877,7 @@ class Penjualan extends CI_Controller {
 				<td width="100" border="1">DP</td>
 				<td width="130" colspan="1" border="1">500.000</td>
 			</tr>
-			<tr>
+			<tr> 
 				<td width="60" border="0" align="left"></td>
 				<td width="150"></td>
 				<td width="100">(Stephen)</td>
