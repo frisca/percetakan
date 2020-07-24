@@ -30,7 +30,27 @@ class Report_Penjualan extends CI_Controller {
 		$this->input->post('status_pembayaran')== -99){
 			$data['report'] = $this->all_model->getReportPenjualanByDate($from, $to, $customer, $no_invoice, (int)$invoice, (int)$status_pembayaran)->result();
 		}else{
-			$data['report'] = $this->all_model->getReportPenjualanByCondition($from, $to, $customer, $no_invoice, (int)$invoice, (int)$status_pembayaran)->result();
+			if ($this->input->post('invoice') == -99){
+				$s_invoice = "p.status >= 0 ";
+			}else{
+				$s_invoice = "p.status = " . $invoice . " " ; 
+			}
+
+			if ($this->input->post('status_pembayaran') == -99){
+				$s_pembayaran = "p.status_pembayaran >= 0";
+			}else{
+				$s_pembayaran = "p.status_pembayaran = " . $status_pembayaran; 
+			}
+
+			if ($customer == 0){
+				$c_customer = "p.id_customer >= 0 ";
+			}else{
+				$c_customer = "p.id_customer = " . $customer . " "; 
+			}
+
+			$data['report'] = $this->all_model->getReportPenjualanByCondition($from, $to, $c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
+			// var_dump($c_customer . " and " . $s_invoice . "and " . $s_pembayaran);exit();
+			// var_dump($data['report']);exit();
 		}
 		// var_dump($data['report']);exit();
 		$data['user'] = $this->all_model->getAllData('user')->result();
@@ -147,7 +167,7 @@ class Report_Penjualan extends CI_Controller {
 				$stat_payment = 'Lunas';
 			}
 
-			if($list->status == 1){
+			if((int)$list->status_invoice == 1){
 				$stat_invoice = 'Sudah checkout';
 			}else{
 				$stat_invoice = 'Belum checkout';

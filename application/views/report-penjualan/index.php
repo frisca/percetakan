@@ -199,7 +199,7 @@
 										</td>
 										<td>
 											<?php 
-												if($value->status == 1){
+												if((int)$value->status_invoice == 1){
 													echo 'Sudah checkout';
 												}else{
 													echo 'Belum checkout';

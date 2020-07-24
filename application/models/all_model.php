@@ -88,15 +88,16 @@ class All_model extends CI_Model {
 
 	public function getReportPenjualanByCondition($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($status_invoice);exit();
-		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
-				and (c.id_customer = $customer or p.nomor_penjualan = '".$no_invoice."'
-				or p.status = $status_invoice and p.status_pembayaran = $status_pembayaran) and p.tgl_penjualan between '".$from_date."' and '".$to."' ";
+		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
+				and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
+				and ".$status_invoice." and ".$status_pembayaran.") and p.tgl_penjualan between '".$from_date."' and '".$to."' ";
+				// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 
 	public function getReportPenjualanByDate($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($from_date);exit();
-		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
+		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
 				and p.tgl_penjualan between '".$from_date."' and '".$to."' ";
 		return $this->db->query($query);
 	}
