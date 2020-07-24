@@ -113,7 +113,7 @@
 								</select>
 							</div>
 
-							<div class="col-xs-1" style="margin-top:10px;margin-bottom:10px;">
+							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 								<button type="submit" class="search btn btn-sm btn-success" style="margin-bottom: 10px;">
 								Cari
 								</button>

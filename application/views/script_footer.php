@@ -448,10 +448,10 @@
 				$("input[name='customer']").val(ui.item.value);
 				$(".customer").val(ui.item.label);
 			},
-			close: function(el){
-				$("input[name='customer']").attr('value', '');
-				$(".customer").val('');
-			}
+			// close: function(el){
+			// 	$("input[name='customer']").attr('value', '');
+			// 	$(".customer").val('');
+			// }
 		});
 
 		$('.csv_penjualan').on('click',function(){
