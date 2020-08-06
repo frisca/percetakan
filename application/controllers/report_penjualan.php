@@ -26,10 +26,24 @@ class Report_Penjualan extends CI_Controller {
 		$invoice = ($this->input->post('invoice') == -99) ? 0 : $this->input->post('invoice');
 		$status_pembayaran = ((int)$this->input->post('status_pembayaran') == -99) ? 0 : $this->input->post('status_pembayaran');
 		// var_dump($invoice);exit();
-		if($from != '' && $to != '' && $no_invoice == '' && $customer == 0 && $this->input->post('invoice') == -99 && 
-		$this->input->post('status_pembayaran')== -99){
+		
+		if($from != '1970-01-01' && $to != '1970-01-01' && $no_invoice == '' && $customer == 0 && $this->input->post('invoice') == -99 && 
+			$this->input->post('status_pembayaran')== -99){
+			$data['from'] = $from;
+			$data['to'] = $to;
 			$data['report'] = $this->all_model->getReportPenjualanByDate($from, $to, $customer, $no_invoice, (int)$invoice, (int)$status_pembayaran)->result();
 		}else{
+			// var_dump($from);exit();
+			if($from == '1970-01-01' || $to == '1970-01-01'){
+				$froms = '';
+				$from = '';
+				$to = '';
+			}
+
+			if($from != '1970-01-01' || $to != '1970-01-01'){
+				$froms = " and p.tgl_penjualan between '".$from."' and '".$to."' ";
+			}
+
 			if ($this->input->post('invoice') == -99){
 				$s_invoice = "p.status >= 0 ";
 			}else{
@@ -48,14 +62,14 @@ class Report_Penjualan extends CI_Controller {
 				$c_customer = "p.id_customer = " . $customer . " "; 
 			}
 
-			$data['report'] = $this->all_model->getReportPenjualanByCondition($from, $to, $c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
+			$data['from'] = $from;
+			$data['to'] = $to;
+			$data['report'] = $this->all_model->getReportPenjualanByCondition($froms, $c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
 			// var_dump($c_customer . " and " . $s_invoice . "and " . $s_pembayaran);exit();
 			// var_dump($data['report']);exit();
 		}
 		// var_dump($data['report']);exit();
 		$data['user'] = $this->all_model->getAllData('user')->result();
-		$data['from'] = $from;
-		$data['to'] = $to;
 		$data['no_invoice'] = $no_invoice;
 		$data['status_pembayaran'] = $status_pembayaran;
 		$data['status_invoice'] = $this->input->post('invoice');

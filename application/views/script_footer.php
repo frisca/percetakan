@@ -396,6 +396,8 @@
 		$('#hrga_satuan').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
 		$('#dp1').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
 
+		$('.harga').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+
 		$('.edit_pengeluaran').click(function(){
 	      	var id = $(this).attr('pengeluaranid'); //get the attribute value
 	      	$.ajax({

@@ -892,453 +892,435 @@ class Penjualan extends CI_Controller {
     //     $pdf->Output('test' . '.pdf','I');
 	// }
 
+	// public function prints(){
+	// 	$pdf = new Pdf("P", "mm", array(215,144), true, 'UTF-8', false);
+	// 	$pdf->setPrintHeader(false);
+
+	// 	$pdf->SetMargins(3, 2, 3, true);
+	// 	$pdf->SetFont('helvetica', '', 8);
+		
+	// 	$pdf->AddPage('P', array(215, 144), false, false);
+	// 	$pdf->SetMargins(3, 2, 3, true);
+	// 	$pdf->SetFont('helvetica', '', 8);
+
+	// 	$tbl = '
+	// 	<table cellspacing="0" cellpadding="2" border="0">
+	// 		<tr>
+	// 			<td rowspan="2" style="font-weight:bold;font-size:14px;" width="240" >
+	// 				TRISINDO PRINTING<br />
+	// 				<span style="font-size:8px;font-weight:none;">Setting, Percetakan, Sablon, Dll</span>
+	// 			</td>
+	// 			<td colspan="3" width="152"></td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td colspan="3" style="font-size:11px;" border="1">No. Faktur : INV/20/05/0001</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td>Jl. Kapuk Raya Rt. 011/005 No.1, (Sebelah Gg. Langgar II)</td>
+	// 			<td>Tgl. Faktur</td>
+	// 			<td width="10">:</td>
+	// 			<td width="91.5">01 Mei 2020</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td>Kapuk - Jakarta Barat</td>
+	// 			<td>Kepada Yth.</td>
+	// 			<td width="10">:</td>
+	// 			<td width="91.5">Bapak Adrian sdfsfsf</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td>E. trisindoprinting2@gmail.com</td>
+	// 			<td></td>
+	// 			<td width="10"></td>
+	// 			<td width="91.5">PT. ABCD - Kapuk</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td>T. 0812 9955 9965 / 0812 9395 9695 / 0877 8899 7599</td>
+	// 			<td></td>
+	// 			<td width="10"></td>
+	// 			<td width="91.5">Telp. 0812 1212 1212</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td>Instagram : @trisindoprinting</td>
+	// 			<td></td>
+	// 			<td width="10"></td>
+	// 			<td width="91.5"></td>
+	// 		</tr>
+	// 	</table>';
+
+	// 	$pdf->writeHTML($tbl, true, false, false, false, '');
+
+	// 	// -----------------------------------------------------------------------------
+
+	// 	$tbl = '
+	// 	<table border="0" nobr="true" align="center" cellspacing="0" cellpadding="5" style="font-size:9px;
+	// 	padding:10px 10px 10px 10px;">
+	// 		<tr>
+	// 			<td width="30" align="center" border="1">No.</td>
+	// 			<td width="170" align="center" border="1">Nama Barang</td>
+	// 			<td width="65" align="center" colspan="2" border="1">Qty</td>
+	// 			<td width="65" align="center" border="1">Harga Stn</td>
+	// 			<td width="62" align="center" border="1">Jumlah</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">1</td>
+	// 			<td align="left" border="1">
+	// 				Nota 3 Rangkap, 2 Warna, Cacah, Nomorator <br>
+	// 				PT. ABCD | NCR Putih-Merah-Kuning Cetak Warna Merah-Biru | Nomor : 00001
+	// 			</td>
+	// 			<td border="1">1.00</td>
+	// 			<td border="1">Rim</td>
+	// 			<td align="right" border="1">250.000</td>
+	// 			<td align="right" border="1">250.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">2</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">3</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">4</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">5</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">6</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">7</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">8</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">9</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">10</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td border="1">11</td>
+	// 			<td align="left" border="1">
+	// 				Spanduk Flx Biasa <br>
+	// 				PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+	// 			</td>
+	// 			<td border="1">3.00</td>
+	// 			<td border="1">M2</td>
+	// 			<td align="right" border="1">35.000</td>
+	// 			<td align="right" border="1">105.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td width="97" border="0" align="left">Bank Acc : </td>
+	// 			<td width="55">Tanda Terima</td>
+	// 			<td width="113">Hormat Kami,</td>
+	// 			<td width="65" border="1">Total</td>
+	// 			<td width="62" colspan="1" border="1">500.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td width="97" border="0" align="left">BCA</td>
+	// 			<td width="55"></td>
+	// 			<td width="113"></td>
+	// 			<td width="65" border="1">Disc.</td>
+	// 			<td width="62" colspan="1" border="1">500.000</td>
+	// 		</tr>
+	// 		<tr>
+	// 			<td width="97" border="0" align="left">758 0268 611</td>
+	// 			<td width="55"></td>
+	// 			<td width="113"></td>
+	// 			<td width="65" border="1">DP</td>
+	// 			<td width="62" colspan="1" border="1">500.000</td>
+	// 		</tr>
+	// 		<tr> 
+	// 			<td width="97" border="0" align="left"></td>
+	// 			<td width="55"></td>
+	// 			<td width="113">(Stephen)</td>
+	// 			<td width="65" border="1">Total</td>
+	// 			<td width="62" colspan="1" border="1">500.000</td>
+	// 		</tr>
+	// 	</table>';
+
+	// 	$pdf->writeHTML($tbl, true, false, false, false, '');
+	// 	$pdf->Output('contoh1.pdf', 'I');
+	// }
+
 	public function prints(){
-		$pdf = new Pdf("P", "mm", array(215,144), true, 'UTF-8', false);
-		$pdf->setPrintHeader(false);
+		$this->load->library('pdf');
 
-		$pdf->SetMargins(3, 2, 3, true);
+		$descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata";
+		// $descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau kalimat tertentu saja di mana kalimat tersebut harus kamu blok atau kamu seleksi terlebih dahulu. Jika tidak ada yang dibloksasaasasas";
+		$nama = "Bapak Hendra Kusuma Saassdsdadasqwqqsdsdssdas";
+		
+		// $this->load->view('laporan_pdf');
+		// set header and footer fonts
+		$pdf = new PDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+		// set header and footer fonts
+		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+		// set default monospaced font
+		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+		// set margins
+		if((strlen($descrip) <= 120 && strlen($nama) <= 36) || (strlen($descrip) <= 120 && strlen($nama) > 36)){
+			$pdf->SetMargins(PDF_MARGIN_LEFT, 65, PDF_MARGIN_RIGHT);
+		}
+
+		if(strlen($descrip) > 120 && strlen($nama) <= 36){
+			$pdf->SetMargins(PDF_MARGIN_LEFT, 73, PDF_MARGIN_RIGHT);
+		}
+
+		if(strlen($descrip) > 120 && strlen($nama) > 36){
+			$pdf->SetMargins(PDF_MARGIN_LEFT, 76, PDF_MARGIN_RIGHT);
+		}
+
+		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		$pdf->SetFooterMargin(10);
+
+		// set auto page breaks
+		$pdf->SetAutoPageBreak(TRUE, 45);
+
+		// set font
+		$pdf->SetFont('helvetica', 'B', 20);
+
+		// add a page
+		$pdf->AddPage();
+
 		$pdf->SetFont('helvetica', '', 8);
-		
-		$pdf->AddPage('P', array(215, 144), false, false);
-
-
-		// $pdf->SetFont('','',14);
-		// $pdf->setXY(2,2);
-		// $pdf->Cell(2,0,'TRISINDO PRINTING', 0, '0', 'L');
-		// $pdf->SetFont('','',7);
-		// $pdf->setXY(2,8);
-		// $pdf->Cell(2,0,'Setting, Percetakan, Sablon, Dll', 0, '0', 'L');
-		// $pdf->setXY(2,13);
-		// $pdf->Cell(2,0,'Jl. Kapuk Raya Rt. 011/005 No.1, (Sebelah Gg. Langgar II)', 0, '0', 'L');
-		// $pdf->setXY(2,17);
-		// $pdf->Cell(2,0,'Kapuk - Jakarta Barat', 0, '0', 'L');
-		// $pdf->setXY(2,21);
-		// $pdf->Cell(2,0,'E. trisindoprinting2@gmail.com', 0, '0', 'L');
-		// $pdf->setXY(2,25);
-		// $pdf->Cell(2,0,'T. 0812 9955 9965 / 0812 9395 9695 / 0877 8899 7599', 0, '0', 'L');
-		// $pdf->setXY(2,29);
-		// $pdf->Cell(2,0,'Instagram : @trisindoprinting', 0, '0', 'L');
-
-		// $pdf->SetFont('','B', 10);
-		// $pdf->setXY(83,8);
-		// $pdf->Cell(60,0,'No. Faktur : INV/20/05/0001', 0, '0', 'R');
-		// $pdf->SetFont('','',8);
-		// $pdf->setXY(83,15);
-		// $pdf->Cell(60,0,'Tgl. Faktur : 01 Mei 2020', 0, '0', 'R');
-		// $pdf->setXY(83,20);
-		// $pdf->Cell(60,0,'Kepada Yth. : Bapak Adrian sdfsfsf', 0, '0', 'R');
-		// $pdf->setXY(83,25);
-		// $pdf->Cell(60,0,'PT. ABCD - Kapuk', 0, '0', 'R');
-		// $pdf->setXY(83,30);
-		// $pdf->Cell(60,0,'Telp. 0812 1212 1212', 0, '0', 'R');
-
-		// $pdf->setXY(3,2);
-		// $tbl1 = '
-		// <table border="0" nobr="true" align="left" cellspacing="0" cellpadding="5">
-		// 	<tr>
-		// 		<td width="200" align="left" border="0" style="font-size:14px;font-weight:bold;">
-		// 			TRISINDO PRINTING <br>
-		// 			<span style="font-size:7px;font-weight:none;">Setting, Percetakan, Sablon, Dll</span>
-		// 		</td>
-		// 		<td width="192" align="left" border="0">Nama Barang</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td width="200" align="left" border="0" style="font-size:14px;font-weight:bold;">
-		// 			TRISINDO PRINTING <br>
-		// 			<span style="font-size:7px;font-weight:none;">Setting, Percetakan, Sablon, Dll</span>
-		// 		</td>
-		// 		<td width="192" align="left" border="0">Nama Barang</td>
-		// 	</tr>
-		// </table>';
-
-		// $pdf->writeHTML($tbl1, true, false, false, false, '');
-
-		// // $pdf->SetMargins(3, PDF_MARGIN_TOP, 15);
-		// // $pdf->setXY(3,15);
-		// // $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-		
-		// $pdf->SetMargins(3, 2, PDF_MARGIN_RIGHT);
-
-		// // set auto page breaks
-		// $pdf->SetAutoPageBreak(TRUE, 0);
-
-		
-		// $tbl = '
-		// <table border="0" nobr="true" align="center" cellspacing="0" cellpadding="5" style="font-size:9px;
-		// padding:10px 10px 10px 10px;">
-		// 	<tr>
-		// 		<td width="30" align="center" border="1">No.</td>
-		// 		<td width="170" align="center" border="1">Nama Barang</td>
-		// 		<td width="65" align="center" colspan="2" border="1">Qty</td>
-		// 		<td width="65" align="center" border="1">Harga Stn</td>
-		// 		<td width="62" align="center" border="1">Jumlah</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">1</td>
-		// 		<td align="left" border="1">
-		// 			Nota 3 Rangkap, 2 Warna, Cacah, Nomorator <br>
-		// 			PT. ABCD | NCR Putih-Merah-Kuning Cetak Warna Merah-Biru | Nomor : 00001
-		// 		</td>
-		// 		<td border="1">1.00</td>
-		// 		<td border="1">Rim</td>
-		// 		<td align="right" border="1">250.000</td>
-		// 		<td align="right" border="1">250.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">2</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">3</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">4</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">5</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">6</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">7</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">8</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">9</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">10</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td border="1">11</td>
-		// 		<td align="left" border="1">
-		// 			Spanduk Flx Biasa <br>
-		// 			PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-		// 		</td>
-		// 		<td border="1">3.00</td>
-		// 		<td border="1">M2</td>
-		// 		<td align="right" border="1">35.000</td>
-		// 		<td align="right" border="1">105.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td width="97" border="0" align="left">Bank Acc : </td>
-		// 		<td width="55">Tanda Terima</td>
-		// 		<td width="113">Hormat Kami,</td>
-		// 		<td width="65" border="1">Total</td>
-		// 		<td width="60" colspan="1" border="1">500.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td width="97" border="0" align="left">BCA</td>
-		// 		<td width="55"></td>
-		// 		<td width="113"></td>
-		// 		<td width="65" border="1">Disc.</td>
-		// 		<td width="60" colspan="1" border="1">500.000</td>
-		// 	</tr>
-		// 	<tr>
-		// 		<td width="97" border="0" align="left">758 0268 611</td>
-		// 		<td width="55"></td>
-		// 		<td width="113"></td>
-		// 		<td width="65" border="1">DP</td>
-		// 		<td width="60" colspan="1" border="1">500.000</td>
-		// 	</tr>
-		// 	<tr> 
-		// 		<td width="97" border="0" align="left"></td>
-		// 		<td width="55"></td>
-		// 		<td width="113">(Stephen)</td>
-		// 		<td width="65" border="1">Total</td>
-		// 		<td width="60" colspan="1" border="1">500.000</td>
-		// 	</tr>
-		// </table>';
-		// $pdf->writeHTML($tbl, true, false, false, false, '');
-		$pdf->SetMargins(3, 2, 3, true);
-		$pdf->SetFont('helvetica', '', 8);
-
 		// -----------------------------------------------------------------------------
-
 		$tbl = '
-		<table cellspacing="0" cellpadding="2" border="0">
-			<tr>
-				<td rowspan="2" style="font-weight:bold;font-size:14px;" width="240" >
-					TRISINDO PRINTING<br />
-					<span style="font-size:8px;font-weight:none;">Setting, Percetakan, Sablon, Dll</span>
-				</td>
-				<td colspan="3" width="152"></td>
-			</tr>
-			<tr>
-				<td colspan="3" style="font-size:11px;" border="1">No. Faktur : INV/20/05/0001</td>
-			</tr>
-			<tr>
-				<td>Jl. Kapuk Raya Rt. 011/005 No.1, (Sebelah Gg. Langgar II)</td>
-				<td>Tgl. Faktur</td>
-				<td width="10">:</td>
-				<td width="91.5">01 Mei 2020</td>
-			</tr>
-			<tr>
-				<td>Kapuk - Jakarta Barat</td>
-				<td>Kepada Yth.</td>
-				<td width="10">:</td>
-				<td width="91.5">Bapak Adrian sdfsfsf</td>
-			</tr>
-			<tr>
-				<td>E. trisindoprinting2@gmail.com</td>
-				<td></td>
-				<td width="10"></td>
-				<td width="91.5">PT. ABCD - Kapuk</td>
-			</tr>
-			<tr>
-				<td>T. 0812 9955 9965 / 0812 9395 9695 / 0877 8899 7599</td>
-				<td></td>
-				<td width="10"></td>
-				<td width="91.5">Telp. 0812 1212 1212</td>
-			</tr>
-			<tr>
-				<td>Instagram : @trisindoprinting</td>
-				<td></td>
-				<td width="10"></td>
-				<td width="91.5"></td>
-			</tr>
-		</table>';
-
+			<table border="0" nobr="true" align="center" cellspacing="0" cellpadding="5" style="font-size:9px;
+			padding:10px 10px 10px 10px;">
+				<thead>
+					<tr nobr="true">
+						<td width="30" align="center" border="1">No.</td>
+						<td width="250" align="center" border="1">Nama Barang</td>
+						<td width="90" align="center" colspan="2" border="1">Qty</td>
+						<td width="70" align="center" border="1">Harga Stn</td>
+						<td width="70" align="center" border="1">Jumlah</td>
+					</tr>
+				</thead>
+				<tr nobr="true">
+					<td width="30" border="1">1</td>
+					<td width="250" align="left" border="1">
+						Nota 3 Rangkap, 2 Warna, Cacah, Nomorator <br>
+						PT. ABCD | NCR Putih-Merah-Kuning Cetak Warna Merah-Biru | Nomor : 00001
+					</td>
+					<td width="45" border="1">1.00</td>
+					<td width="45" border="1">Rim</td>
+					<td width="70" align="right" border="1">250.000</td>
+					<td width="70" align="right" border="1">250.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">2</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">2</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">2</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">2</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+				<tr nobr="true">
+					<td border="1">3</td>
+					<td align="left" border="1">
+						Spanduk Flx Biasa <br>
+						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+					</td>
+					<td border="1">3.00</td>
+					<td border="1">M2</td>
+					<td align="right" border="1">35.000</td>
+					<td align="right" border="1">105.000</td>
+				</tr>
+			</table>';
+		
 		$pdf->writeHTML($tbl, true, false, false, false, '');
-
-		// -----------------------------------------------------------------------------
-
-		$tbl = '
-		<table border="0" nobr="true" align="center" cellspacing="0" cellpadding="5" style="font-size:9px;
-		padding:10px 10px 10px 10px;">
-			<tr>
-				<td width="30" align="center" border="1">No.</td>
-				<td width="170" align="center" border="1">Nama Barang</td>
-				<td width="65" align="center" colspan="2" border="1">Qty</td>
-				<td width="65" align="center" border="1">Harga Stn</td>
-				<td width="62" align="center" border="1">Jumlah</td>
-			</tr>
-			<tr>
-				<td border="1">1</td>
-				<td align="left" border="1">
-					Nota 3 Rangkap, 2 Warna, Cacah, Nomorator <br>
-					PT. ABCD | NCR Putih-Merah-Kuning Cetak Warna Merah-Biru | Nomor : 00001
-				</td>
-				<td border="1">1.00</td>
-				<td border="1">Rim</td>
-				<td align="right" border="1">250.000</td>
-				<td align="right" border="1">250.000</td>
-			</tr>
-			<tr>
-				<td border="1">2</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">3</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">4</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">5</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">6</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">7</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">8</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">9</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">10</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td border="1">11</td>
-				<td align="left" border="1">
-					Spanduk Flx Biasa <br>
-					PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-				</td>
-				<td border="1">3.00</td>
-				<td border="1">M2</td>
-				<td align="right" border="1">35.000</td>
-				<td align="right" border="1">105.000</td>
-			</tr>
-			<tr>
-				<td width="97" border="0" align="left">Bank Acc : </td>
-				<td width="55">Tanda Terima</td>
-				<td width="113">Hormat Kami,</td>
-				<td width="65" border="1">Total</td>
-				<td width="62" colspan="1" border="1">500.000</td>
-			</tr>
-			<tr>
-				<td width="97" border="0" align="left">BCA</td>
-				<td width="55"></td>
-				<td width="113"></td>
-				<td width="65" border="1">Disc.</td>
-				<td width="62" colspan="1" border="1">500.000</td>
-			</tr>
-			<tr>
-				<td width="97" border="0" align="left">758 0268 611</td>
-				<td width="55"></td>
-				<td width="113"></td>
-				<td width="65" border="1">DP</td>
-				<td width="62" colspan="1" border="1">500.000</td>
-			</tr>
-			<tr> 
-				<td width="97" border="0" align="left"></td>
-				<td width="55"></td>
-				<td width="113">(Stephen)</td>
-				<td width="65" border="1">Total</td>
-				<td width="62" colspan="1" border="1">500.000</td>
-			</tr>
-		</table>';
-
-		$pdf->writeHTML($tbl, true, false, false, false, '');
-		$pdf->Output('contoh1.pdf', 'I');
+		
+		//Close and output PDF document
+		$pdf->Output('example_048.pdf', 'I');
 	}
 }

@@ -192,8 +192,10 @@
 											<?php 
 												if($value->metode_pembayaran == 2){
 													echo 'DP';
-												}else{
+												}else if($value->metode_pembayaran == 1){
 													echo 'Lunas';
+												}else{
+													echo 'Belum Bayar';
 												}
 											?>
 										</td>

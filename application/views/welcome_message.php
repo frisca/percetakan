@@ -5,7 +5,10 @@
 	<title>Welcome to CodeIgniter</title>
 
 	<style type="text/css">
-
+	body{
+		display:block;}
+	}
+/* 
 	::selection{ background-color: #E13300; color: white; }
 	::moz-selection{ background-color: #E13300; color: white; }
 	::webkit-selection{ background-color: #E13300; color: white; }
@@ -61,7 +64,7 @@
 		margin: 10px;
 		border: 1px solid #D0D0D0;
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
-	}
+	} */
 	</style>
 </head>
 <body>
