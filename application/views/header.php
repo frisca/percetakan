@@ -15,7 +15,7 @@
 			<a href="index.html" class="navbar-brand">
 				<small>
 					<i class="fa fa-book"></i>
-					Application Fotocopy
+					TRISINDO PRINTING
 				</small>
 			</a>
 		</div>

@@ -35,6 +35,18 @@ class Customer extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'address_1' => $this->input->post('address_1'),
+				'address_2' => $this->input->post('address_2'),
+				'phone_1' => $this->input->post('phone_1'),
+				'phone_2' => $this->input->post('phone_2'),
+				'status' => $this->input->post('status'),
+				'email' => $this->input->post('email')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('customer/add');
 		}else{
             // $result = $this->all_model->insertData("customer", $data);
@@ -52,10 +64,34 @@ class Customer extends CI_Controller {
 	                $this->session->set_flashdata('success', 'Data customer berhasil disimpan');
 	                redirect(base_url() . 'customer/index');
 	            }else{
+					$input = array(
+						'first_name' => $this->input->post('first_name'),
+						'last_name' => $this->input->post('last_name'),
+						'address_1' => $this->input->post('address_1'),
+						'address_2' => $this->input->post('address_2'),
+						'phone_1' => $this->input->post('phone_1'),
+						'phone_2' => $this->input->post('phone_2'),
+						'status' => $this->input->post('status'),
+						'email' => $this->input->post('email')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 	                $this->session->set_flashdata('error', 'Data customer tidak berhasil disimpan');
 	                redirect(base_url() . 'customer/add');
 	            }
             }else{
+				$input = array(
+					'first_name' => $this->input->post('first_name'),
+					'last_name' => $this->input->post('last_name'),
+					'address_1' => $this->input->post('address_1'),
+					'address_2' => $this->input->post('address_2'),
+					'phone_1' => $this->input->post('phone_1'),
+					'phone_2' => $this->input->post('phone_2'),
+					'status' => $this->input->post('status'),
+					'email' => $this->input->post('email')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
             	$this->session->set_flashdata('error', 'First and last name sudah tersedia');
             	redirect(base_url() . 'customer/add');
             }
@@ -82,6 +118,18 @@ class Customer extends CI_Controller {
 		$this->form_validation->set_rules('last_name', 'Alamat', 'required');
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'address_1' => $this->input->post('address_1'),
+				'address_2' => $this->input->post('address_2'),
+				'phone_1' => $this->input->post('phone_1'),
+				'phone_2' => $this->input->post('phone_2'),
+				'status' => $this->input->post('status'),
+				'email' => $this->input->post('email')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('customer/edit/' . $this->input->post('id'));
 		}else{
 			// $location = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->row();
@@ -129,10 +177,34 @@ class Customer extends CI_Controller {
 	                $this->session->set_flashdata('success', 'Data customer berhasil diubah');
 	                redirect(base_url() . 'customer/index');
 	            }else{
+					$input = array(
+						'first_name' => $this->input->post('first_name'),
+						'last_name' => $this->input->post('last_name'),
+						'address_1' => $this->input->post('address_1'),
+						'address_2' => $this->input->post('address_2'),
+						'phone_1' => $this->input->post('phone_1'),
+						'phone_2' => $this->input->post('phone_2'),
+						'status' => $this->input->post('status'),
+						'email' => $this->input->post('email')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 	                $this->session->set_flashdata('error', 'Data customer tidak berhasil diubah');
 	                redirect(base_url() . 'customer/edit/' . $this->input->post('id'));
 	            }
 	        }else{
+				$input = array(
+					'first_name' => $this->input->post('first_name'),
+					'last_name' => $this->input->post('last_name'),
+					'address_1' => $this->input->post('address_1'),
+					'address_2' => $this->input->post('address_2'),
+					'phone_1' => $this->input->post('phone_1'),
+					'phone_2' => $this->input->post('phone_2'),
+					'status' => $this->input->post('status'),
+					'email' => $this->input->post('email')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 	        	$this->session->set_flashdata('error', 'First and last name sudah tersedia');
             	redirect(base_url() . 'customer/edit/' . $this->input->post('id'));
 	        }

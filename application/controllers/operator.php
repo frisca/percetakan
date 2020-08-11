@@ -34,11 +34,25 @@ class Operator extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'username' => $this->input->post('username'),
+				'id_location' => $this->input->post('id_location')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('operator/add');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 3);
 			$check = $this->all_model->getDataByCondition('user', $con)->num_rows();
 			if($check > 0){
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'id_location' => $this->input->post('id_location')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Username sudah tersedia');
 				redirect(base_url() . 'operator/add');
 			}else{
@@ -47,6 +61,13 @@ class Operator extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data operator berhasil disimpan');
 					redirect(base_url() . 'operator/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'username' => $this->input->post('username'),
+						'id_location' => $this->input->post('id_location')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data operator tidak berhasil disimpan');
 					redirect(base_url() . 'operator/add');
 				}
@@ -101,10 +122,24 @@ class Operator extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data operator berhasil diubah');
 					redirect(base_url() . 'operator/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'username' => $this->input->post('username'),
+						'id_location' => $this->input->post('id_location')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data operator tidak berhasil diubah');
 					redirect(base_url() . 'operator/edit/' . $this->input->post('id'));
 				}
 			}else{
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'id_location' => $this->input->post('id_location')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Username sudah tersedia');
 				redirect(base_url() . 'operator/edit/' . $this->input->post('id'));
 			}

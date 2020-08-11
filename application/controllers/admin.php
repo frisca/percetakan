@@ -35,19 +35,40 @@ class Admin extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'username' => $this->input->post('username'),
+				'id_location' => $this->input->post('id_location')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('admin/add');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 2);
 			$check = $this->all_model->getDataByCondition('user', $con)->num_rows();
 			if($check > 0){
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'id_location' => $this->input->post('id_location')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Username sudah tersedia');
-					redirect(base_url() . 'admin/add');
+				redirect(base_url() . 'admin/add');
 			}else{
 				$result = $this->all_model->insertData("user", $data);
 				if($result  == true){
 					$this->session->set_flashdata('success', 'Data admin berhasil disimpan');
 					redirect(base_url() . 'admin/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'username' => $this->input->post('username'),
+						'id_location' => $this->input->post('stid_location')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data admin tidak berhasil disimpan');
 					redirect(base_url() . 'admin/add');
 				}
@@ -86,6 +107,13 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'username' => $this->input->post('username'),
+				'id_location' => $this->input->post('id_location')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('admin/edit');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 2);
@@ -104,10 +132,24 @@ class Admin extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data admin berhasil diubah');
 					redirect(base_url() . 'admin/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'username' => $this->input->post('username'),
+						'id_location' => $this->input->post('id_location')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data admin tidak berhasil diubah');
 					redirect(base_url() . 'admin/edit/' . $this->input->post('id'));
 				}
 			}else{
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'id_location' => $this->input->post('id_location')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Username sudah tersedia');
 				redirect(base_url() . 'admin/edit/' . $this->input->post('id'));
 			}

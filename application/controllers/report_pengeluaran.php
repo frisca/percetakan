@@ -130,4 +130,13 @@ class Report_Pengeluaran extends CI_Controller {
 		$write = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 		$write->save('php://output');	
 	}
+
+	public function detail($id){
+		$condition = array('id_header_pengeluaran' => $id);
+		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
+		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0))->result();
+		$condition = array('id_user' => $this->session->userdata('id'));
+		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		$this->load->view('report-pengeluaran/detail', $data);
+	}
 }

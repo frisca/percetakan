@@ -159,7 +159,7 @@
 											</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="<?php echo base_url('report_pengeluaran/view/' . $value->id_header_pengeluaran);?>">
+													<a class="blue" href="<?php echo base_url('report_pengeluaran/detail/' . $value->id_header_pengeluaran);?>">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
 												</div>

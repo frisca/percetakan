@@ -230,11 +230,11 @@
 												<?php
 													if($value->line_item == ""){
 												?>
-													<img id="my_image" src="<?php echo base_url('gambar/no_img.png');?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
+													<img id="my_images" src="<?php echo base_url('gambar/no_img.png');?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
 												<?php 
 													}else{
 												?>
-													<img id="my_image" src="<?php echo base_url('gambar/' . $value->line_item);?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
+													<img id="my_images" src="<?php echo base_url('gambar/' . $value->line_item);?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
 												<?php
 													}
 												?>

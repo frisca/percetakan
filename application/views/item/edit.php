@@ -45,6 +45,10 @@
 					</h1>
 				</div>
 
+				<?php
+					$inputs = $this->session->flashdata('inputs');
+				?>
+
 				<div class="row">
 					<div class="col-xs-12">
 						<?php if(validation_errors() != ""){?>
@@ -73,7 +77,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text"  placeholder="Nama" class="form-control" required name="nama" value="<?php echo $item->nama;?>" />
+									<input type="text"  placeholder="Nama" class="form-control" required name="nama" 
+									value="<?php if(empty($inputs['nama'])) { echo $item->nama; }else{ echo $inputs['nama']; }?>" />
 								</div>
 							</div>
 
@@ -82,19 +87,39 @@
 
 								<div class="col-sm-9">
 									<select name="id_satuan" class="select2" data-placeholder="Click to Choose...">
-										<?php 
-											foreach ($satuan as $key => $value) {
-												if($value->id_satuan == $item->id_satuan){
-										?>
-											<option value="<?php echo $value->id_satuan;?>" selected><?php echo $value->satuan;?></option>
-										<?php 
-												}else{
-										?>
-											<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
 										<?php
-												}
-											}
+											if(empty($inputs['id_satuan'])){
 										?>
+											<?php 
+												foreach ($satuan as $key => $value) {
+													if($value->id_satuan == $item->id_satuan){
+											?>
+												<option value="<?php echo $value->id_satuan;?>" selected><?php echo $value->satuan;?></option>
+											<?php 
+													}else{
+											?>
+												<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
+											<?php
+													}
+												}
+											?>
+										<?php 
+											}else{
+										?>
+											<?php 
+												foreach ($satuan as $key => $value) {
+													if($inputs['id_satuan'] == $value->id_satuan){
+											?>
+														<option value="<?php echo $value->id_satuan;?>" selected><?php echo $value->satuan;?></option>
+											<?php
+													}else{
+											?>
+														<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
+											<?php 
+													}
+												}
+											?>
+										<?php } ?>
 									</select>
 								</div>
 							</div>
@@ -103,7 +128,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Harga</label>
 
 								<div class="col-sm-9">
-									<input type="text" placeholder="Harga" class="form-control harga" name="hargas" required value="<?php echo $item->harga;?>"/>
+									<input type="text" placeholder="Harga" class="form-control harga" name="hargas" required 
+									value="<?php if(empty($inputs['harga'])) { echo $item->harga; }else{ echo $inputs['harga']; }?>"/>
 								</div>
 							</div>
 
@@ -120,17 +146,39 @@
 
 								<div class="col-sm-9">
 									<select name="is_design"  data-placeholder="Click to Choose...">
-										<?php 
-											if($item->is_design == 0){
+										<?php
+											if(empty($inputs['is_design'])){
 										?>
-											<option value=0 selected>Tidak</option>
-											<option value=1>Ya</option>
+											<?php 
+												if($item->is_design == 0){
+											?>
+												<option value=0 selected>Tidak</option>
+												<option value=1>Ya</option>
+											<?php 
+												}else{
+											?>
+												<option value=0>Tidak</option>
+												<option value=1 selected>Ya</option>
+											<?php 
+												}
+											?>
 										<?php 
 											}else{
 										?>
-											<option value=0>Tidak</option>
-											<option value=1 selected>Ya</option>
-										<?php 
+											<?php
+												if($inputs['is_design'] == 0){
+											?>
+												<option value=0 selected>Tidak</option>
+												<option value=1>Ya</option>
+											<?php
+												}else{
+											?>
+												<option value=0>Tidak</option>
+												<option value=1 selected>Ya</option>
+											<?php
+												}
+											?>
+										<?php
 											}
 										?>
 									</select>

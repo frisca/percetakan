@@ -247,4 +247,19 @@ class Report_Penjualan extends CI_Controller {
 		$write = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 		$write->save('php://output');	
 	}
+
+	public function detail($id){
+		$condition = array('id_header_penjualan' => $id);
+		$data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+		// var_dump($data);exit();
+		$data['penjualan'] = $this->all_model->getPenjualanByHeaderPenjualan($id)->result();
+		$data['counts'] = $this->all_model->getPenjualanByStatusHeaderPenjualan($id)->num_rows();
+		$data['item'] = $this->all_model->getAllData('item')->result();
+		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$condition = array('id_user' => $this->session->userdata('id'));
+		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
+		$this->load->view('report-penjualan/detail', $data);
+	}
 }

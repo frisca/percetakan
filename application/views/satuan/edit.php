@@ -45,6 +45,10 @@
 					</h1>
 				</div>
 
+				<?php
+					$inputs = $this->session->flashdata('inputs');
+				?>
+
 				<div class="row">
 					<div class="col-xs-12">
 						<?php if(validation_errors() != ""){?>
@@ -73,7 +77,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Satuan</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Satuan" class="form-control" required name="satuan" value="<?php echo $satuan->satuan?>" />
+									<input type="text" id="form-field-1-1" placeholder="Satuan" class="form-control" required name="satuan" 
+									value="<?php if(empty($inputs['satuan'])){ echo $satuan->satuan; }else{ echo $inputs['satuan']; }?>" />
 								</div>
 							</div>
 

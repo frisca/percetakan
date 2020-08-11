@@ -34,6 +34,14 @@ class Item extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'id_satuan' => $this->input->post('id_satuan'),
+				'harga' => $harga,
+				'is_design' => $this->input->post('is_design')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('item/add');
 		}else{
 			$check = $this->all_model->getListDataByNama('item', 'nama', $this->input->post('nama'))->num_rows();
@@ -43,10 +51,26 @@ class Item extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data item berhasil disimpan');
 					redirect(base_url() . 'item/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'id_satuan' => $this->input->post('id_satuan'),
+						'harga' => $this->input->post('harga'),
+						'is_design' => $this->input->post('is_design')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
 					redirect(base_url() . 'item/add');
 				}
 			}else{
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'id_satuan' => $this->input->post('id_satuan'),
+					'harga' => $harga,
+					'is_design' => $this->input->post('is_design')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Nama sudah tersedia');
 				redirect(base_url() . 'item/add');
 			}
@@ -86,6 +110,14 @@ class Item extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'id_satuan' => $this->input->post('id_satuan'),
+				'harga' => $harga,
+				'is_design' => $this->input->post('is_design')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('item/edit/' . $this->input->post('id'));
 		}else{
 			$name = $this->all_model->getListDataByNama('item', 'nama', $this->input->post('nama'))->row();
@@ -100,10 +132,26 @@ class Item extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data item berhasil diubah');
 					redirect(base_url() . 'item/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'id_satuan' => $this->input->post('id_satuan'),
+						'harga' => $harga,
+						'is_design' => $this->input->post('is_design')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data item tidak berhasil diubah');
 					redirect(base_url() . 'item/edit/' . $this->input->post('id'));
 				}
 			}else{
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'id_satuan' => $this->input->post('id_satuan'),
+					'harga' => $this->input->post('harga'),
+					'is_design' => $this->input->post('is_design')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Nama sudah tersedia.');
 				redirect(base_url() . 'item/edit/' . $this->input->post('id'));
 			}

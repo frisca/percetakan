@@ -44,6 +44,10 @@
 					</h1>
 				</div>
 
+				<?php
+					$inputs = $this->session->flashdata('inputs');
+				?>
+
 				<div class="row">
 					<div class="col-xs-12">
 						<?php if(validation_errors() != ""){?>
@@ -60,7 +64,7 @@
 							</div>
 						<?php } ?>
 						<div class="table-header">
-							Tambah Data Location
+							Tambah Data Customer
 						</div>
 					</div>
 
@@ -71,7 +75,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">First Name</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="First Name" class="form-control" required name="first_name" />
+									<input type="text" id="form-field-1-1" placeholder="First Name" class="form-control" required name="first_name" 
+									value="<?php echo $inputs['first_name'];?>"/>
 								</div>
 							</div>
 
@@ -79,7 +84,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Last Name</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Last Name" class="form-control" required name="last_name" />
+									<input type="text" id="form-field-1-1" placeholder="Last Name" class="form-control" required name="last_name" 
+									value="<?php echo $inputs['last_name'];?>"/>
 								</div>
 							</div>
 
@@ -87,7 +93,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Address 1</label>
 
 								<div class="col-sm-9">
-									<textarea name="address_1" rows="10" cols="50" style="width: 100%"></textarea>
+									<textarea name="address_1" rows="10" cols="50" style="width: 100%"><?php echo $inputs['address_1'];?></textarea>
 								</div>
 							</div>
 
@@ -95,7 +101,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Address 2</label>
 
 								<div class="col-sm-9">
-									<textarea name="address_2" rows="10" cols="50" style="width: 100%"></textarea>
+									<textarea name="address_2" rows="10" cols="50" style="width: 100%"><?php echo $inputs['address_1'];?></textarea>
 								</div>
 							</div>
 
@@ -103,7 +109,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Phone 1</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Phone 1" class="form-control" name="phone_1" />
+									<input type="text" id="form-field-1-1" placeholder="Phone 1" class="form-control" name="phone_1" 
+									value="<?php echo $inputs['phone_1'];?>"/>
 								</div>
 							</div>
 
@@ -111,7 +118,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Phone 2</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Phone 2" class="form-control" name="phone_2" />
+									<input type="text" id="form-field-1-1" placeholder="Phone 2" class="form-control" name="phone_2" 
+									value="<?php echo $inputs['phone_2'];?>"/>
 								</div>
 							</div>
 
@@ -119,7 +127,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Email</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Email" class="form-control" name="email" />
+									<input type="text" id="form-field-1-1" placeholder="Email" class="form-control" name="email" 
+									value="<?php echo $inputs['email'];?>"/>
 								</div>
 							</div>
 
@@ -128,8 +137,21 @@
 
 								<div class="col-sm-9">
 									<select name="status"  data-placeholder="Click to Choose...">
-										<option value="0">Tidak Aktif</option>
-										<option value="1">Aktif</option>
+										<!-- <option value="0">Tidak Aktif</option>
+										<option value="1">Aktif</option> -->
+										<?php
+											if($inputs['status'] == 0){
+										?>
+											<option value="0" selected>Tidak Aktif</option>
+											<option value="1">Aktif</option>
+										<?php
+											}else{
+										?>
+											<option value="0">Tidak Aktif</option>
+											<option value="1" selected>Aktif</option>
+										<?php
+											}
+										?>
 									</select>
 								</div>
 							</div>

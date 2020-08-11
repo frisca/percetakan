@@ -100,12 +100,17 @@
 
 				$('.edit').click(function(){
 		          	var id = $(this).attr('penjualanid'); //get the attribute value
+					$("#item").find('option:selected').removeAttr("selected");
 		          	$.ajax({
 			              url : "<?php echo base_url();?>penjualan/edit",
 			              data:{id : id},
 			              method:'GET',
 			              dataType:'json',
 			              success:function(response) {
+							console.log('response: ', response.penjualan.id_item);
+							// $('#item option[value='+response.penjualan.id_item+']').attr('selected','selected');
+							$("#item").val(response.penjualan.id_item).change();
+							// $("#item").selectmenu('refresh', true);
 			                $('input[name="id_penjualan"]').val(response.penjualan.id_penjualan);
 			                $('input[name="id_header_penjualan"]').val(response.penjualan.id_header_penjualan);
 			                $("#item option[value="+response.penjualan.id_item+"]").attr('selected', 'selected');
@@ -136,7 +141,7 @@
 		        	});
 		        });
 
-		        $('.id_item').click(function(){
+		        $('.id_item').on('change', function(){
 		        	id = $(this).children("option:selected").val();
 		        	$.ajax({
 		              url : "<?php echo base_url(); ?>penjualan/getItem",
@@ -236,6 +241,7 @@
 				}
 
 				$('#item').on('change', function(){
+					console.log('test');
 					$(this).removeAttr("selected");
 					$(this).attr('selected', 'selected');
 				    id = $('#item option:selected').data('id');
@@ -285,10 +291,15 @@
 		    //     	});
 				});
 
-				$('.closes').click(function(){
-					$('#item option:selected').removeAttr("selected");
-					$('#show_modal').modal('hide');
-				});
+				// $('.closes').click(function(){
+				// 	// $('#item').removeAttr("selected");
+				// 	$("#item").find('option:selected').removeAttr("selected");
+				// 	$('#show_modal').modal('hide');
+				// });
+
+				// $('#show_modal').on('hidden', function () {
+				// 	$("#item").find('option:selected').removeAttr("selected");
+				// });
 
 				$('.customers').on('change', function(){
 					console.log('customer: ', $(this).val());
@@ -298,31 +309,32 @@
 
 		        // console.log("items: " + $('#item option:selected').data('id'));
 		    //     console.log("items: " + item);
-		    	items = $('#item option:selected').val();
-		        if(items != 0){
-		        	$.ajax({
-		              url : "<?php echo base_url(); ?>penjualan/getItem",
-		              data:{id : item},
-		              method:'GET',
-		              dataType:'json',
-		              success:function(response) {
-		                // $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
-		                $('input[name="satuan"]').val(response.satuan);
-		                $('input[name="id_satuan"]').val(response.id_satuan);
-		                $('input[name="harga"]').val(response.harga);
-						var harga_satuan = response.harga.split(",");
-						var harga = harga_satuan[0].replace(".", "");
-						$('input[name="harga_satuan"]').val(harga);
-		                if(response.is_design == 0){
-		                	$('.images').css('display', 'none');
-		                }else{
-		                	$('.images').css('display', 'block');
-		                }
-		                console.log("design: ",response.is_design);
-		              }
-		        	});
-		        }
-			});
+			// items = $('#item option:selected').val();
+			// if(items != 0){
+			// 	console.log('test1');
+			// 	$.ajax({
+			// 		url : "<?php echo base_url(); ?>penjualan/getItem",
+			// 		data:{id : item},
+			// 		method:'GET',
+			// 		dataType:'json',
+			// 		success:function(response) {
+			// 		// $("#satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
+			// 		$('input[name="satuan"]').val(response.satuan);
+			// 		$('input[name="id_satuan"]').val(response.id_satuan);
+			// 		$('input[name="harga"]').val(response.harga);
+			// 		var harga_satuan = response.harga.split(",");
+			// 		var harga = harga_satuan[0].replace(".", "");
+			// 		$('input[name="harga_satuan"]').val(harga);
+			// 		if(response.is_design == 0){
+			// 			$('.images').css('display', 'none');
+			// 		}else{
+			// 			$('.images').css('display', 'block');
+			// 		}
+			// 		console.log("design: ",response.is_design);
+			// 		}
+			// 	});
+			// }
+		});
 
 		$('.dp1').click(function(){
           	var id = $(this).attr('headerpenjualan'); //get the attribute value
@@ -499,7 +511,19 @@
 			"&status=" + status;
 		});
 
-		
+		$(document).on('hidden', '#show_modal', function () {
+			$('#item').removeAttr("selected");
+			$(this).remove();
+		});
+
+		// $('.closes').click(function(){
+		// 	// $('#item').removeAttr("selected");
+		// 	$("#item").find('option:selected').removeAttr("selected");
+		// 	$('#show_modal').modal('hide');
+		// });
+		$('#show_modal').on('hidden.bs.modal', function () {
+			$("#item").find('option:selected').removeAttr("selected");
+		});
 		</script>
 	</body>
 </html>

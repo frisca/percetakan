@@ -21,6 +21,11 @@ class Location extends CI_Controller {
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
 		$this->form_validation->set_rules('status', 'Status', 'required');
+		$this->form_validation->set_rules('kecamatan', 'Kecamatan', 'required');
+		$this->form_validation->set_rules('kota', 'Kota', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('tlp', 'Telepon', 'required');
+		$this->form_validation->set_rules('ig', 'Instagram', 'required');
 
 		$data = array(
 			'nama_location' => $this->input->post('nama'),
@@ -29,6 +34,18 @@ class Location extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama_location' => $this->input->post('nama'),
+				'alamat_location' => $this->input->post('alamat'),
+				'status' => $this->input->post('status'),
+				'kecamatan' => $this->input->post('kecamatan'),
+				'kota' => $this->input->post('kota'),
+				'email' => $this->input->post('email'),
+				'tlp' => $this->input->post('tlp'),
+				'ig' => $this->input->post('ig')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('location/add');
 		}else{
 			$check = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->num_rows();
@@ -38,10 +55,34 @@ class Location extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data location berhasil disimpan');
 					redirect(base_url() . 'location/index');
 				}else{
+					$input = array(
+						'nama_location' => $this->input->post('nama'),
+						'alamat_location' => $this->input->post('alamat'),
+						'status' => $this->input->post('status'),
+						'kecamatan' => $this->input->post('kecamatan'),
+						'kota' => $this->input->post('kota'),
+						'email' => $this->input->post('email'),
+						'tlp' => $this->input->post('tlp'),
+						'ig' => $this->input->post('ig')
+					);
+	
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data location tidak berhasil disimpan');
 					redirect(base_url() . 'location/add');
 				}
 			}else{
+				$input = array(
+					'nama_location' => $this->input->post('nama'),
+					'alamat_location' => $this->input->post('alamat'),
+					'status' => $this->input->post('status'),
+					'kecamatan' => $this->input->post('kecamatan'),
+					'kota' => $this->input->post('kota'),
+					'email' => $this->input->post('email'),
+					'tlp' => $this->input->post('tlp'),
+					'ig' => $this->input->post('ig')
+				);
+
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Nama sudah tersedia');
 				redirect(base_url() . 'location/add');
 			}
@@ -67,6 +108,11 @@ class Location extends CI_Controller {
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
 		$this->form_validation->set_rules('status', 'Status', 'required');
+		$this->form_validation->set_rules('kecamatan', 'Kecamatan', 'required');
+		$this->form_validation->set_rules('kota', 'Kota', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('tlp', 'Telepon', 'required');
+		$this->form_validation->set_rules('ig', 'Instagram', 'required');
 
 		if($this->form_validation->run() == false){
 			$this->load->view('location/edit/' . $this->input->post('id'));
@@ -77,7 +123,12 @@ class Location extends CI_Controller {
 				$data = array(
 					'nama_location' => $this->input->post('nama'),
 					'alamat_location' => $this->input->post('alamat'),
-					'status' => $this->input->post('status')
+					'status' => $this->input->post('status'),
+					'kecamatan' => $this->input->post('kecamatan'),
+					'kota' => $this->input->post('kota'),
+					'email' => $this->input->post('email'),
+					'tlp' => $this->input->post('tlp'),
+					'ig' => $this->input->post('ig')
 				);
 
 				$result = $this->all_model->updateData("location", $condition, $data);
@@ -85,10 +136,34 @@ class Location extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data location berhasil diubah');
 					redirect(base_url() . 'location/index');
 				}else{
+					$input = array(
+						'nama_location' => $this->input->post('nama'),
+						'alamat_location' => $this->input->post('alamat'),
+						'status' => $this->input->post('status'),
+						'kecamatan' => $this->input->post('kecamatan'),
+						'kota' => $this->input->post('kota'),
+						'email' => $this->input->post('email'),
+						'tlp' => $this->input->post('tlp'),
+						'ig' => $this->input->post('ig')
+					);
+	
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data location tidak berhasil diubah');
 					redirect(base_url() . 'location/edit/' . $this->input->post('id'));
 				}
 			}else{
+				$input = array(
+					'nama_location' => $this->input->post('nama'),
+					'alamat_location' => $this->input->post('alamat'),
+					'status' => $this->input->post('status'),
+					'kecamatan' => $this->input->post('kecamatan'),
+					'kota' => $this->input->post('kota'),
+					'email' => $this->input->post('email'),
+					'tlp' => $this->input->post('tlp'),
+					'ig' => $this->input->post('ig')
+				);
+
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Nama sudah tersedia');
 				redirect(base_url() . 'location/edit/' . $this->input->post('id'));
 			}

@@ -45,6 +45,10 @@
 					</h1>
 				</div>
 
+				<?php
+					$inputs = $this->session->flashdata('inputs');
+				?>
+
 				<div class="row">
 					<div class="col-xs-12">
 						<?php if(validation_errors() != ""){?>
@@ -72,7 +76,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" />
+									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" 
+									value="<?php echo $inputs['nama'];?>"/>
 								</div>
 							</div>
 
@@ -83,9 +88,15 @@
 									<select name="id_satuan" class="select2" data-placeholder="Click to Choose...">
 										<?php 
 											foreach ($satuan as $key => $value) {
+												if($inputs['id_satuan'] == $value->id_satuan){
 										?>
-											<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
+													<option value="<?php echo $value->id_satuan;?>" selected><?php echo $value->satuan;?></option>
+										<?php
+												}else{
+										?>
+													<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
 										<?php 
+												}
 											}
 										?>
 									</select>
@@ -96,7 +107,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Harga</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control harga" name="harga" required/>
+									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control harga" name="harga" required
+									value="<?php echo $inputs['harga'];?>"/>
 								</div>
 							</div>
 
@@ -113,8 +125,19 @@
 
 								<div class="col-sm-9">
 									<select name="is_design"  data-placeholder="Click to Choose...">
-										<option value=0>Tidak</option>
-										<option value=1>Ya</option>
+										<?php
+											if($inputs['is_design'] == 0){
+										?>
+											<option value=0 selected>Tidak</option>
+											<option value=1>Ya</option>
+										<?php
+											}else{
+										?>
+											<option value=0>Tidak</option>
+											<option value=1 selected>Ya</option>
+										<?php
+											}
+										?>
 									</select>
 								</div>
 							</div>

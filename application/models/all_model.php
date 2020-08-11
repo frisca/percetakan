@@ -76,8 +76,9 @@ class All_model extends CI_Model {
 	}
 
 	public function getReportPenjualan($from, $to){
-		$query = "SELECT p.*, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
-		and (p.tgl_penjualan between '".$from."' and '".$to."')";
+		$query = "SELECT p.*, c.*, pd.id_penjualan from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		left join penjualan pd on pd.id_header_penjualan = p.id_header_penjualan where p.status_delete = 0
+		and (p.tgl_penjualan between '".$from."' and '".$to."') group by p.id_header_penjualan";
 		return $this->db->query($query);
 	}
 
@@ -88,17 +89,19 @@ class All_model extends CI_Model {
 
 	public function getReportPenjualanByCondition($froms, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($status_invoice);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
+		$query = "SELECT p.*, p.status as status_invoice, c.*, pd.id_penjualan from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				left join penjualan pd.id_header_penjualan = p.id_header_penjualan where p.status_delete = 0
 				and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
-				and ".$status_invoice." and ".$status_pembayaran.") " . $froms;
+				and ".$status_invoice." and ".$status_pembayaran.") " . $froms . " group by p.id_header_penjualan";
 				// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 
 	public function getReportPenjualanByDate($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($from_date);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer where p.status_delete = 0
-				and p.tgl_penjualan between '".$from_date."' and '".$to."' ";
+		$query = "SELECT p.*, p.status as status_invoice, c.*, pd.id_penjualan from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				left join penjualan pd.id_header_penjualan = p.id_header_penjualan where p.status_delete = 0
+				and p.tgl_penjualan between '".$from_date."' and '".$to."' group by p.id_header_penjualan";
 		return $this->db->query($query);
 	}
 

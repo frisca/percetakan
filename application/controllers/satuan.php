@@ -25,6 +25,11 @@ class Satuan extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'satuan' => $this->input->post('satuan')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('satuan/add');
 		}else{
 			$check = $this->all_model->getListDataByNama('satuan', 'satuan', $this->input->post('satuan'))->num_rows();
@@ -34,10 +39,20 @@ class Satuan extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data satuan berhasil disimpan');
 					redirect(base_url() . 'satuan/index');
 				}else{
+					$input = array(
+						'satuan' => $this->input->post('satuan')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data satuan tidak berhasil disimpan');
 					redirect(base_url() . 'satuan/add');
 				}
 			}else{
+				$input = array(
+					'satuan' => $this->input->post('satuan')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Satuan sudah tersedia');
 				redirect(base_url() . 'satuan/add');
 			}
@@ -71,10 +86,20 @@ class Satuan extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data satuan berhasil diubah');
 					redirect(base_url() . 'satuan/index');
 				}else{
+					$input = array(
+						'satuan' => $this->input->post('satuan')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data satuan tidak berhasil diubah');
 					redirect(base_url() . 'satuan/edit/' . $this->input->post('id'));
 				}
 			}else{
+				$input = array(
+					'satuan' => $this->input->post('satuan')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Satuan sudah tersedia');
 				redirect(base_url() . 'satuan/edit/' . $this->input->post('id'));
 			}

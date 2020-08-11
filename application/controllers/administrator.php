@@ -35,6 +35,13 @@ class Administrator extends CI_Controller {
 		);
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'username' => $this->input->post('username'),
+				'id_location' => $this->input->post('id_location')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('administrator/add');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 1);
@@ -48,6 +55,13 @@ class Administrator extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data administrator berhasil disimpan');
 					redirect(base_url() . 'administrator/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'username' => $this->input->post('username'),
+						'id_location' => $this->input->post('id_location')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data administrator tidak berhasil disimpan');
 					redirect(base_url() . 'administrator/add');
 				}
@@ -87,6 +101,13 @@ class Administrator extends CI_Controller {
 		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'username' => $this->input->post('username'),
+				'id_location' => $this->input->post('id_location')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('administrator/edit/' . $this->input->post('id'));
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 1);
@@ -105,10 +126,24 @@ class Administrator extends CI_Controller {
 					$this->session->set_flashdata('success', 'Data administrator berhasil diubah');
 					redirect(base_url() . 'administrator/index');
 				}else{
+					$input = array(
+						'nama' => $this->input->post('nama'),
+						'username' => $this->input->post('username'),
+						'id_location' => $this->input->post('id_location')
+					);
+		
+					$this->session->set_flashdata('inputs', $input);
 					$this->session->set_flashdata('error', 'Data administrator tidak berhasil diubah');
 					redirect(base_url() . 'administrator/edit/' . $this->input->post('id'));
 				}
 			}else{
+				$input = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username'),
+					'id_location' => $this->input->post('id_location')
+				);
+	
+				$this->session->set_flashdata('inputs', $input);
 				$this->session->set_flashdata('error', 'Username sudah tersedia');
 				redirect(base_url() . 'administrator/edit/' . $this->input->post('id'));
 			}

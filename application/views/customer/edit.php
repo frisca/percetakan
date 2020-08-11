@@ -44,6 +44,10 @@
 					</h1>
 				</div>
 
+				<?php
+					$inputs = $this->session->flashdata('inputs');
+				?>
+
 				<div class="row">
 					<div class="col-xs-12">
 						<?php if(validation_errors() != ""){?>
@@ -60,7 +64,7 @@
 							</div>
 						<?php } ?>
 						<div class="table-header">
-							Tambah Data Location
+							Ubah Data Customer
 						</div>
 					</div>
 
@@ -74,7 +78,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="First Name" class="form-control" required name="first_name" 
-                                    value="<?php echo $customer->first_name;?>"/>
+                                    value="<?php if(empty($inputs['first_name'])){ echo $customer->first_name; }else{ echo $inputs['first_name']; }?>"/>
 								</div>
 							</div>
 
@@ -83,7 +87,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Last Name" class="form-control" required name="last_name" 
-                                    value="<?php echo $customer->last_name;?>"/>
+                                    value="<?php if(empty($inputs['last_name'])){ echo $customer->last_name; }else{ echo $inputs['last_name']; }?>"/>
 								</div>
 							</div>
 
@@ -91,7 +95,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Address 1</label>
 
 								<div class="col-sm-9">
-									<textarea name="address_1" rows="10" cols="50" style="width: 100%"><?php echo $customer->address_1;?></textarea>
+									<textarea name="address_1" rows="10" cols="50" style="width: 100%"><?php if(empty($inputs['address_1'])){ echo $customer->address_1; }else{ echo $inputs['address_1']; }?></textarea>
 								</div>
 							</div>
 
@@ -99,7 +103,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Address 2</label>
 
 								<div class="col-sm-9">
-									<textarea name="address_2" rows="10" cols="50" style="width: 100%"><?php echo $customer->address_2;?></textarea>
+									<textarea name="address_2" rows="10" cols="50" style="width: 100%"><?php if(empty($inputs['address_2'])){ echo $customer->address_2; }else{ echo $inputs['address_2']; }?></textarea>
 								</div>
 							</div>
 
@@ -108,7 +112,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Phone 1" class="form-control" name="phone_1" 
-                                    value="<?php echo $customer->phone_1;?>"/>
+                                    value="<?php if(empty($inputs['phone_1'])){ echo $customer->phone_1; }else{ echo $inputs['phone_1']; }?>"/>
 								</div>
 							</div>
 
@@ -117,7 +121,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Phone 2" class="form-control" name="phone_2" 
-                                    value="<?php echo $customer->phone_2;?>"/>
+                                    value="<?php if(empty($inputs['phone_2'])){ echo $customer->phone_2; }else{ echo $inputs['phone_2']; }?>"/>
 								</div>
 							</div>
 
@@ -126,7 +130,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Email" class="form-control" name="email" 
-                                    value="<?php echo $customer->email;?>"/>
+                                    value="<?php if(empty($inputs['email'])){ echo $customer->email; }else{ echo $inputs['email']; }?>"/>
 								</div>
 							</div>
 
@@ -135,13 +139,33 @@
 
 								<div class="col-sm-9">
 									<select name="status"  data-placeholder="Click to Choose...">
-										<?php if($customer->status == 0){?>
-											<option value="0" selected>Tidak Aktif</option>
-											<option value="1">Aktif</option>
-										<?php }else{ ?>
-											<option value="0">Tidak Aktif</option>
-											<option value="1" selected>Aktif</option>
-										<?php }?>
+										<?php 
+											if(empty($inputs['status'])){
+										?>
+											<?php if($customer->status == 0){?>
+												<option value="0" selected>Tidak Aktif</option>
+												<option value="1">Aktif</option>
+											<?php }else{ ?>
+												<option value="0">Tidak Aktif</option>
+												<option value="1" selected>Aktif</option>
+											<?php }?>
+										<?php
+											}else{
+										?>
+											<?php
+												if($inputs['status'] == 0){
+											?>
+												<option value="0" selected>Tidak Aktif</option>
+												<option value="1">Aktif</option>
+											<?php
+												}else{
+											?>
+												<option value="0">Tidak Aktif</option>
+												<option value="1" selected>Aktif</option>
+											<?php
+												}
+											?>
+										<?php } ?>
 									</select>
 								</div>
 							</div>

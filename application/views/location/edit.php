@@ -65,6 +65,10 @@
 						</div>
 					</div>
 
+					<?php
+						$inputs = $this->session->flashdata('inputs');
+					?>
+
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('location/processEdit');?>">
@@ -73,7 +77,8 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" value="<?php echo $location->nama_location;?>" />
+									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" 
+									value="<?php if(!empty($inputs['nama_location'])){ echo $inputs['nama_location'];}else{ echo $location->nama_location;}?>" />
 								</div>
 							</div>
 
@@ -81,7 +86,52 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Alamat</label>
 
 								<div class="col-sm-9">
-									<textarea name="alamat" rows="10" cols="50" style="width: 100%"><?php echo $location->alamat_location;?></textarea>
+									<textarea name="alamat" rows="10" cols="50" style="width: 100%"><?php if(!empty($inputs['alamat_location'])){ echo $inputs['alamat_location'];}else{ echo $location->alamat_location;}?></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Kecamatan</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Kecamatan" class="form-control" required name="kecamatan" 
+									value="<?php if(empty($inputs['kecamatan'])){ echo $location->kecamatan; }else{ echo $inputs['kecamatan'];}?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Kota</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Kota" class="form-control" required name="kota" 
+									value="<?php if(empty($inputs['kota'])){ echo $location->kota; }else{ echo $inputs['kota'];}?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Email</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Email" class="form-control" required name="email" 
+									value="<?php if(empty($inputs['email'])){ echo $location->email; }else{ echo $inputs['email'];}?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Telepon</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Telepon" class="form-control" required name="tlp" 
+									value="<?php if(empty($inputs['tlp'])){ echo $location->tlp; }else{ echo $inputs['tlp'];}?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Instagran</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Instagram" class="form-control" required name="ig" 
+									value="<?php if(empty($inputs['ig'])){ echo $location->ig; }else{ echo $inputs['ig'];}?>"/>
 								</div>
 							</div>
 
@@ -90,13 +140,31 @@
 
 								<div class="col-sm-9">
 									<select name="status"  data-placeholder="Click to Choose...">
-										<?php if($location->status == 0){?>
-											<option value="0" selected>Tidak Aktif</option>
-											<option value="1">Aktif</option>
+										<?php
+											if(!empty($inputs['status'])){
+										?>
+											<?php
+												if($inputs['status'] == 0){
+											?>
+												<option value="0" selected>Tidak Aktif</option>
+												<option value="1">Aktif</option>
+											<?php
+												}else{
+											?>
+												<option value="0">Tidak Aktif</option>
+												<option value="1" selected>Aktif</option>
+											<?php
+												}
+											?>
 										<?php }else{ ?>
-											<option value="0">Tidak Aktif</option>
-											<option value="1" selected>Aktif</option>
-										<?php }?>
+											<?php if($location->status == 0){?>
+												<option value="0" selected>Tidak Aktif</option>
+												<option value="1">Aktif</option>
+											<?php }else{ ?>
+												<option value="0">Tidak Aktif</option>
+												<option value="1" selected>Aktif</option>
+											<?php }?>
+										<?php } ?>
 									</select>
 								</div>
 							</div>

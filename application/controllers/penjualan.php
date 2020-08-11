@@ -106,7 +106,7 @@ class Penjualan extends CI_Controller {
 					'id_user' => $this->session->userdata('id'),
 					'keterangan' => $this->input->post('keterangan')
 				);
-
+				var_dump($datas);exit();
 				$result = $this->all_model->insertData("penjualan", $datas);
 				if($result  == true){
 					$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
@@ -139,6 +139,7 @@ class Penjualan extends CI_Controller {
 					redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 				}
 			}else{
+				
 				$new_name                   = time().$_FILES["line_item"]['name'];
 		        $config['file_name']        = $new_name;
 				$config['upload_path']      = './gambar/';
@@ -146,62 +147,63 @@ class Penjualan extends CI_Controller {
 
 				$this->load->library('upload', $config);
 		 
-				if ( ! $this->upload->do_upload('line_item')){
-					$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
-					redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
-				}
+				if ($this->upload->do_upload('line_item')){
 
-				$datas = array(
-					'id_item' => $this->input->post('id_item'),
-					'id_satuan' => $this->input->post('id_satuan'),
-					'qty' => $this->input->post('jmlh'),
-					'harga_satuan' => $harga,
-					'total_harga' => $this->input->post('total_harga'),
-					'status' => 0,
-					'created_date' => date('Y-m-d'),
-					'created_by' => $this->session->userdata('id'),
-					'id_header_penjualan' => $this->input->post('id_header_penjualan'),
-					'id_user' => $this->session->userdata('id'),
-					'line_item' => $new_name,
-					'keterangan' => $this->input->post('keterangan')
-				);
-
-				$result = $this->all_model->insertData("penjualan", $datas);
-				if($result  == true){
-					$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
-					$res = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
-
-					$total = $res->total + $this->input->post('total_harga');
-					$grandTotal = $total - $res->discount;
-
-					if((int)$this->input->post('metode_pembayaran') == 0){
-						$status_pembayaran = 0;
-					}else if((int)$this->input->post('metode_pembayaran') == 1){
-						$status_pembayaran = 1;
-					}else{
-						$status_pembayaran = 2;
-					}
-
-					$dataHeaderPenjualan = array(
-						'total' => $total,
-						'grandtotal' => $grandTotal,
-						'discount' => $this->input->post('discount'),
-						'grandtotal' => $this->input->post('grandtotal'),
-						'metode_pembayaran' => $this->input->post('metode_pembayaran'),
-						'status_pembayaran' => $status_pembayaran,
-						'updatedBy' => $this->session->userdata('id'),
-						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
-						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-						'id_customer' => $this->input->post('customers')
+					$datas = array(
+						'id_item' => $this->input->post('id_item'),
+						'id_satuan' => $this->input->post('id_satuan'),
+						'qty' => $this->input->post('jmlh'),
+						'harga_satuan' => $harga,
+						'total_harga' => $this->input->post('total_harga'),
+						'status' => 0,
+						'created_date' => date('Y-m-d'),
+						'created_by' => $this->session->userdata('id'),
+						'id_header_penjualan' => $this->input->post('id_header_penjualan'),
+						'id_user' => $this->session->userdata('id'),
+						'line_item' => $new_name,
+						'keterangan' => $this->input->post('keterangan')
 					);
+					// var_dump('masuk', $datas);exit();
+					$result = $this->all_model->insertData("penjualan", $datas);
+					if($result  == true){
+						$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+						$res = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
 
-					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
-					if($headerPenjualan == true){
-						$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+						$total = $res->total + $this->input->post('total_harga');
+						$grandTotal = $total - $res->discount;
+
+						if((int)$this->input->post('metode_pembayaran') == 0){
+							$status_pembayaran = 0;
+						}else if((int)$this->input->post('metode_pembayaran') == 1){
+							$status_pembayaran = 1;
+						}else{
+							$status_pembayaran = 2;
+						}
+
+						$dataHeaderPenjualan = array(
+							'total' => $total,
+							'grandtotal' => $grandTotal,
+							'discount' => $this->input->post('discount'),
+							'grandtotal' => $this->input->post('grandtotal'),
+							'metode_pembayaran' => $this->input->post('metode_pembayaran'),
+							'status_pembayaran' => $status_pembayaran,
+							'updatedBy' => $this->session->userdata('id'),
+							'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
+							'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
+							'id_customer' => $this->input->post('customers')
+						);
+
+						$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
+						if($headerPenjualan == true){
+							$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+							redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+						}
+						$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
+						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+					}else{
+						$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
 						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 					}
-					$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
-					redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 				}else{
 					$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
 					redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));

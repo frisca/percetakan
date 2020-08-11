@@ -201,10 +201,20 @@
 										</td>
 										<td>
 											<?php 
-												if((int)$value->status_invoice == 1){
-													echo 'Sudah checkout';
+												// if((int)$value->status_invoice == 1 || !empty($value->status_invoice)){
+												// 	echo 'Sudah checkout';
+												// }else{
+												// 	echo 'Belum checkout';
+												// }
+												// var_dump($value->status_invoice);exit();
+												if(empty($value->status_invoice)){
+													echo 'Belum Checkout';
 												}else{
-													echo 'Belum checkout';
+													if((int)$value->status_invoice == 1 || !empty($value->status_invoice)){
+														echo 'Sudah checkout';
+													}else{
+														echo 'Belum checkout';
+													}
 												}
 											?>
 										</td>
@@ -234,7 +244,7 @@
 										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
-												<a class="blue" href="<?php echo base_url('report_penjualan/view/' . $value->id_header_penjualan);?>">
+												<a class="blue" href="<?php echo base_url('report_penjualan/detail/' . $value->id_header_penjualan);?>">
 													<i class="ace-icon fa fa-search-plus bigger-130"></i>
 												</a>
 											</div>
