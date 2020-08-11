@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 11 Agu 2020 pada 22.34
+-- Waktu pembuatan: 11 Agu 2020 pada 22.39
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 5.6.39
 
@@ -94,13 +94,6 @@ CREATE TABLE `header_penjualan` (
   `status_pembayaran` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `header_penjualan`
---
-
-INSERT INTO `header_penjualan` (`id_header_penjualan`, `tgl_penjualan`, `total`, `discount`, `dp1`, `dp2`, `grandtotal`, `metode_pembayaran`, `sisa_pembayaran`, `status`, `createdBy`, `createdDate`, `updatedBy`, `updatedDate`, `nomor_penjualan`, `status_delete`, `keterangan_delete`, `deleted_by`, `deleted_date`, `status_pembayaran`, `id_customer`) VALUES
-(1, '2020-08-11', 13000, 0, 0, 0, 13000, 0, 0, 0, 5, '2020-08-12 00:26:42', 5, '1970-01-01 01:00:00', '', 0, '', 0, '0000-00-00', 0, 7);
 
 -- --------------------------------------------------------
 
