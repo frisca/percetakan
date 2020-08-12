@@ -106,7 +106,7 @@ class Penjualan extends CI_Controller {
 					'id_user' => $this->session->userdata('id'),
 					'keterangan' => $this->input->post('keterangan')
 				);
-				var_dump($datas);exit();
+				// var_dump($datas);exit();
 				$result = $this->all_model->insertData("penjualan", $datas);
 				if($result  == true){
 					$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));

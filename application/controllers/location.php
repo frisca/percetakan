@@ -30,7 +30,12 @@ class Location extends CI_Controller {
 		$data = array(
 			'nama_location' => $this->input->post('nama'),
 			'alamat_location' => $this->input->post('alamat'),
-			'status' => $this->input->post('status')
+			'status' => $this->input->post('status'),
+			'kecamatan' => $this->input->post('kecamatan'),
+			'kota' => $this->input->post('kota'),
+			'email' => $this->input->post('email'),
+			'tlp' => $this->input->post('tlp'),
+			'ig' => $this->input->post('ig')
 		);
 
 		if($this->form_validation->run() == false){
@@ -115,6 +120,18 @@ class Location extends CI_Controller {
 		$this->form_validation->set_rules('ig', 'Instagram', 'required');
 
 		if($this->form_validation->run() == false){
+			$input = array(
+				'nama_location' => $this->input->post('nama'),
+				'alamat_location' => $this->input->post('alamat'),
+				'status' => $this->input->post('status'),
+				'kecamatan' => $this->input->post('kecamatan'),
+				'kota' => $this->input->post('kota'),
+				'email' => $this->input->post('email'),
+				'tlp' => $this->input->post('tlp'),
+				'ig' => $this->input->post('ig')
+			);
+
+			$this->session->set_flashdata('inputs', $input);
 			$this->load->view('location/edit/' . $this->input->post('id'));
 		}else{
 			$location = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->row();
