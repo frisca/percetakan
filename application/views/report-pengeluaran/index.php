@@ -84,11 +84,11 @@
 								</div>
 
 								<div class="col-xs-3" style="margin-top:10px;margin-bottom:10px;">
-									<button type="submit" class="search btn btn-sm btn-success" style="margin-bottom: 10px;">
-									Cari
+									<button type="submit" class="search btn btn-sm btn-success fa fa-search" style="margin-bottom: 10px;">
+									<!-- Cari -->
 									</button>
-									<button type="button" class="csv_pengeluaran btn btn-sm btn-info" style="margin-bottom: 10px;">
-									Print
+									<button type="button" class="csv_pengeluaran btn btn-sm btn-info fa fa-file-excel-o" style="margin-bottom: 10px;">
+									<!-- Print -->
 									</button>
 								</div>
 							</form>
