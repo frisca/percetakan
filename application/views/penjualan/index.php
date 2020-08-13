@@ -117,7 +117,7 @@
 														DP 1
 													</button>
 												<?php 
-														}else if($value->dp1 != 0){
+														}else if($value->dp1 != 0 && $value->dp2 == 0){
 												?>
 													<a href="<?php echo base_url('penjualan/prints');?>">
 													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
@@ -139,17 +139,8 @@
 														DP 2
 													</button>
 												<?php 
-														}else if($value->dp1 != 0 && $value->dp2 != 0){
-												?>
-													<a href="<?php echo base_url('penjualan/prints');?>">
-													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-														Print
-													</button>
-													</a>
-													<p>Total : <?php if(!empty($value->dp2)){ echo number_format($value->dp2, 0, '', '.'); } ?></p>
-												<?php
 														}
-													} 
+													}
 												?>
 											</td>
 											<td>
@@ -157,21 +148,31 @@
 													if($value->metode_pembayaran == 1){
 												?>
 												<a href="<?php echo base_url('penjualan/prints');?>">
-												<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-													Print
-												</button>
+													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+														Print
+													</button>
 												</a>
+												<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+												<?php
+													}else if($value->dp1 != 0 && $value->dp2 != 0){
+												?>
+													<a href="<?php echo base_url('penjualan/prints');?>">
+														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+															Print
+														</button>
+													</a>
+													<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
 													} 
 												?>
 											</td>
 											<td>
 												<?php
-													if($value->status_pembayaran == 0){
+													if((int)$value->status_pembayaran == 0){
 												?>
 													Belum Bayar
 												<?php
-													}else if($value->status_pembayaran == 1){
+													}else if((int)$value->status_pembayaran == 1){
 												?>
 													Lunas
 												<?php }else{ ?>

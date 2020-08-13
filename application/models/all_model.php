@@ -76,32 +76,30 @@ class All_model extends CI_Model {
 	}
 
 	public function getReportPenjualan($from, $to){
-		$query = "SELECT p.*, c.*, pd.id_penjualan from header_penjualan p left join customer c on c.id_customer = p.id_customer 
-		left join penjualan pd on pd.id_header_penjualan = p.id_header_penjualan where p.status_delete = 0
-		and (p.tgl_penjualan between '".$from."' and '".$to."') group by p.id_header_penjualan";
+		$query = "SELECT p.*, c.*, p.status as status_invoice from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		where p.status_delete = 0 and (p.tgl_penjualan between '".$from."' and '".$to."') group by p.id_header_penjualan order by p.tgl_penjualan desc";
 		return $this->db->query($query);
 	}
 
 	public function getReportPengeluaranByCondition($from_date, $to, $status){
-		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 and p.status = $status  and p.tgl_pengeluaran between '".$from_date."' and '".$to."' ";
+		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 " . $status . " and p.tgl_pengeluaran between '".$from_date."' and '".$to."' 
+		order by p.tgl_pengeluaran desc";
 		return $this->db->query($query);
 	}
 
 	public function getReportPenjualanByCondition($froms, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($status_invoice);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.*, pd.id_penjualan from header_penjualan p left join customer c on c.id_customer = p.id_customer 
-				left join penjualan pd.id_header_penjualan = p.id_header_penjualan where p.status_delete = 0
-				and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
-				and ".$status_invoice." and ".$status_pembayaran.") " . $froms . " group by p.id_header_penjualan";
+		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				where p.status_delete = 0 and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
+				and ".$status_invoice." and ".$status_pembayaran.") " . $froms . " group by p.id_header_penjualan order by p.tgl_penjualan desc";
 				// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 
 	public function getReportPenjualanByDate($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($from_date);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.*, pd.id_penjualan from header_penjualan p left join customer c on c.id_customer = p.id_customer 
-				left join penjualan pd.id_header_penjualan = p.id_header_penjualan where p.status_delete = 0
-				and p.tgl_penjualan between '".$from_date."' and '".$to."' group by p.id_header_penjualan";
+		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				where p.status_delete = 0 and p.tgl_penjualan between '".$from_date."' and '".$to."' group by p.id_header_penjualan order by p.tgl_penjualan desc";
 		return $this->db->query($query);
 	}
 
@@ -115,7 +113,44 @@ class All_model extends CI_Model {
 	}
 
 	public function getReportPengeluaranDate($from, $to){
-		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 and p.tgl_pengeluaran between '".$from."' and '".$to."'";
+		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 and p.tgl_pengeluaran between '".$from."' and '".$to."'
+		order by p.tgl_pengeluaran desc";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getReportPenjualanByWithoutDate($customer,  $no_invoice, $status_invoice, $status_pembayaran){
+		// var_dump($status_invoice);exit();
+		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				where p.status_delete = 0 and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
+				and ".$status_invoice." and ".$status_pembayaran.") group by p.id_header_penjualan order by p.tgl_penjualan desc ";
+				// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getReportPenjualanDetail($id){
+		// var_dump($status_invoice);exit();
+		$query = "SELECT p.*, sum(pj.qty) as qty_item, sum(pj.total_harga) as total_harga, pj.harga_satuan, s.satuan as unit, i.nama as item, pj.keterangan, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				 left join penjualan pj on pj.id_header_penjualan = p.id_header_penjualan
+				 left join item i on i.id_item = pj.id_item
+				 left join satuan s on s.id_satuan = i.id_satuan
+				 where pj.id_header_penjualan = ".$id." and pj.status_delete = 0 group by pj.id_item order by p.tgl_penjualan desc";
+				// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getReportPengeluaranWithoutDate($status){
+		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 ".$status."
+		order by p.tgl_pengeluaran desc";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getReportPengeluaranDetail($id){
+		$query = "SELECT p.*, sum(pg.price) as total_harga, pg.item, pg.keterangan from header_pengeluaran p 
+				 left join pengeluaran pg on pg.id_header_pengeluaran = p.id_header_pengeluaran 
+				 where p.id_header_pengeluaran = ".$id." and pg.status_delete = 0 group by pg.item
+		         order by p.tgl_pengeluaran desc";
 		return $this->db->query($query);
 	}
 }

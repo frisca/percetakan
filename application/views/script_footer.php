@@ -491,6 +491,13 @@
 			"&no_invoice=" + no_invoice + "&customer=" + customer + "&invoice=" + status + "&status_pembayaran=" + status_pembayaran;
 		});
 
+		$('.csv_det_penjualan').on('click',function(){
+			var from_date = $('#from_date').val();
+			var to_date = $('#to_date').val();
+			var id = $(this).attr('headerpenjualan');
+			window.location = "<?php echo base_url('report_penjualan/printDetail/');?>" + "/" + id + "?from_date=" + from_date + "&to_date=" + to_date;
+		});
+
 		$('.csv_pengeluaran').on('click',function(){
 			var from_date = $('#from_date').val();
 			var to_date = $('#to_date').val();
@@ -509,6 +516,13 @@
 			// console.log('status : ' + status + 'status pembayaran : ' + status_pembayaran);
 			window.location = "<?php echo base_url('report_pengeluaran/export');?>" + "?from_date=" + from_date + "&to_date=" + to_date + 
 			"&status=" + status;
+		});
+
+		$('.csv_det_pengeluaran').on('click',function(){
+			var from_date = $('#from_date').val();
+			var to_date = $('#to_date').val();
+			var id = $(this).attr('headerpengeluaran');
+			window.location = "<?php echo base_url('report_pengeluaran/printDetail/');?>" + "/" + id + "?from_date=" + from_date + "&to_date=" + to_date;
 		});
 
 		$(document).on('hidden', '#show_modal', function () {

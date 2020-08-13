@@ -67,9 +67,6 @@
 
 								<div class="col-xs-3" style="margin-top:10px;margin-bottom:10px;">
 									<select name="status" class="form-control" data-placeholder="Pilih status ..." id="status" style="width: 100%">
-										<!-- <option value="-99">Pilih Status Pembayaran</option>
-										<option value="1">Lunas</option>
-										<option value="2">DP</option> -->
 										<?php if($status == "0"){?>
 											<option value="-99">Pilih Status</option>
 											<option value="0" selected>Open</option>
@@ -122,7 +119,7 @@
 											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
                                             <td>
-                                                <?php echo $value->total;?>	
+                                                <?php echo number_format($value->total, 0, '', '.');?>	
 											</td>
                                             <td>
                                                 <?php 
@@ -159,9 +156,14 @@
 											</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="<?php echo base_url('report_pengeluaran/detail/' . $value->id_header_pengeluaran);?>">
+													<a class="blue" href="<?php echo base_url('report_pengeluaran/detail/' . $value->id_header_pengeluaran);?>"
+													target="_blank">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
+													<button type="button" class="csv_det_pengeluaran btn btn-sm btn-info fa fa-file-excel-o" style="margin-bottom: 10px;"
+													headerpengeluaran="<?php echo $value->id_header_pengeluaran;?>">
+														<!-- <i class="ace-icon fa fa-file-excel-o bigger-130"></i> -->
+													</button>
 												</div>
 											</td>
 										</tr>
@@ -177,7 +179,7 @@
 									<tbody>
 										<tr style="width:10%;">
 											<th>Sum Total</th>
-											<td><?php echo $total;?></td>
+											<td><?php echo number_format($total, 0, '', '.');?></td>
 										</tr>
 									</tbody>
 								</table>

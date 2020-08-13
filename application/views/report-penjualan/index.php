@@ -68,8 +68,8 @@
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 								<!-- <input type="text" placeholder="Customer" class="form-control customer" name="customer" value="<?php if(!empty($customer)){ echo $customer;}?>" id="customer"/> -->
-								<input type="text" placeholder="Customer" class="form-control customer" name="customers" value="<? if(!empty($customer)){ echo $customer->first_name . ' ' . $customer->last_name;}?>">
-								<input type="hidden" class="form-control customers" name="customer" value="<? if(!empty($customer)){ echo $customer->id_customer;}?>" id="customer">
+								<input type="text" placeholder="Customer" class="form-control customer" name="customers" value="<?php if(!empty($customer)){ echo $customer->first_name . ' ' . $customer->last_name;}?>">
+								<input type="hidden" class="form-control customers" name="customer" value="<?php if(!empty($customer)){ echo $customer->id_customer;}?>" id="customer">
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
@@ -114,11 +114,11 @@
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
-								<button type="submit" class="search btn btn-sm btn-success" style="margin-bottom: 10px;">
-								Cari
+								<button type="submit" class="search btn btn-sm btn-success fa fa-search" style="margin-bottom: 10px;">
+								<!-- Cari -->
 								</button>
-								<button type="button" class="csv_penjualan btn btn-sm btn-info" style="margin-bottom: 10px;">
-								Print
+								<button type="button" class="csv_penjualan btn btn-sm btn-info fa fa-file-excel-o" style="margin-bottom: 10px;">
+								<!-- Export ke Excel -->
 								</button>
 							</div>
 						</form>
@@ -158,6 +158,29 @@
 											$discount = $discount + $value->discount;
 											$dp1 = $dp1 + $value->dp1;
 											$dp2 = $dp2 + $value->dp2;
+											// var_dump($value->updatedDate);exit();
+											$value->tgl_penjualan = explode(" ", $value->tgl_penjualan);
+											$value->updatedDate = explode(" ", $value->updatedDate);
+											$value->createdDate = explode(" ", $value->createdDate);
+
+											// var_dump($value->updatedDate[0]);exit();
+											if($value->tgl_penjualan[0] == '1970-01-01' || $value->tgl_penjualan[0] == '0000-00-00'){
+												$tgl_penjualan = '';
+											}else{
+												$tgl_penjualan = date('d-m-Y', strtotime($value->tgl_penjualan[0]));
+											}
+
+											if($value->updatedDate[0] == '1970-01-01' || $value->updatedDate[0] == '0000-00-00'){
+												$updatedDate = '';
+											}else{
+												$updatedDate = date('d-m-Y', strtotime($value->updatedDate[0]));
+											}
+
+											if($value->createdDate[0] == '1970-01-01' || $value->createdDate[0] == '0000-00-00'){
+												$createdDate = '';
+											}else{
+												$createdDate = date('d-m-Y', strtotime($value->createdDate[0]));
+											}
 									?>
 									<tr>
 										<td>
@@ -169,7 +192,7 @@
 												}
 											?>	
 										</td>
-										<td><?php echo date('d-m-Y', strtotime($value->tgl_penjualan));?></td>
+										<td><?php echo $tgl_penjualan;?></td>
 										<td><?php echo $value->first_name . ' ' . $value->last_name;?></td>
 										<td><?php echo number_format($value->total, 0, '', '.');?></td>
 										<td><?php echo number_format($value->discount, 0, '', '.');?></td>
@@ -177,22 +200,29 @@
 										<td>
 											<?php 
 												if($value->dp1 != ""){
-													echo $value->dp1;
+													echo number_format($value->dp1, 0, '', '.');
 												}
 											?>
 										</td>
 										<td>
 											<?php 
 												if($value->dp2 != ""){
-													echo $value->dp2;
+													echo number_format($value->dp2, 0, '', '.');
 												}
 											?>
 										</td>
 										<td>
 											<?php 
-												if($value->metode_pembayaran == 2){
+												// if($value->metode_pembayaran == 2){
+												// 	echo 'DP';
+												// }else if($value->metode_pembayaran == 1){
+												// 	echo 'Lunas';
+												// }else{
+												// 	echo 'Belum Bayar';
+												// }
+												if((int)$value->status_pembayaran == 2){
 													echo 'DP';
-												}else if($value->metode_pembayaran == 1){
+												}else if((int)$value->status_pembayaran == 1){
 													echo 'Lunas';
 												}else{
 													echo 'Belum Bayar';
@@ -207,18 +237,26 @@
 												// 	echo 'Belum checkout';
 												// }
 												// var_dump($value->status_invoice);exit();
-												if(empty($value->status_invoice)){
+												// if(empty($value->status_invoice)){
+												// 	echo 'Belum Checkout';
+												// }else{
+												// 	if((int)$value->status_invoice == 1 || !empty($value->status_invoice)){
+												// 		echo 'Sudah checkout';
+												// 	}else{
+												// 		echo 'Belum checkout';
+												// 	}
+												// }
+												// var_dump($value->status_invoice);exit();
+												if((int)$value->status_invoice == 0){
 													echo 'Belum Checkout';
+												}else if((int)$value->status_invoice == 1){
+													echo 'Sudah Checkout';
 												}else{
-													if((int)$value->status_invoice == 1 || !empty($value->status_invoice)){
-														echo 'Sudah checkout';
-													}else{
-														echo 'Belum checkout';
-													}
+													echo "Belum Checkout";
 												}
 											?>
 										</td>
-										<td><?php echo date('d-m-Y', strtotime($value->createdDate));?></td>
+										<td><?php echo $createdDate;?></td>
 										<td>
 											<?php
 												if(!empty($user)){
@@ -230,7 +268,7 @@
 												}
 											?>
 										</td>
-										<td><?php echo date('d-m-Y', strtotime($value->updatedDate));?></td>
+										<td><?php echo $updatedDate;?></td>
 										<td>
 											<?php
 												if(!empty($user)){
@@ -244,9 +282,17 @@
 										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
-												<a class="blue" href="<?php echo base_url('report_penjualan/detail/' . $value->id_header_penjualan);?>">
+												<a class="blue" href="<?php echo base_url('report_penjualan/detail/' . $value->id_header_penjualan);?>"
+													target="_blank">
 													<i class="ace-icon fa fa-search-plus bigger-130"></i>
 												</a>
+												<!-- <a class="blue" href="<?php echo base_url('report_penjualan/printDetail/' . $value->id_header_penjualan);?>">
+													<i class="ace-icon fa fa-file-excel-o bigger-130"></i>
+												</a> -->
+												<button type="button" class="csv_det_penjualan btn btn-sm btn-info fa fa-file-excel-o" style="margin-bottom: 10px;"
+												headerpenjualan="<?php echo $value->id_header_penjualan;?>">
+													<!-- <i class="ace-icon fa fa-file-excel-o bigger-130"></i> -->
+												</button>
 											</div>
 										</td>
 									</tr>
@@ -262,23 +308,23 @@
 								<tbody>
 									<tr style="width:10%;">
 										<th>Sum Total</th>
-										<td><?php echo $total;?></td>
+										<td><?php echo number_format($total, 0, '', '.');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum Total Discount</th>
-										<td><?php echo $discount;?></td>
+										<td><?php echo number_format($discount, 0, '', '.');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum GrandTotal</th>
-										<td><?php echo $grandtotal;?></td>
+										<td><?php echo number_format($grandtotal, 0, '', '.');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum DP 1</th>
-										<td><?php echo $dp1;?></td>
+										<td><?php echo number_format($dp1, 0, '', '.');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum DP 2</th>
-										<td><?php echo $dp2;?></td>
+										<td><?php echo number_format($dp2, 0, '', '.');?></td>
 									</tr>
 								</tbody>
 							</table>
