@@ -22,15 +22,6 @@
 						</li>
 						<li class="active">Penjualan</li>
 					</ul><!-- /.breadcrumb -->
-
-					<div class="nav-search" id="nav-search">
-						<form class="form-search">
-							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-								<i class="ace-icon fa fa-search nav-search-icon"></i>
-							</span>
-						</form>
-					</div><!-- /.nav-search -->
 				</div>
 				<div class="page-content">
 					<div class="page-header">
@@ -80,6 +71,7 @@
 										<tr>
 											<th>Nomor Penjualan</th>
 											<th>Tanggal Penjualan</th>
+											<th>Nama Customer</th>
 											<th>Total</th>
 											<th>Discount</th>
 											<th>GrandTotal</th>
@@ -105,6 +97,7 @@
 												?>	
 											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_penjualan));?></td>
+											<td><?php echo $value->first_name . ' ' . $value->last_name;?></td>
 											<td><?php echo number_format($value->total, 0, '', '.');?></td>
 											<td><?php echo number_format($value->discount, 0, '', '.');?></td>
 											<td><?php echo number_format($value->grandtotal, 0, '', '.');?></td>

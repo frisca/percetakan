@@ -61,7 +61,7 @@
 						<?php } ?>
 						
 						<div class="table-header">
-							Tambah Data Location
+							Ubah Data Location
 						</div>
 					</div>
 

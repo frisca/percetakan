@@ -23,15 +23,6 @@
 						<li>Report</li>
 						<li class="active">Penjualan</li>
 					</ul><!-- /.breadcrumb -->
-
-					<div class="nav-search" id="nav-search">
-						<form class="form-search">
-							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-								<i class="ace-icon fa fa-search nav-search-icon"></i>
-							</span>
-						</form>
-					</div><!-- /.nav-search -->
 				</div>
 				<div class="page-content">
 					<div class="page-header">
@@ -101,7 +92,7 @@
 										<option value="-99">Pilih Status Pembayaran</option>
 										<option value="1" selected>Lunas</option>
 										<option value="2">DP</option>
-									<?php }else if($status_invoice == "2"){?>
+									<?php }else if($status_pembayaran == "2"){?>
 										<option value="-99">Pilih Status Pembayaran</option>
 										<option value="1">Lunas</option>
 										<option value="2" selected>DP</option>

@@ -153,4 +153,10 @@ class All_model extends CI_Model {
 		         order by p.tgl_pengeluaran desc";
 		return $this->db->query($query);
 	}
+
+	public function getHeaderPenjualan(){
+		$query = "select hp.*, c.* from header_penjualan hp left join customer c on c.id_customer = hp.id_customer
+				where hp.status_delete = 0";
+		return $this->db->query($query);
+	}
 }

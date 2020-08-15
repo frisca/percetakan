@@ -9,7 +9,8 @@ class Penjualan extends CI_Controller {
 
 	public function index()
 	{
-		$data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', array('status_delete' => 0))->result();
+		// $data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', array('status_delete' => 0))->result();
+		$data['header_penjualan'] = $this->all_model->getHeaderPenjualan()->result();
 		$this->load->view('penjualan/index', $data);
 	}
 
@@ -340,6 +341,7 @@ class Penjualan extends CI_Controller {
 			$items = $this->all_model->getDataByCondition('item', $con_item)->row();
 
 			if($items->is_design == 1){
+				// var_dump($_FILES['line_item']['name']);exit();
 				if(!$_FILES['line_item']['name']){
 					$datas = array(
 						'id_item' => $this->input->post('id_item'),
@@ -366,46 +368,61 @@ class Penjualan extends CI_Controller {
 						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 					}
 				}else{
-					unlink(FCPATH."gambar/".$penjualan->line_item);
-
 					$new_name                   = time().$_FILES["line_item"]['name'];
 			        $config['file_name']        = $new_name;
-					$config['upload_path']      = './gambar/';
-					$config['allowed_types']    = 'gif|jpg|png';
+					// $config['upload_path']      = './gambar/';
+					// $config['allowed_types']    = 'gif|jpg|png';
+					$config['upload_path'] = './gambar/';
+					$config['allowed_types'] = 'gif|jpg|png|jpeg';
+					$config['max_size'] = 2000;
+					$config['max_width'] = 1500;
+					$config['max_height'] = 1500;
 
 					$this->load->library('upload', $config);
-			 
-					if ( ! $this->upload->do_upload('line_item')){
-						$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
-						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+
+					// var_dump($penjualan->line_item);exit();
+					if(!empty($penjualan->line_item) || $penjualan->line_item != ""){
+						unlink(FCPATH."gambar/".$penjualan->line_item);
 					}
-					$datas = array(
-						'id_item' => $this->input->post('id_item'),
-						'id_satuan' => $this->input->post('id_satuan'),
-						'qty' => $this->input->post('qty'),
-						'harga_satuan' => $this->input->post('harga_satuan'),
-						'total_harga' => $this->input->post('total_harga'),
-						'updated_date' => date('Y-m-d'),
-						'updated_by' => $this->session->userdata('id'),
-						'line_item' => $new_name,
-						'keterangan' => $this->input->post('keterangan')
-					);
-					$result = $this->all_model->updateData("penjualan", $con, $datas);
-					if($result  == true){
-						$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
-						if($headerPenjualan == true){
-							$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+			 
+					if ($this->upload->do_upload('line_item')){
+						$datas = array(
+							'id_item' => $this->input->post('id_item'),
+							'id_satuan' => $this->input->post('id_satuan'),
+							'qty' => $this->input->post('qty'),
+							'harga_satuan' => $this->input->post('harga_satuan'),
+							'total_harga' => $this->input->post('total_harga'),
+							'updated_date' => date('Y-m-d'),
+							'updated_by' => $this->session->userdata('id'),
+							'line_item' => $new_name,
+							'keterangan' => $this->input->post('keterangan')
+						);
+						$result = $this->all_model->updateData("penjualan", $con, $datas);
+						if($result  == true){
+							$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
+							if($headerPenjualan == true){
+								$this->session->set_flashdata('success', 'Data item berhasil disimpan');
+								redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+							}
+							$this->session->set_flashdata('error', 'Data penjualan tidak berhasil diubah');
+							redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+						}else{
+							$this->session->set_flashdata('error', 'Data penjualan tidak berhasil diubah');
 							redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 						}
-						$this->session->set_flashdata('error', 'Data penjualan tidak berhasil diubah');
-						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+						// $this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
+						// redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 					}else{
-						$this->session->set_flashdata('error', 'Data penjualan tidak berhasil diubah');
+						$this->session->set_flashdata('error', $this->upload->display_errors());
 						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 					}
+					
 				}
 			}else{
-				unlink(FCPATH."gambar/".$penjualan->line_item);
+				// unlink(FCPATH."gambar/".$penjualan->line_item);
+				if(!empty($penjualan->line_item) || $penjualan->line_item != ""){
+					unlink(FCPATH."gambar/".$penjualan->line_item);
+				}
 
 				$datas = array(
 					'id_item' => $this->input->post('id_item'),

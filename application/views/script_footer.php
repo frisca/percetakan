@@ -447,26 +447,54 @@
 		    }
 		});
 
-		$('.customer').autocomplete({
-			source: "<?php echo site_url('report_penjualan/get_autocomplete?');?>",
-			// select: function(event, ui) {
-			// 	// console.log("ui: " + ui.item.label);
-			// 	$('input[name="customers"]').val(ui.item.label);
-			// }
-			focus: function (event, ui) {
-				event.preventDefault();
-				$(".customer").val(ui.item.label);
-			},
-			select: function (event, ui) {
-				event.preventDefault();
-				$("input[name='customer']").val(ui.item.value);
-				$(".customer").val(ui.item.label);
-			},
-			// close: function(el){
-			// 	$("input[name='customer']").attr('value', '');
-			// 	$(".customer").val('');
-			// }
+		$('.customer').keyup(function(e){
+			if($(this).val() == ''){
+				$("input[name='customer']").attr('value', '');
+				$('.customer').attr('value', '');
+			}else{
+				$('.customer').autocomplete({
+				source: "<?php echo site_url('report_penjualan/get_autocomplete?');?>",
+				// select: function(event, ui) {
+				// 	// console.log("ui: " + ui.item.label);
+				// 	$('input[name="customers"]').val(ui.item.label);
+				// }
+				focus: function (event, ui) {
+					event.preventDefault();
+					$(".customer").val(ui.item.label);
+				},
+				select: function (event, ui) {
+					event.preventDefault();
+					$("input[name='customer']").val(ui.item.value);
+					$(".customer").val(ui.item.label);
+				},
+				// close: function(el){
+				// 	$("input[name='customer']").attr('value', '');
+				// 	$(".customer").val('');
+				// }
+			});
+			}
 		});
+
+		// $('.customer').autocomplete({
+		// 	source: "<?php echo site_url('report_penjualan/get_autocomplete?');?>",
+		// 	// select: function(event, ui) {
+		// 	// 	// console.log("ui: " + ui.item.label);
+		// 	// 	$('input[name="customers"]').val(ui.item.label);
+		// 	// }
+		// 	focus: function (event, ui) {
+		// 		event.preventDefault();
+		// 		$(".customer").val(ui.item.label);
+		// 	},
+		// 	select: function (event, ui) {
+		// 		event.preventDefault();
+		// 		$("input[name='customer']").val(ui.item.value);
+		// 		$(".customer").val(ui.item.label);
+		// 	},
+		// 	// close: function(el){
+		// 	// 	$("input[name='customer']").attr('value', '');
+		// 	// 	$(".customer").val('');
+		// 	// }
+		// });
 
 		$('.csv_penjualan').on('click',function(){
 			var from_date = $('#from_date').val();
