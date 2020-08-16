@@ -96,13 +96,12 @@
 
 							<!-- div.dataTables_borderWrap -->
 							<div>
-								<table id="example" class="table table-striped table-bordered table-hover">
+								<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 									<thead>
 										<tr>
 											<th>Nama Item</th>
 											<th>Harga</th>
 											<th>Keterangan</th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody>

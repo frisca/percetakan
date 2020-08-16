@@ -155,8 +155,8 @@ class All_model extends CI_Model {
 	}
 
 	public function getHeaderPenjualan(){
-		$query = "select hp.*, c.* from header_penjualan hp left join customer c on c.id_customer = hp.id_customer
-				where hp.status_delete = 0";
+		$query = "select hp.*, hp.status as status_invoice, c.* from header_penjualan hp 
+				left join customer c on c.id_customer = hp.id_customer where hp.status_delete = 0";
 		return $this->db->query($query);
 	}
 }

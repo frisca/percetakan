@@ -115,10 +115,10 @@
 						</form>
 
 						<div class="col-xs-12">
-							<table id="example" class="table table-striped table-bordered table-hover">
+							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 								<thead>
 									<tr>
-										<th>Nomor Invoice</th>
+										<th width="20%">Nomor Invoice</th>
 										<th>Tanggal Invoice</th>
 										<th>Nama Customer</th>
 										<th>Total</th>
@@ -295,7 +295,7 @@
 						</div>
 
 						<div class="col-xs-12" style="margin-top:20px;">
-							<table id="example" class="table table-striped table-bordered table-hover">
+							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 								<tbody>
 									<tr style="width:10%;">
 										<th>Sum Total</th>

@@ -20,18 +20,18 @@
 						<i class="ace-icon fa fa-home home-icon"></i>
 						<a href="#">Home</a>
 					</li>
-					<li class="active">User</li>
-					<li class="active">Item</li>
+					<li class="active">Profil</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 
 			<div class="page-content">
+
 				<div class="page-header">
 					<h1>
-						Item
+						Profil
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Item
+							Profil
 						</small>
 					</h1>
 				</div>
@@ -39,83 +39,53 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="table-header">
-							Lihat Data Item
+							Data Profil
 						</div>
 					</div>
 
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
-						<?php if(validation_errors() != ""){?>
-							<div class="alert alert-danger form-group">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								<?php echo validation_errors();?>
-							</div>
-						<?php } ?>
-
-						<?php if($this->session->flashdata('error') != ""){?>
-							<div class="alert alert-danger form-group">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								<?php echo $this->session->flashdata('error');?>
-							</div>
-						<?php } ?>
-						
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;">
-							<input type="hidden" name="id" value="<?php echo $item->id_item;?>"/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" value="<?php echo $item->nama;?>" disabled />
+									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" disabled name="nama" value="<?php echo $user->nama;?>" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Satuan</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Username</label>
 
 								<div class="col-sm-9">
-									<select name="id_satuan" class="select2" data-placeholder="Click to Choose..." disabled>
+									<input type="text" id="form-field-1-1" placeholder="Username" class="form-control" name="username" value="<?php echo $user->username;?>" disabled/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Passsword</label>
+
+								<div class="col-sm-9">
+									<input type="password" id="form-field-1-1" placeholder="Password" class="form-control" name="password" disabled />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
+
+								<div class="col-sm-9">
+									<select name="id_location" class="select2" data-placeholder="Click to Choose..." disabled>
 										<?php 
-											foreach ($satuan as $key => $value) {
-												if($value->id_satuan == $item->id_satuan){
+											foreach ($location as $key => $value) {
+												if($user->id_location == $value->id_location){
 										?>
-											<option value="<?php echo $value->id_satuan;?>" selected><?php echo $value->satuan;?></option>
+											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>
 										<?php 
-												}else{
+											}else{ 
 										?>
-											<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
-										<?php
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
+										<?php 
 												}
-											}
-										?>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Harga</label>
-
-								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control" name="hargas" required 
-									value="<?php echo number_format($item->harga, 0, '', '.');?>" disabled/>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Desain</label>
-
-								<div class="col-sm-9">
-									<select name="is_design"  data-placeholder="Click to Choose..." disabled>
-										<?php 
-											if($item->is_design == 0){
-										?>
-											<option value=0 selected>Tidak</option>
-											<option value=1>Ya</option>
-										<?php 
-											}else{
-										?>
-											<option value=0>Tidak</option>
-											<option value=1 selected>Ya</option>
-										<?php 
 											}
 										?>
 									</select>
@@ -124,7 +94,7 @@
 
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
-									<a href="<?php echo base_url('item/index');?>">
+									<a href="<?php echo base_url('home/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo"></i>
 											Back

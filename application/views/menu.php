@@ -1,6 +1,9 @@
 <ul class="nav nav-list">
+	<?php 
+		if($this->session->userdata('role') != 3){
+	?>
 	<li class="active">
-		<a href="index.html">
+		<a href="<?php echo base_url('home/index');?>">
 			<i class="menu-icon fa fa-tachometer"></i>
 			<span class="menu-text"> Dashboard </span>
 		</a>
@@ -125,4 +128,49 @@
 			</li>
 		</ul>
 	</li>
-</ul><!-- /.nav-list -->
+	<?php
+		}else{
+	?>
+		<li class="active">
+			<a href="<?php echo base_url('home/index');?>">
+				<i class="menu-icon fa fa-tachometer"></i>
+				<span class="menu-text"> Dashboard </span>
+			</a>
+			<b class="arrow"></b>
+		</li>
+		<li class="">
+			<a href="<?php echo base_url('customer/index')?>">
+				<i class="menu-icon fa fa-user"></i>
+				<span class="menu-text"> Customer</span>
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+		<li class="">
+			<a href="<?php echo base_url('item/index')?>">
+				<i class="menu-icon fa fa-list"></i>
+				<span class="menu-text"> Item</span>
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+		<li class="">
+			<a href="<?php echo base_url('penjualan/index')?>">
+				<i class="menu-icon fa fa-cart-plus"></i>
+				<span class="menu-text"> Penjualan</span>
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+		<li class="">
+			<a href="<?php echo base_url('pengeluaran/index')?>">
+				<i class="menu-icon fa fa-exchange"></i>
+				<span class="menu-text"> Pengeluaran</span>
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+	<?php
+		}
+	?>
+</ul>

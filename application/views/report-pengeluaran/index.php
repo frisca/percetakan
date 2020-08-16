@@ -84,7 +84,7 @@
 								</div>
 							</form>
 							<div class="col-xs-12">
-								<table id="example" class="table table-striped table-bordered table-hover">
+								<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 									<thead>
 										<tr>
 											<th>Nomor Pengeluaran</th>

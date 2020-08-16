@@ -66,7 +66,7 @@
 
 							<!-- div.dataTables_borderWrap -->
 							<div>
-								<table id="example" class="table table-striped table-bordered table-hover">
+								<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 									<thead>
 										<tr>
 											<th>Nomor Penjualan</th>
@@ -178,15 +178,33 @@
 													<a class="blue" href="<?php echo base_url('penjualan/view/' . $value->id_header_penjualan);?>">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
-													<?php if($value->status_pembayaran != 1){ ?>
-													<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
-														<i class="ace-icon fa fa-pencil bigger-130"></i>
-													</a>
+													<?php 
+														if($this->session->userdata('role') != 3){
+													?>
+														<?php if($value->status_pembayaran != 1){ ?>
+														<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
+															<i class="ace-icon fa fa-pencil bigger-130"></i>
+														</a>
 
-													<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
-														<i class="ace-icon fa fa-trash-o bigger-130"></i>
-													</a>
-													<?php } ?>
+														<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
+															<i class="ace-icon fa fa-trash-o bigger-130"></i>
+														</a>
+														<?php } ?>
+													<?php
+														}else{
+															if((int)$value->status_invoice != 1){
+													?>
+														<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
+															<i class="ace-icon fa fa-pencil bigger-130"></i>
+														</a>
+
+														<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
+															<i class="ace-icon fa fa-trash-o bigger-130"></i>
+														</a>
+													<?php
+															}
+														}
+													?>
 												</div>
 											</td>
 										</tr>

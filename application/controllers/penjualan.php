@@ -1135,7 +1135,7 @@ class Penjualan extends CI_Controller {
 	// 	$pdf->Output('contoh1.pdf', 'I');
 	// }
 
-	public function prints(){
+	public function prints($id){
 		$this->load->library('pdf');
 
 		$descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata";

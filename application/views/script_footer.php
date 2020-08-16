@@ -41,7 +41,9 @@
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$('#example').DataTable();
+				$('#example').DataTable({
+					"scrollX": true
+				});
 
 				// $('#savePenjualan').click(function(){
 				// 	if($('#qty').val()){

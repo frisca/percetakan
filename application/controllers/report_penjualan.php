@@ -372,17 +372,20 @@ class Report_Penjualan extends CI_Controller {
 	}
 
 	public function detail($id){
-		$condition = array('id_header_penjualan' => $id);
-		$data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
-		// var_dump($data);exit();
-		$data['penjualan'] = $this->all_model->getPenjualanByHeaderPenjualan($id)->result();
-		$data['counts'] = $this->all_model->getPenjualanByStatusHeaderPenjualan($id)->num_rows();
-		$data['item'] = $this->all_model->getAllData('item')->result();
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		// $condition = array('id_header_penjualan' => $id);
+		// $data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+		// // var_dump($data);exit();
+		// $data['penjualan'] = $this->all_model->getPenjualanByHeaderPenjualan($id)->result();
+		// $data['counts'] = $this->all_model->getPenjualanByStatusHeaderPenjualan($id)->num_rows();
+		// $data['item'] = $this->all_model->getAllData('item')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
 
-		$condition = array('id_user' => $this->session->userdata('id'));
-		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
-		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
+		// $condition = array('id_user' => $this->session->userdata('id'));
+		// $data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		// $data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
+		$data['report'] = $this->all_model->getReportPenjualanDetail($id)->result();
+
+		$data['user'] = $this->all_model->getAllData('user')->result();
 		$this->load->view('report-penjualan/detail', $data);
 	}
 
@@ -402,13 +405,16 @@ class Report_Penjualan extends CI_Controller {
 
 		// Panggil class PHPExcel nya
 		$objPHPExcel = new PHPExcel();
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Transaksi Penjualan"); // Set kolom A1 dengan tulisan "DATA SISWA"
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Transaksi Penjualan"); 
 		$objPHPExcel->getActiveSheet()->mergeCells('A1:O1'); // Set Merge Cell pada kolom A1 sampai E1
 		$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); // Set bold kolom A1
 		$objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); // Set font size 15 untuk kolom A1
 		$objPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Periode " . $this->input->get('from_date') . " s/d " . $this->input->get('to_date')); // Set kolom A1 dengan tulisan "DATA SISWA"
+		if($from != '' && $to == ''){
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Periode " . $this->input->get('from_date') . " s/d " . $this->input->get('to_date')); 
+		}
+
 		$objPHPExcel->getActiveSheet()->mergeCells('A2:O2'); // Set Merge Cell pada kolom A1 sampai E1
 		$objPHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); // Set bold kolom A1
 		$objPHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setSize(15); // Set font size 15 untuk kolom A1
@@ -465,24 +471,6 @@ class Report_Penjualan extends CI_Controller {
 			}else{
 				$stat_payment = 'Belum Bayar';
 			}
-
-			// if($list->metode_pembayaran == "2"){
-			// 	$stat_payment =  'DP';
-			// }else if($list->metode_pembayaran == "1" && ($list->dp1 != "" && $list->dp2 != "")){
-			// 	$stat_payment = 'Lunas';
-			// }else if($list->metode_pembayaran == "0"){
-			// 	$stat_payment = 'Belum Bayar';
-			// }else if($list->metode_pembayaran == "1") {
-			// 	$stat_payment = 'Lunas';
-			// }else if($list->dp1 != "" && $list->dp2 != ""){
-			// 	$stat_payment =  'Lunas';
-			// }
-
-			// if ((int)$list->status_invoice == 0 || empty($list->status_invoice)){
-			// 	$stat_invoice = 'Belum checkout';
-			// }else{
-			// 	$stat_invoice = 'Sudah checkout';
-			// }
 
 			if((int)$list->status_invoice == 0){
 				$stat_invoice =  'Belum Checkout';

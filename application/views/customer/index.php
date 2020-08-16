@@ -67,7 +67,7 @@
 
 						<!-- div.dataTables_borderWrap -->
 						<div>
-							<table id="example" class="table table-striped table-bordered table-hover">
+							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 								<thead>
 									<tr>
 										<th>First Name</th>
@@ -96,7 +96,9 @@
 												<a class="blue" href="<?php echo base_url('customer/view/' . $value->id_customer);?>">
 													<i class="ace-icon fa fa-search-plus bigger-130"></i>
 												</a>
-
+												<?php 
+													if($this->session->userdata('role') != 3){
+												?>
 												<a class="green" href="<?php echo base_url('customer/edit/' . $value->id_customer)?>">
 													<i class="ace-icon fa fa-pencil bigger-130"></i>
 												</a>
@@ -104,6 +106,9 @@
 												<a class="red" href="<?php echo base_url('customer/delete/' . $value->id_customer);?>">
 													<i class="ace-icon fa fa-trash-o bigger-130"></i>
 												</a>
+												<?php
+													}
+												?>
 											</div>
 										</td>
 									</tr>

@@ -160,7 +160,7 @@
 
 						<!-- div.dataTables_borderWrap -->
 						<div>
-							<table id="example" class="table table-striped table-bordered table-hover">
+							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 								<thead>
 									<tr>
 										<th>Nama Item</th>
@@ -183,11 +183,15 @@
 												<?php
 													if($value->line_item == ""){
 												?>
+												<a href="<?php echo base_url('gambar/' . $value->line_item);?>" target="_blank">
 													<img id="my_image" src="<?php echo base_url('gambar/no_img.png');?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
+												</a>
 												<?php 
 													}else{
 												?>
+												<a href="<?php echo base_url('gambar/' . $value->line_item);?>" target="_blank">
 													<img id="my_image" src="<?php echo base_url('gambar/' . $value->line_item);?>" style="width: 100px;height: 100px;margin-bottom: 10px;"/>
+												</a>
 												<?php
 													}
 												?>

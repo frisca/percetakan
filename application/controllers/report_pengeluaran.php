@@ -193,11 +193,14 @@ class Report_Pengeluaran extends CI_Controller {
 	}
 
 	public function detail($id){
-		$condition = array('id_header_pengeluaran' => $id);
-		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
-		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0))->result();
-		$condition = array('id_user' => $this->session->userdata('id'));
-		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		// $condition = array('id_header_pengeluaran' => $id);
+		// $data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
+		// $data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0))->result();
+		// $condition = array('id_user' => $this->session->userdata('id'));
+		// $data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
+		$data['report'] = $this->all_model->getReportPengeluaranDetail($id)->result();
+		// var_dump($report);exit();
+		$data['user'] = $this->all_model->getAllData('user')->result();
 		$this->load->view('report-pengeluaran/detail', $data);
 	}
 

@@ -102,7 +102,7 @@ class Customer extends CI_Controller {
 	{
 		$condition = array('id_customer' => $id);
 		$data['customer'] = $this->all_model->getDataByCondition('customer', $condition)->row();
-		$this->load->view('location/view', $data);
+		$this->load->view('customer/view', $data);
 	}
 
 

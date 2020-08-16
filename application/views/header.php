@@ -24,9 +24,9 @@
 			<ul class="nav ace-nav">
 				<li class="light-blue dropdown-modal">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle" style="background-color: red;">
-						<img class="nav-user-photo" src="<?php echo base_url();?>assets/images/avatars/user.jpg" alt="Jason's Photo" />
+						<img class="nav-user-photo" src="<?php echo base_url();?>assets/images/avatars/users.png" alt="Jason's Photo" />
 						<span class="user-info">
-							<small>Welcome,</small>
+							<small>Selamat datang,</small>
 							<?php echo $this->session->userdata('nama');?>
 						</span>
 
@@ -35,16 +35,16 @@
 
 					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 						<li>
-							<a href="#">
+							<a href="<?php echo base_url('profil/edit');?>">
 								<i class="ace-icon fa fa-cog"></i>
-								Settings
+								Ubah Profil
 							</a>
 						</li>
 
 						<li>
-							<a href="profile.html">
+							<a href="<?php echo base_url('profil/index');?>">
 								<i class="ace-icon fa fa-user"></i>
-								Profile
+								Profil
 							</a>
 						</li>
 
