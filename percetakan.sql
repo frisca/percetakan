@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 11 Agu 2020 pada 22.39
+-- Waktu pembuatan: 19 Agu 2020 pada 19.25
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 5.6.39
 
@@ -43,6 +43,13 @@ CREATE TABLE `customer` (
   `updated_by` int(11) NOT NULL,
   `email` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `customer`
+--
+
+INSERT INTO `customer` (`id_customer`, `first_name`, `last_name`, `address_1`, `address_2`, `phone_1`, `phone_2`, `status`, `created_date`, `created_by`, `updated_date`, `updated_by`, `email`) VALUES
+(1, 'Abdul', 'Azis', 'test', '', '08232332', '', 1, '2020-08-12', 5, '0000-00-00', 0, 'abdul@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -92,7 +99,10 @@ CREATE TABLE `header_penjualan` (
   `deleted_by` int(11) NOT NULL,
   `deleted_date` date NOT NULL,
   `status_pembayaran` int(11) NOT NULL,
-  `id_customer` int(11) NOT NULL
+  `id_customer` int(11) NOT NULL,
+  `counter_dp1` int(11) NOT NULL,
+  `counter_dp2` int(11) NOT NULL,
+  `counter_lunas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -150,6 +160,13 @@ CREATE TABLE `location` (
   `tlp` varchar(100) NOT NULL,
   `ig` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `location`
+--
+
+INSERT INTO `location` (`id_location`, `nama_location`, `alamat_location`, `status`, `kecamatan`, `kota`, `email`, `tlp`, `ig`) VALUES
+(2, 'Kapuk', 'als', 1, 'set', 'a', 'abdul@gmail.com', '02323', 'ds1');
 
 -- --------------------------------------------------------
 
@@ -242,7 +259,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `role`, `nama`, `id_location`) VALUES
 (5, 'administrator', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator1', 3),
-(6, 'operator', '827ccb0eea8a706c4c34a16891f84e7b', 3, 'operator', 0),
+(6, 'operator', '827ccb0eea8a706c4c34a16891f84e7b', 3, 'operator123', 2),
 (8, 'test', '827ccb0eea8a706c4c34a16891f84e7b', 2, 'test2', 2),
 (9, 'administrator2', '827ccb0eea8a706c4c34a16891f84e7b', 1, 'administrator2', 2),
 (10, 'test2', 'e10adc3949ba59abbe56e057f20f883e', 2, 'test1', 2);
@@ -319,19 +336,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `header_pengeluaran`
 --
 ALTER TABLE `header_pengeluaran`
-  MODIFY `id_header_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_header_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `header_penjualan`
 --
 ALTER TABLE `header_penjualan`
-  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_header_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `history_price`
@@ -349,19 +366,19 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT untuk tabel `location`
 --
 ALTER TABLE `location`
-  MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_location` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pengeluaran` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_penjualan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `satuan`
