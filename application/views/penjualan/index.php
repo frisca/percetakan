@@ -89,7 +89,7 @@
 										<tr>
 											<td>
 												<?php 
-													if($value->status_pembayaran != 0){
+													if($value->status_invoice != 0){
 														echo $value->nomor_penjualan;
 													}else{
 														echo $value->id_header_penjualan;
