@@ -177,5 +177,10 @@ class All_model extends CI_Model {
 				 where hp.status_delete = 0 and u.id_location = " . $location;
 		return $this->db->query($query);
 	}
+
+	public function getHeaderPenjualanByLimit(){
+		$query = "select p.* from header_penjualan p where p.status = 1 order by p.id_header_penjualan desc limit 1";
+		return $this->db->query($query);
+	}
 	
 }

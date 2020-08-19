@@ -1268,9 +1268,21 @@ class Penjualan extends CI_Controller {
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'penjualan/open/' . $this->input->post('id_header_penjualan'));
 		}else{ 
-
 			$str = explode(',', $this->input->post('harga_satuan'));
 			$harga = str_replace(".", "", $str[0]);
+
+			$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimit()->row();
+			$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
+			$tamp_db = (int)$counter_db + 1;
+
+			$counter_in = explode("/", $this->input->post('id_head'));
+			
+			// var_dump($tamp_db);exit();
+			if($counter_in[4] != sprintf('%04d', $tamp_db)){
+				$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+				$this->session->set_flashdata('error', $error);
+				return redirect(base_url().'penjualan/open/' . $id);
+			}
 
 			if(!$_FILES['line_item']['name']){
 
@@ -1313,7 +1325,8 @@ class Penjualan extends CI_Controller {
 						'updatedBy' => $this->session->userdata('id'),
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-						'id_customer' => $this->input->post('customers')
+						'id_customer' => $this->input->post('customers'),
+						'nomor_penjualan' => $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db)
 					);
 					// var_dump($dataHeaderPenjualan);exit();
 					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -1379,7 +1392,8 @@ class Penjualan extends CI_Controller {
 							'updatedBy' => $this->session->userdata('id'),
 							'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 							'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-							'id_customer' => $this->input->post('customers')
+							'id_customer' => $this->input->post('customers'),
+							'nomor_penjualan' => $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db)
 						);
 
 						$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -1402,6 +1416,22 @@ class Penjualan extends CI_Controller {
 	}
 
 	public function open_checkout($id){
+		$tamp_db = 0;
+		$tamp_in = 0;
+
+		$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimit()->row();
+		$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
+		$tamp_db = (int)$counter_db + 1;
+
+		$counter_in = explode("/", $this->input->post('id_head'));
+		
+		// var_dump($tamp_db);exit();
+		if($counter_in[4] != sprintf('%04d', $tamp_db)){
+			$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+			$this->session->set_flashdata('error', $error);
+			return redirect(base_url().'penjualan/open/' . $id);
+		}
+		
 		$condition = array('id_header_penjualan' => $id);
 		$data = array('status' => 1);
 		$res = $this->all_model->updateData('penjualan', $condition, $data);
@@ -1435,7 +1465,7 @@ class Penjualan extends CI_Controller {
 			'updatedBy' => $this->session->userdata('id'),
 			'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 			'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-			'nomor_penjualan' => sprintf('%02d', $user->id_location) . '/INV/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', $id),
+			'nomor_penjualan' => $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db),
 			'id_customer' => $this->input->post('customers')
 		);
 		$result = $this->all_model->updateData('header_penjualan', $condition, $datas);
@@ -1447,6 +1477,7 @@ class Penjualan extends CI_Controller {
 	}
 
 	public function processOpenEditPenjualan(){
+		// var_dump($this->input->post('id_penjualan'));exit();
 		$con = array('id_penjualan' => $this->input->post('id_penjualan'));
 		$penjualan = $this->all_model->getDataByCondition('penjualan', $con)->row();
 
@@ -1457,7 +1488,7 @@ class Penjualan extends CI_Controller {
 		$this->form_validation->set_rules('total_harga', 'Total Harga', 'required');
 
 		if($this->form_validation->run() == false){
-			return redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
+			return redirect(base_url() . 'penjualan/open/' . $this->input->post('id_header_penjualan'));
 		}else{
 			$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
 			$res = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
