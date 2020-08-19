@@ -99,8 +99,18 @@
 															<a class="red delete" href="#" deleteid="<?php echo $value->id_header_pengeluaran;?>">
 																<i class="ace-icon fa fa-trash-o bigger-130"></i>
 															</a>
-														<?php } ?>
+														<?php 
+															}else{ 
+														?>
+															<a class="green" href="<?php echo base_url('pengeluaran/open/' . $value->id_header_pengeluaran)?>">
+																<i class="ace-icon fa fa-refresh bigger-130"></i>
+															</a>
+
+															<a class="red delete" href="#" deleteid="<?php echo $value->id_header_pengeluaran;?>">
+																<i class="ace-icon fa fa-trash-o bigger-130"></i>
+															</a>
 													<?php
+															}
 														}
 													?>
 												</div>

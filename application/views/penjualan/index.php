@@ -111,14 +111,26 @@
 													</button>
 												<?php 
 														}else if($value->dp1 != 0 && $value->dp2 == 0){
+															if($this->session->userdata('role') == 3 && ($value->counter_dp1 == 0 || empty($value->counter_dp1))){
 												?>
-													<a href="<?php echo base_url('penjualan/prints');?>">
+													<a href="<?php echo base_url('penjualan/prints_dp1/' . $value->id_header_penjualan);?>"
+													onclick="reloadPage()">
 													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
 														Print
 													</button>
 													</a>
 													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
+												<?php 
+															}else if($this->session->userdata('role') != 3 && ($value->counter_dp1 >= 0 || empty($value->counter_dp1))){
+												?>
+													<a href="<?php echo base_url('penjualan/prints_dp1/' . $value->id_header_penjualan);?>" onclick="reloadPage()">
+														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" onclick="reloadPage();">
+															Print
+														</button>
+													</a>
+													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
 												<?php
+															}
 														}
 													} 
 												?>
@@ -139,23 +151,47 @@
 											<td>
 												<?php 
 													if($value->metode_pembayaran == 1){
+														if($this->session->userdata('role') == 3 && ($value->counter_dp2 == 0 || empty($value->counter_dp2))){
 												?>
-												<a href="<?php echo base_url('penjualan/prints');?>">
-													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-														Print
-													</button>
-												</a>
-												<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+														<a href="<?php echo base_url('penjualan/prints_dp2/' . $value->id_header_penjualan);?>" onclick="reloadPage()">
+															<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+																Print
+															</button>
+														</a>
+														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
-													}else if($value->dp1 != 0 && $value->dp2 != 0){
+														}else if($this->session->userdata('role') != 3 && ($value->counter_dp2 >= 0 || empty($value->counter_dp2))){
 												?>
-													<a href="<?php echo base_url('penjualan/prints');?>">
+														<a href="<?php echo base_url('penjualan/prints_dp2/' . $value->id_header_penjualan);?>" onclick="reloadPage()">
+															<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+																Print
+															</button>
+														</a>
+														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+												<?php
+														}
+													}else if($value->dp1 != 0 && $value->dp2 != 0){
+														if($this->session->userdata('role') == 3 && ($value->counter_lunas == 0 || empty($value->counter_lunas))){
+												?>
+													<a href="<?php echo base_url('penjualan/prints_lunas/' . $value->id_header_penjualan);?>"
+													onclick="reloadPage()">
 														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
 															Print
 														</button>
 													</a>
 													<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
+														}else if($this->session->userdata('role') != 3 && ($value->counter_lunas >= 0 || empty($value->counter_lunas))){
+												?>
+														<a href="<?php echo base_url('penjualan/prints_lunas/' . $value->id_header_penjualan);?>"
+														onclick="reloadPage()">
+															<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+																Print
+															</button>
+														</a>
+														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+												<?php
+														}
 													} 
 												?>
 											</td>
@@ -179,17 +215,30 @@
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
 													<?php 
-														if($this->session->userdata('role') != 3){
+														if((int)$this->session->userdata('role') != 3){
 													?>
-														<?php if($value->status_pembayaran != 1){ ?>
-														<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
-															<i class="ace-icon fa fa-pencil bigger-130"></i>
-														</a>
+														<?php 
+															if($value->status_pembayaran != 1){ 
+														?>
+																<a class="green" href="<?php echo base_url('penjualan/detail/' . $value->id_header_penjualan)?>">
+																	<i class="ace-icon fa fa-pencil bigger-130"></i>
+																</a>
 
-														<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
-															<i class="ace-icon fa fa-trash-o bigger-130"></i>
-														</a>
-														<?php } ?>
+																<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
+																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
+																</a>
+														<?php 
+															}else{ ?>
+																<a class="green" href="<?php echo base_url('penjualan/open/' . $value->id_header_penjualan)?>">
+																	<i class="ace-icon fa fa-refresh bigger-130"></i>
+																</a>
+
+																<a class="red delete" href="#" deleteid="<?php echo $value->id_header_penjualan;?>">
+																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
+																</a>
+														<?php
+															}	
+														?>
 													<?php
 														}else{
 															if((int)$value->status_invoice != 1){

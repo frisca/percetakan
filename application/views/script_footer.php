@@ -568,6 +568,10 @@
 		$('#show_modal').on('hidden.bs.modal', function () {
 			$("#item").find('option:selected').removeAttr("selected");
 		});
+
+		function reloadPage(){
+			location.reload(true);
+		}
 		</script>
 	</body>
 </html>
