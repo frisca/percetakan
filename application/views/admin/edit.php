@@ -97,6 +97,7 @@
 
 								<div class="col-sm-9">
 									<select name="id_location" class="select2" data-placeholder="Click to Choose...">
+										<option value="">Pilih Location</option>
 										<?php if(empty($inputs['id_location'])) { ?>
 											<?php 
 												foreach ($location as $key => $value) {

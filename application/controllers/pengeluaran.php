@@ -8,8 +8,13 @@ class Pengeluaran extends CI_Controller {
 
 	public function index()
 	{
-		$condition = array('status_delete' => 0);
-		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->result();
+		// $condition = array('status_delete' => 0);
+		// $data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->result();
+		if($this->session->userdata('role') != 3){
+			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaran()->result();
+		}else{
+			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($this->session->userdata('location'))->result();
+		}
 		$this->load->view('pengeluaran/index', $data);
 	}
 

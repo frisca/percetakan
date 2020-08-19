@@ -159,4 +159,22 @@ class All_model extends CI_Model {
 				left join customer c on c.id_customer = hp.id_customer where hp.status_delete = 0";
 		return $this->db->query($query);
 	}
+
+	public function getHeaderPenjualanByOperator($location){
+		$query = "select hp.*, hp.status as status_invoice, c.* from header_penjualan hp 
+				left join customer c on c.id_customer = hp.id_customer left join user u on u.id_user = hp.createdBy
+				where hp.status_delete = 0 and u.id_location = " . $location;
+		return $this->db->query($query);
+	}
+
+	public function getHeaderPengeluaran(){
+		$query = "select hp.* from header_pengeluaran hp where hp.status_delete = 0";
+		return $this->db->query($query);
+	}
+
+	public function getHeaderPengeluaranByOperator($location){
+		$query = "select hp.*, u.* from header_pengeluaran hp left join user u on u.id_user = hp.created_by 
+				 where hp.status_delete = 0 and u.id_location = " . $location;
+		return $this->db->query($query);
+	}
 }

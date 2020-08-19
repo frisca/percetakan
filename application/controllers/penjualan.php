@@ -10,7 +10,11 @@ class Penjualan extends CI_Controller {
 	public function index()
 	{
 		// $data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', array('status_delete' => 0))->result();
-		$data['header_penjualan'] = $this->all_model->getHeaderPenjualan()->result();
+		if($this->session->userdata('role') != 3){
+			$data['header_penjualan'] = $this->all_model->getHeaderPenjualan()->result();
+		}else{
+			$data['header_penjualan'] = $this->all_model->getHeaderPenjualanByOperator($this->session->userdata('location'))->result();
+		}
 		$this->load->view('penjualan/index', $data);
 	}
 
