@@ -177,4 +177,5 @@ class All_model extends CI_Model {
 				 where hp.status_delete = 0 and u.id_location = " . $location;
 		return $this->db->query($query);
 	}
+	
 }
