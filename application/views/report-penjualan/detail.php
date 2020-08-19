@@ -36,6 +36,15 @@
 				</div>
 
 				<div class="row">
+					<div class="col-xs-12" style="margin-bottom:10px;">
+						<a href="<?php echo base_url('report_penjualan/index');?>">
+							<button class="btn" type="button">
+								<i class="ace-icon fa fa-undo"></i>
+								Kembali
+							</button>
+						</a>
+					</div>
+
 					<div class="col-xs-12">
 						<?php if(validation_errors() != ""){?>
 							<div class="alert alert-danger form-group">
@@ -226,7 +235,7 @@
 					<div class="col-xs-12">
 						<a href="<?php echo base_url('report_penjualan/index');?>">
 							<button class="btn" type="button" style="margin-top: 10px;">
-								Back
+								Kembali
 							</button>
 						</a>
 					</div>

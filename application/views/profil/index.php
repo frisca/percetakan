@@ -37,6 +37,15 @@
 				</div>
 
 				<div class="row">
+					<div class="col-xs-12" style="margin-bottom:10px;">
+						<a href="<?php echo base_url('home/index');?>">
+							<button class="btn" type="button">
+								<i class="ace-icon fa fa-undo"></i>
+								Kembali
+							</button>
+						</a>
+					</div>
+
 					<div class="col-xs-12">
 						<div class="table-header">
 							Data Profil
@@ -97,7 +106,7 @@
 									<a href="<?php echo base_url('home/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo"></i>
-											Back
+											Kembali
 										</button>
 									</a>
 								</div>
