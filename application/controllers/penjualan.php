@@ -5,9 +5,9 @@ class Penjualan extends CI_Controller {
 		parent::__construct();
 		$this->load->model('all_model');
 		$this->load->library('pdf');
-		if(!$this->session->userdata('id')){
-            redirect('login/index');
-        }
+		if($this->session->userdata('logged_in') != 1){
+			return redirect(base_url() . 'login');
+		}
 	}
 
 	public function index()
