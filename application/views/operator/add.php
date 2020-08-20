@@ -77,7 +77,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" 
-									value="<?php echo $inputs['nama'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['nama'];}?>"/>
 								</div>
 							</div>
 
@@ -86,7 +86,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Username" class="form-control" name="username" required
-									value="<?php echo $inputs['username'];?>"/>
+									value="<?php if(!empty($inputs)){echo $inputs['username'];}?>"/>
 								</div>
 							</div>
 
@@ -106,14 +106,16 @@
 										<option value="">Pilih Location</option>
 										<?php 
 											foreach ($location as $key => $value) {
-												if($inputs['id_location'] == $value->id_location){
+												if(!empty($inputs)){
+													if($inputs['id_location'] == $value->id_location){
 										?>
 													<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>
 										<?php
-												}else{
+													}else{
 										?>
 													<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
 										<?php 
+													}
 												}
 											}
 										?>

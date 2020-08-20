@@ -75,7 +75,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="First Name" class="form-control" required name="first_name" 
-									value="<?php echo $inputs['first_name'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['first_name'];}?>"/>
 								</div>
 							</div>
 
@@ -84,7 +84,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Last Name" class="form-control" required name="last_name" 
-									value="<?php echo $inputs['last_name'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['last_name'];}?>"/>
 								</div>
 							</div>
 
@@ -92,7 +92,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Address 1</label>
 
 								<div class="col-sm-9">
-									<textarea name="address_1" rows="10" cols="50" style="width: 100%"><?php echo $inputs['address_1'];?></textarea>
+									<textarea name="address_1" rows="10" cols="50" style="width: 100%"><?php if(!empty($inputs)){ echo $inputs['address_1'];}?></textarea>
 								</div>
 							</div>
 
@@ -100,7 +100,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Address 2</label>
 
 								<div class="col-sm-9">
-									<textarea name="address_2" rows="10" cols="50" style="width: 100%"><?php echo $inputs['address_1'];?></textarea>
+									<textarea name="address_2" rows="10" cols="50" style="width: 100%"><?php if(!empty($inputs)){ echo $inputs['address_1'];}?></textarea>
 								</div>
 							</div>
 
@@ -109,7 +109,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Phone 1" class="form-control" name="phone_1" 
-									value="<?php echo $inputs['phone_1'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['phone_1'];}?>"/>
 								</div>
 							</div>
 
@@ -118,7 +118,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Phone 2" class="form-control" name="phone_2" 
-									value="<?php echo $inputs['phone_2'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['phone_2'];}?>"/>
 								</div>
 							</div>
 
@@ -127,7 +127,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Email" class="form-control" name="email" 
-									value="<?php echo $inputs['email'];?>"/>
+									value="<?php if(!empty($inputs)){ $inputs['email'];}?>"/>
 								</div>
 							</div>
 
@@ -139,6 +139,7 @@
 										<!-- <option value="0">Tidak Aktif</option>
 										<option value="1">Aktif</option> -->
 										<?php
+										if(!empty($inputs)){ 
 											if($inputs['status'] == 0){
 										?>
 											<option value="0" selected>Tidak Aktif</option>
@@ -150,6 +151,7 @@
 											<option value="1" selected>Aktif</option>
 										<?php
 											}
+										}
 										?>
 									</select>
 								</div>

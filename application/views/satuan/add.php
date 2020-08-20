@@ -77,7 +77,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Satuan" class="form-control" required name="satuan" 
-									value="<?php echo $inputs['satuan'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['satuan'];}?>"/>
 								</div>
 							</div>
 

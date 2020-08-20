@@ -76,7 +76,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" 
-									value="<?php echo $inputs['nama'];?>"/>
+									value="<?php if(!empty($inputs)){  echo $inputs['nama'];}?>"/>
 								</div>
 							</div>
 
@@ -87,14 +87,16 @@
 									<select name="id_satuan" class="select2" data-placeholder="Click to Choose...">
 										<?php 
 											foreach ($satuan as $key => $value) {
-												if($inputs['id_satuan'] == $value->id_satuan){
+												if(!empty($inputs)){ 
+													if($inputs['id_satuan'] == $value->id_satuan){
 										?>
 													<option value="<?php echo $value->id_satuan;?>" selected><?php echo $value->satuan;?></option>
 										<?php
-												}else{
+													}else{
 										?>
 													<option value="<?php echo $value->id_satuan;?>"><?php echo $value->satuan;?></option>
 										<?php 
+													}
 												}
 											}
 										?>
@@ -107,7 +109,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control harga" name="harga" required
-									value="<?php echo $inputs['harga'];?>"/>
+									value="<?php if(!empty($inputs)){ echo $inputs['harga'];}?>"/>
 								</div>
 							</div>
 
@@ -125,6 +127,7 @@
 								<div class="col-sm-9">
 									<select name="is_design"  data-placeholder="Click to Choose...">
 										<?php
+										if(!empty($inputs)){ 
 											if($inputs['is_design'] == 0){
 										?>
 											<option value=0 selected>Tidak</option>
@@ -136,6 +139,7 @@
 											<option value=1 selected>Ya</option>
 										<?php
 											}
+										}
 										?>
 									</select>
 								</div>
