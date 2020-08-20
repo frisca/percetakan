@@ -24,15 +24,15 @@ class Penjualan extends CI_Controller {
 	public function add(){
 		$order = "id_header_penjualan desc";
 		$header_penjualan = $this->all_model->getDataByLimit(1, $order, 'header_penjualan')->row();
-
+		// var_dump($header_penjualan);exit();
 		if(empty($header_penjualan)){
 			$data['id_header_penjualan'] = 1;
 			$data['tgl_penjualan'] = date('d-m-Y');
 		}else{
-			$data['id_header_penjualan'] = $header_penjualan->id_header_penjualan + 1;
+			$data['id_header_penjualan'] = (int)$header_penjualan->id_header_penjualan + 1;
 			$data['tgl_penjualan'] = date('d-m-Y');
 		}
-
+		// var_dump($data['id_header_penjualan']);exit();
 		$data['item'] = $this->all_model->getAllData('item')->result();
 		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
 		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
@@ -43,8 +43,17 @@ class Penjualan extends CI_Controller {
 	}
 
 	public function processAdd(){
+		$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+		$p = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+
+		if(!empty($p)){
+			$tamp = $p->id_header_penjualan + 1;
+		}else{
+			$tamp = $this->input->post('id_header_penjualan');
+		}
+
 		$data = array(
-			'id_header_penjualan' => $this->input->post('id_header_penjualan'),
+			'id_header_penjualan' => $tamp,
 			'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
 			'status'  => 0,
 			'createdBy' => $this->session->userdata('id'),
@@ -1515,7 +1524,7 @@ class Penjualan extends CI_Controller {
 				$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
 				$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimitDesc($nmr)->row();
 				$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
-				$tamp_db = (int)$counter_db + 1;
+				$tamp_db = (int)$counter_db[4] + 1;
 				
 				// var_dump($tamp_db);exit();
 				if($counter_in[4] != sprintf('%04d', $tamp_db)){
