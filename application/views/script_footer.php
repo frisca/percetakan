@@ -569,9 +569,41 @@
 			$("#item").find('option:selected').removeAttr("selected");
 		});
 
-		function reloadPage(){
-			location.reload(true);
-		}
+		// function reloadPage(){
+		// 	location.reload(true);
+		// }
+
+		$('#prints_dp1').click(function(){
+			var role = "<?php echo $this->session->userdata('role');?>";
+			if(role == 3){
+				window.location.reload;
+				$(this).css('display', 'none');
+				$(this).parent().find('p').css('display', 'none');
+			}
+		});
+
+		$('#prints_dp2').click(function(){
+			var role = "<?php echo $this->session->userdata('role');?>";
+			if(role == 3){
+				window.location.reload;
+				$(this).css('display', 'none');
+				$(this).parent().find('p').css('display', 'none');
+			}
+		});
+
+		$('#prints_lunas').click(function(){
+			var role = "<?php echo $this->session->userdata('role');?>";
+			if(role == 3){
+				window.location.reload;
+				$(this).css('display', 'none');
+				$(this).parent().find('p').css('display', 'none');
+			}
+		});
+
+		$('.nmr_penjualan').keyup(function(){
+			$('input[name="nmr_penjualan"]').val($(this).val());
+			$('input[name="nmrs_penjualan"]').val($(this).val());
+		});
 		</script>
 	</body>
 </html>

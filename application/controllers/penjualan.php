@@ -5,6 +5,9 @@ class Penjualan extends CI_Controller {
 		parent::__construct();
 		$this->load->model('all_model');
 		$this->load->library('pdf');
+		if(!$this->session->userdata('id')){
+            redirect('login/index');
+        }
 	}
 
 	public function index()
@@ -1271,17 +1274,25 @@ class Penjualan extends CI_Controller {
 			$str = explode(',', $this->input->post('harga_satuan'));
 			$harga = str_replace(".", "", $str[0]);
 
-			$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimit()->row();
-			$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
-			$tamp_db = (int)$counter_db + 1;
+			$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+			$headers_penjualan = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
 
-			$counter_in = explode("/", $this->input->post('id_head'));
-			
-			// var_dump($tamp_db);exit();
-			if($counter_in[4] != sprintf('%04d', $tamp_db)){
-				$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
-				$this->session->set_flashdata('error', $error);
-				return redirect(base_url().'penjualan/open/' . $id);
+			if($headers_penjualan->nomor_penjualan != $this->input->post('nmr_penjualan')){
+				$counter_in = explode("/", $this->input->post('nmr_penjualan'));
+				$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
+				$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimitDesc($nmr)->row();
+				$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
+				$tamp_db = (int)$counter_db[4] + 1;
+				
+				// var_dump($tamp_db);exit();
+				if($counter_in[4] != sprintf('%04d', $tamp_db)){
+					$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+					$this->session->set_flashdata('error', $error);
+					return redirect(base_url().'penjualan/open/' . $this->input->post('id_header_penjualan'));
+				}
+				$nmrs = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+			}else{
+				$nmrs = $headers_penjualan->nomor_penjualan;
 			}
 
 			if(!$_FILES['line_item']['name']){
@@ -1326,7 +1337,7 @@ class Penjualan extends CI_Controller {
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
 						'id_customer' => $this->input->post('customers'),
-						'nomor_penjualan' => $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db)
+						'nomor_penjualan' => $nmrs
 					);
 					// var_dump($dataHeaderPenjualan);exit();
 					$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -1393,7 +1404,7 @@ class Penjualan extends CI_Controller {
 							'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 							'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
 							'id_customer' => $this->input->post('customers'),
-							'nomor_penjualan' => $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db)
+							'nomor_penjualan' => $nmrs
 						);
 
 						$headerPenjualan = $this->all_model->updateData('header_penjualan', $condition, $dataHeaderPenjualan);
@@ -1419,17 +1430,25 @@ class Penjualan extends CI_Controller {
 		$tamp_db = 0;
 		$tamp_in = 0;
 
-		$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimit()->row();
-		$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
-		$tamp_db = (int)$counter_db + 1;
-
-		$counter_in = explode("/", $this->input->post('id_head'));
-		
-		// var_dump($tamp_db);exit();
-		if($counter_in[4] != sprintf('%04d', $tamp_db)){
-			$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
-			$this->session->set_flashdata('error', $error);
-			return redirect(base_url().'penjualan/open/' . $id);
+		$condition = array('id_header_penjualan' => $id);
+		$headers_penjualan = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
+		// var_dump($this->input->post('id_head'));exit();
+		if($headers_penjualan->nomor_penjualan != $this->input->post('id_head')){
+			$counter_in = explode("/", $this->input->post('id_head'));
+			$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
+			$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimitDesc($nmr)->row();
+			$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
+			$tamp_db = (int)$counter_db[4] + 1;
+			
+			// var_dump($tamp_db);exit();
+			if($counter_in[4] != sprintf('%04d', $tamp_db)){
+				$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+				$this->session->set_flashdata('error', $error);
+				return redirect(base_url().'penjualan/open/' . $id);
+			}
+			$nmrs = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+		}else{
+			$nmrs = $headers_penjualan->nomor_penjualan;
 		}
 		
 		$condition = array('id_header_penjualan' => $id);
@@ -1439,8 +1458,6 @@ class Penjualan extends CI_Controller {
 			$this->session->set_flashdata('error', 'Data penjualan tidak tersimpan');
 			return redirect(base_url().'penjualan/open/' . $id);
 		}
-		$tahun = date('y');
-		$bulan = date('m');
 
 		if((int)$this->input->post('metode_pembayaran') == 0){
 			$status_pembayaran = 0;
@@ -1465,7 +1482,7 @@ class Penjualan extends CI_Controller {
 			'updatedBy' => $this->session->userdata('id'),
 			'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 			'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
-			'nomor_penjualan' => $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db),
+			'nomor_penjualan' => $nmrs,
 			'id_customer' => $this->input->post('customers')
 		);
 		$result = $this->all_model->updateData('header_penjualan', $condition, $datas);
@@ -1490,6 +1507,27 @@ class Penjualan extends CI_Controller {
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'penjualan/open/' . $this->input->post('id_header_penjualan'));
 		}else{
+			$conditions = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
+			$headers_penjualan = $this->all_model->getDataByCondition('header_penjualan', $conditions)->row();
+
+			if($headers_penjualan->nomor_penjualan != $this->input->post('nmr_penjualan')){
+				$counter_in = explode("/", $this->input->post('nmr_penjualan'));
+				$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
+				$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimitDesc($nmr)->row();
+				$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);
+				$tamp_db = (int)$counter_db + 1;
+				
+				// var_dump($tamp_db);exit();
+				if($counter_in[4] != sprintf('%04d', $tamp_db)){
+					$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+					$this->session->set_flashdata('error', $error);
+					return redirect(base_url().'penjualan/open/' . $this->input->post('id_header_penjualan'));
+				}
+				$nmrs = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+			}else{
+				$nmrs = $headers_penjualan->nomor_penjualan;
+			}
+
 			$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
 			$res = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
 
@@ -1528,7 +1566,8 @@ class Penjualan extends CI_Controller {
 						'updatedDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('updatedDate'), '-', '-'))),
 						'tgl_penjualan' => date('Y-m-d', strtotime(strtr($this->input->post('tgl_penjualan'), '-', '-'))),
 						'sisa_pembayaran' => $grandTotal - $res->dp1,
-						'id_customer' => $this->input->post('customers')
+						'id_customer' => $this->input->post('customers'),
+						'nomor_penjualan' => $nmrs
 					);
 				}
 			}

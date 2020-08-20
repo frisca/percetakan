@@ -82,11 +82,11 @@
 						<?php
 							if((int)$header_penjualan->metode_pembayaran == 2 || (int)$header_penjualan->metode_pembayaran == 1){
 						?>
-							<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $header_penjualan->nomor_penjualan;?>" />
+							<input type="text" placeholder="Nomor Penjualan" class="form-control nmr_penjualan" name="id_head" value="<?php echo $header_penjualan->nomor_penjualan;?>" />
 						<?php
 							}else{
 						?>
-							<input type="text" placeholder="Nomor Penjualan" class="form-control" name="id_head" value="<?php echo $header_penjualan->id_header_penjualan;?>" disabled/>
+							<input type="text" placeholder="Nomor Penjualan" class="form-control nmr_penjualan" name="id_head" value="<?php echo $header_penjualan->id_header_penjualan;?>" disabled/>
 						<?php
 							}
 						?>
@@ -301,6 +301,7 @@
 					            	<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
 					            	<input type="hidden" name="customers" value="<?php echo $header_penjualan->id_customer;?>">
 					            	<input type="hidden" id="total_harga" placeholder="Total Harga" class="form-control" name="total_harga" value="" required />
+									<input type="hidden" id="nmr_penjualan" name="nmr_penjualan" value="<?php echo $header_penjualan->nomor_penjualan;?>"/>
 					            	<div class="col-sm-12 form-group">
 										<label>Nama Item</label>
 										<select name="id_item" class="select2 id_item" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required>
@@ -378,6 +379,7 @@
 					            		<input type="hidden" class="form-control satuan" name="id_satuan" value="" />
 					            		<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
 					            		<input type="hidden" name="customers" value="<?php echo $header_penjualan->id_customer;?>">
+										<input type="hidden" id="nmr_penjualan" name="nmr_penjualan" value="<?php echo $header_penjualan->nomor_penjualan;?>"/>
 						            	<div class="col-sm-12 form-group">
 											<label>Nama Item</label>
 											<select name="id_item" class="select2" id="item" data-placeholder="Click to Choose..." style="width: 100%" required>

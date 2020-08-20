@@ -182,5 +182,12 @@ class All_model extends CI_Model {
 		$query = "select p.* from header_penjualan p where p.status = 1 order by p.id_header_penjualan desc limit 1";
 		return $this->db->query($query);
 	}
+
+	public function getHeaderPenjualanByLimitDesc($nmr){
+		$query = "select p.* from header_penjualan p where p.nomor_penjualan like '%" . $nmr . "%' and p.status = 1 
+		order by p.id_header_penjualan desc limit 1";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
 	
 }
