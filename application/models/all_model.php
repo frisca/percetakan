@@ -178,16 +178,30 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getHeaderPenjualanByLimit(){
-		$query = "select p.* from header_penjualan p where p.status = 1 order by p.id_header_penjualan desc limit 1";
+	public function getHeaderPenjualanByLimit($nmr){
+		$query = "select p.* from header_penjualan p where p.status = 1 and  p.status_delete = 0 and
+		p.nomor_penjualan like '%" . $nmr . "%' order by p.id_header_penjualan desc limit 1";
+		// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 
 	public function getHeaderPenjualanByLimitDesc($nmr){
 		$query = "select p.* from header_penjualan p where p.nomor_penjualan like '%" . $nmr . "%' and p.status = 1 
-		order by p.id_header_penjualan desc limit 1";
+		and p.status_delete = 0 order by p.id_header_penjualan desc limit 1";
 		// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 	
+	public function getCountHeaderPenjualan($nmr){
+		$query = "select p.* from header_penjualan p where p.nomor_penjualan = '" . $nmr . "' and p.status_delete = 0
+		and p.status = 1";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getCountHeaderPenjualanByGroup(){
+		$query = "SELECT count(*) FROM `header_penjualan` where p.status_delete = 0 and p.status = 1 GROUP by nomor_penjualan";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
 }

@@ -85,6 +85,7 @@
 
 								<div class="col-sm-9">
 									<select name="id_location" class="select2" data-placeholder="Click to Choose..." disabled>
+										<option value="">Pilih Location</option>
 										<?php 
 											foreach ($location as $key => $value) {
 												if($user->id_location == $value->id_location){

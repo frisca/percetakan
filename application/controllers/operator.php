@@ -33,7 +33,8 @@ class Operator extends CI_Controller {
 			'nama' => $this->input->post('nama'),
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
-			'role' => 3
+			'role' => 3,
+			'id_location' => $this->input->post('id_location')
 		);
 
 		if($this->form_validation->run() == false){
@@ -117,7 +118,8 @@ class Operator extends CI_Controller {
 				$data = array(
 					'nama' => $this->input->post('nama'),
 					'username' => $this->input->post('username'),
-					'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password'))
+					'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password')),
+					'id_location' => $this->input->post('id_location')
 				);
 
 				$result = $this->all_model->updateData("user", $condition, $data);
