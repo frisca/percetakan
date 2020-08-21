@@ -569,36 +569,95 @@
 			$("#item").find('option:selected').removeAttr("selected");
 		});
 
-		// function reloadPage(){
-		// 	location.reload(true);
-		// }
-
-		$('#prints_dp1').click(function(){
-			var role = "<?php echo $this->session->userdata('role');?>";
-			if(role == 3){
-				window.location.reload;
-				$(this).css('display', 'none');
-				$(this).parent().find('p').css('display', 'none');
-			}
+		$("body").on("click", "#prints_dp1", function(e){
+			var nmr = $(this).data('nmr');
+			var id = $(this).data('id');
+			$.ajax({
+				url : "<?php echo base_url();?>penjualan/validasiPrintPenjualan/",
+				method:'post',
+				data : {nmr:nmr},
+				dataType:'json',
+				success:function(response) {
+					if(response > 1){
+						alert('Nomor penjualan duplicate');
+					}else{
+						var role = "<?php echo $this->session->userdata('role');?>";
+						url = "<?php echo base_url('penjualan/prints_dp1/');?>" + "/" + id;
+						if(role == 3){
+							$(e.target).closest('table td').find('button').css('display', 'none');
+							$(e.target).parent().find('p').css('display', 'none');
+							window.open(url, '_target');
+						}
+					}
+				}
+			});
 		});
 
-		$('#prints_dp2').click(function(){
-			var role = "<?php echo $this->session->userdata('role');?>";
-			if(role == 3){
-				window.location.reload;
-				$(this).css('display', 'none');
-				$(this).parent().find('p').css('display', 'none');
-			}
+		$("body").on("click", "#prints_dp2", function(e){
+			var nmr = $(this).data('nmr');
+			var id = $(this).data('id');
+			$.ajax({
+				url : "<?php echo base_url();?>penjualan/validasiPrintPenjualan/",
+				method:'post',
+				data : {nmr:nmr},
+				dataType:'json',
+				success:function(response) {
+					if(response > 1){
+						alert('Nomor penjualan duplicate');
+					}else{
+						var role = "<?php echo $this->session->userdata('role');?>";
+						url = "<?php echo base_url('penjualan/prints_dp2/');?>" + "/" + id;
+						if(role == 3){
+							$(e.target).closest('table td').find('button').css('display', 'none');
+							$(e.target).parent().find('p').css('display', 'none');
+							window.open(url, '_target');
+						}
+					}
+				}
+			});
 		});
 
-		$('#prints_lunas').click(function(){
-			var role = "<?php echo $this->session->userdata('role');?>";
-			if(role == 3){
-				window.location.reload;
-				$(this).css('display', 'none');
-				$(this).parent().find('p').css('display', 'none');
-			}
+		$("body").on("click", "#prints_lunas", function(e){
+			var nmr = $(this).data('nmr');
+			var id = $(this).data('id');
+			$.ajax({
+				url : "<?php echo base_url();?>penjualan/validasiPrintPenjualan/",
+				method:'post',
+				data : {nmr:nmr},
+				dataType:'json',
+				success:function(response) {
+					if(response > 1){
+						alert('Nomor penjualan duplicate');
+					}else{
+						var role = "<?php echo $this->session->userdata('role');?>";
+						url = "<?php echo base_url('penjualan/prints_lunas/');?>" + "/" + id;
+						if(role == 3){
+							$(e.target).closest('table td').find('button').css('display', 'none');
+							$(e.target).parent().find('p').css('display', 'none');
+							window.open(url, '_target');
+						}
+					}
+				}
+			});
 		});
+
+		// $('#prints_dp2').click(function(){
+		// 	var role = "<?php echo $this->session->userdata('role');?>";
+		// 	if(role == 3){
+		// 		window.location.reload;
+		// 		$(this).css('display', 'none');
+		// 		$(this).parent().find('p').css('display', 'none');
+		// 	}
+		// });
+
+		// $('#prints_lunas').click(function(){
+		// 	var role = "<?php echo $this->session->userdata('role');?>";
+		// 	if(role == 3){
+		// 		window.location.reload;
+		// 		$(this).css('display', 'none');
+		// 		$(this).parent().find('p').css('display', 'none');
+		// 	}
+		// });
 
 		$('.nmr_penjualan').keyup(function(){
 			$('input[name="nmr_penjualan"]').val($(this).val());

@@ -113,21 +113,18 @@
 														}else if($value->dp1 != 0 && $value->dp2 == 0){
 															if($this->session->userdata('role') == 3 && ($value->counter_dp1 == 0 || empty($value->counter_dp1))){
 												?>
-													<a href="<?php echo base_url('penjualan/prints_dp1/' . $value->id_header_penjualan);?>"
-													id="prints_dp1" target="_blank">
-													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
+													<button type="button" class="btn btn-sm btn-success" id="prints_dp1" style="margin-bottom: 10px;" 
+													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 														Print
 													</button>
-													</a>
 													<p class="prints_dp1">Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
 												<?php 
 															}else if($this->session->userdata('role') != 3 && ($value->counter_dp1 >= 0 || empty($value->counter_dp1))){
 												?>
-													<a href="<?php echo base_url('penjualan/prints_dp1/' . $value->id_header_penjualan);?>" id="prints_dp1" target="_blank">
-														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-															Print
-														</button>
-													</a>
+													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_dp1" 
+													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
+														Print
+													</button>
 													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
 												<?php
 															}
@@ -153,42 +150,36 @@
 													if($value->metode_pembayaran == 1){
 														if($this->session->userdata('role') == 3 && ($value->counter_dp2 == 0 || empty($value->counter_dp2))){
 												?>
-														<a href="<?php echo base_url('penjualan/prints_dp2/' . $value->id_header_penjualan);?>" id="prints_dp2" target="_blank">
-															<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-																Print
-															</button>
-														</a>
+														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_dp2" 
+														data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
+															Print
+														</button>
 														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
 														}else if($this->session->userdata('role') != 3 && ($value->counter_dp2 >= 0 || empty($value->counter_dp2))){
 												?>
-														<a href="<?php echo base_url('penjualan/prints_dp2/' . $value->id_header_penjualan);?>" id="prints_dp2" target="_blank">
-															<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-																Print
-															</button>
-														</a>
+														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_dp2" 
+													    data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
+															Print
+														</button>
 														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
 														}
 													}else if($value->dp1 != 0 && $value->dp2 != 0){
 														if($this->session->userdata('role') == 3 && ($value->counter_lunas == 0 || empty($value->counter_lunas))){
 												?>
-													<a href="<?php echo base_url('penjualan/prints_lunas/' . $value->id_header_penjualan);?>"
-													id="prints_lunas" target="_blank">
-														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-															Print
-														</button>
-													</a>
+													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_lunas" 
+													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
+														Print
+													</button>
 													<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
 														}else if($this->session->userdata('role') != 3 && ($value->counter_lunas >= 0 || empty($value->counter_lunas))){
 												?>
-														<a href="<?php echo base_url('penjualan/prints_lunas/' . $value->id_header_penjualan);?>"
-														id="prints_lunas" target="_blank">
-															<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;">
-																Print
-															</button>
-														</a>
+														<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_lunas" 
+														data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
+															Print
+														</button>
 														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
 												<?php
 														}

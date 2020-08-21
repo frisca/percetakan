@@ -199,9 +199,9 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getCountHeaderPenjualanByGroup(){
-		$query = "SELECT count(*) FROM `header_penjualan` where p.status_delete = 0 and p.status = 1 GROUP by nomor_penjualan";
-		// var_dump($query);exit();
+	public function getCountHeaderPenjualans($nmr){
+		$query = "select p.* from header_penjualan p where p.nomor_penjualan = '" . $nmr . "' and p.status_delete = 0
+		and p.status = 1";
 		return $this->db->query($query);
 	}
 }

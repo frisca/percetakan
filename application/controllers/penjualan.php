@@ -1731,4 +1731,12 @@ class Penjualan extends CI_Controller {
 			}
 		}	
 	}
+
+	public function validasiPrintPenjualan(){
+		$nmr = $this->input->post('nmr');
+		// var_dump($nmr);exit();
+		$counter = $this->all_model->getCountHeaderPenjualans($nmr)->num_rows();
+		// var_dump($nmr);exit();
+		echo json_encode($counter);
+	}
 }
