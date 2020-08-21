@@ -139,6 +139,11 @@
 											<option value=1 selected>Ya</option>
 										<?php
 											}
+										}else{
+										?>
+											<option value=0>Tidak</option>
+											<option value=1>Ya</option>
+										<?php
 										}
 										?>
 									</select>

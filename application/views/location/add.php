@@ -150,6 +150,11 @@
 											<option value="1" selected>Aktif</option>
 										<?php
 											}
+										}else{
+										?>
+											<option value="0">Tidak Aktif</option>
+											<option value="1">Aktif</option>
+										<?php
 										}
 										?>
 									</select>

@@ -45,7 +45,8 @@ class Admin extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('admin/add');
+			$this->session->set_flashdata('error', 'Data admin tidak berhasil disimpan');
+			redirect(base_url() . 'admin/add');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 2);
 			$check = $this->all_model->getDataByCondition('user', $con)->num_rows();
@@ -117,7 +118,8 @@ class Admin extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('admin/edit');
+			$this->session->set_flashdata('error', 'Data admin tidak berhasil diubah');
+			redirect(base_url() . 'admin/edit/' . $this->input->post('id'));
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 2);
 			$users = $this->all_model->getDataByCondition('user', $con)->row();

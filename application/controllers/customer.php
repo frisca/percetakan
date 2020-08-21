@@ -50,7 +50,8 @@ class Customer extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('customer/add');
+			$this->session->set_flashdata('error', 'Data customer tidak berhasil disimpan');
+			redirect(base_url() . 'customer/add');
 		}else{
             // $result = $this->all_model->insertData("customer", $data);
             // if($result  == true){
@@ -133,6 +134,7 @@ class Customer extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
+			$this->session->set_flashdata('error', 'Data customer tidak berhasil diubah');
 			$this->load->view('customer/edit/' . $this->input->post('id'));
 		}else{
 			// $location = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->row();

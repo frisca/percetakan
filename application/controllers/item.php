@@ -45,7 +45,8 @@ class Item extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('item/add');
+			$this->session->set_flashdata('error', 'Data item tidak berhasil disimpan');
+			redirect(base_url() . 'item/add');
 		}else{
 			$check = $this->all_model->getListDataByNama('item', 'nama', $this->input->post('nama'))->num_rows();
 			if($check <= 0){

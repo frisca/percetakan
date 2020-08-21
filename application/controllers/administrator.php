@@ -45,6 +45,7 @@ class Administrator extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
+			$this->session->set_flashdata('error', 'Data administrator tidak berhasil disimpan');
 			$this->load->view('administrator/add');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 1);
@@ -111,6 +112,7 @@ class Administrator extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
+			$this->session->set_flashdata('error', 'Data administrator tidak berhasil diubah');
 			$this->load->view('administrator/edit/' . $this->input->post('id'));
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 1);

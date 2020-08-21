@@ -54,7 +54,8 @@ class Location extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('location/add');
+			$this->session->set_flashdata('error', 'Data location tidak berhasil disimpan');
+			redirect(base_url() . 'location/add');
 		}else{
 			$check = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->num_rows();
 			if($check <= 0){
@@ -135,7 +136,8 @@ class Location extends CI_Controller {
 			);
 
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('location/edit/' . $this->input->post('id'));
+			$this->session->set_flashdata('error', 'Data location tidak berhasil diubah');
+			redirect(base_url() . 'operator/edit/' . $this->input->post('id'));
 		}else{
 			$location = $this->all_model->getListDataByNama('location', 'nama_location', $this->input->post('nama'))->row();
 			if(($location->nama_location == $this->input->post('nama') && $location->id_location == $this->input->post('id')) || empty($location)){

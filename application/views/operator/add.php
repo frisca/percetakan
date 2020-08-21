@@ -38,6 +38,7 @@
 
 				<?php
 					$inputs = $this->session->flashdata('inputs');
+					// var_dump($this->session->flashdata('inputs'));exit();
 				?>
 
 				<div class="row">
@@ -106,7 +107,7 @@
 										<option value="">Pilih Location</option>
 										<?php 
 											foreach ($location as $key => $value) {
-												if(!empty($inputs)){
+												if(!empty($inputs['id_location'])){
 													if($inputs['id_location'] == $value->id_location){
 										?>
 													<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>

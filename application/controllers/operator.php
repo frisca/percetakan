@@ -43,9 +43,9 @@ class Operator extends CI_Controller {
 				'username' => $this->input->post('username'),
 				'id_location' => $this->input->post('id_location')
 			);
-
 			$this->session->set_flashdata('inputs', $input);
-			$this->load->view('operator/add');
+			$this->session->set_flashdata('error', 'Data operator gagal disimpan');
+			redirect(base_url() . 'operator/add');
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 3);
 			$check = $this->all_model->getDataByCondition('user', $con)->num_rows();
@@ -109,7 +109,15 @@ class Operator extends CI_Controller {
 		$this->form_validation->set_rules('id_location', 'Location', 'required');
 
 		if($this->form_validation->run() == false){
-			$this->load->view('operator/edit');
+			$input = array(
+				'nama' => $this->input->post('nama'),
+				'username' => $this->input->post('username'),
+				'id_location' => $this->input->post('id_location')
+			);
+			
+			$this->session->set_flashdata('inputs', $input);
+			$this->session->set_flashdata('error', 'Data operator gagal disimpan');
+			redirect(base_url() . 'operator/edit/' . $this->input->post('id'));
 		}else{
 			$con = array('username' => $this->input->post('username'), 'role' => 3);
 			$users = $this->all_model->getDataByCondition('user', $con)->row();
