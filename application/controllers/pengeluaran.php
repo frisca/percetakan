@@ -427,6 +427,7 @@ class Pengeluaran extends CI_Controller {
 			$nmrs = $header_pengeluaran->nomor_pengeluaran;
 		}
 
+		
 		$pengeluaran = array(
 			'status' => 1
 		);
