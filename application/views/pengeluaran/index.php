@@ -80,7 +80,15 @@
 											foreach ($header_pengeluaran as $key => $value) {
 										?>
 										<tr>
-											<td><?php echo $value->id_header_pengeluaran;?></td>
+											<td>
+												<?php 
+													if($value->status != 0){
+														echo $value->nomor_pengeluaran;
+													}else{
+														echo $value->id_header_pengeluaran;
+													}
+												?>
+											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
 											<td><?php echo number_format($value->total, 0, '', '.');?></td>
 											<td>
@@ -88,6 +96,19 @@
 													<a class="blue" href="<?php echo base_url('pengeluaran/view/' . $value->id_header_pengeluaran);?>">
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
+													<?php 
+														if($this->session->userdata('role') == 3 && $value->status == 0){
+													?>
+														<a class="green" href="<?php echo base_url('pengeluaran/detail/' . $value->id_header_pengeluaran)?>">
+															<i class="ace-icon fa fa-pencil bigger-130"></i>
+														</a>
+
+														<a class="red delete" href="#" deleteid="<?php echo $value->id_header_pengeluaran;?>">
+															<i class="ace-icon fa fa-trash-o bigger-130"></i>
+														</a>
+													<?php
+														}
+													?>
 													<?php 
 														if($this->session->userdata('role') != 3){
 													?>

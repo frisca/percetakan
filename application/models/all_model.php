@@ -204,4 +204,31 @@ class All_model extends CI_Model {
 		and p.status = 1";
 		return $this->db->query($query);
 	}
+
+	public function getHeaderPengeluaranByLimit($nmr){
+		$query = "select p.* from header_pengeluaran p where p.status = 1 and  p.status_delete = 0 and
+		p.nomor_pengeluaran like '%" . $nmr . "%' order by p.id_header_pengeluaran desc limit 1";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getHeaderPengeluaranByLimitDesc($nmr){
+		$query = "select p.* from header_pengeluaran p where p.nomor_pengeluaran like '%" . $nmr . "%' and p.status = 1 
+		and p.status_delete = 0 order by p.id_header_pengeluaran desc limit 1";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+	
+	public function getCountHeaderPengeluaran($nmr){
+		$query = "select p.* from header_pengeluaran p where p.nomor_pengeluaran = '" . $nmr . "' and p.status_delete = 0
+		and p.status = 1";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getCountHeaderPengeluarans($nmr){
+		$query = "select p.* from header_pengeluaran p where p.nomor_pengeluaran = '" . $nmr . "' and p.status_delete = 0
+		and p.status = 1";
+		return $this->db->query($query);
+	}
 }

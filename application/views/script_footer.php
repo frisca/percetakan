@@ -663,6 +663,11 @@
 			$('input[name="nmr_penjualan"]').val($(this).val());
 			$('input[name="nmrs_penjualan"]').val($(this).val());
 		});
+
+		$('.nmr_pengeluaran').keyup(function(){
+			$('input[name="nmr_pengeluaran"]').val($(this).val());
+			$('input[name="nmrs_pengeluaran"]').val($(this).val());
+		});
 		</script>
 	</body>
 </html>

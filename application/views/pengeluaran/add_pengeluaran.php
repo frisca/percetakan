@@ -79,7 +79,17 @@
 					<form style="margin-top:50px;" method="post" action="<?php echo base_url('pengeluaran/checkout/' . $header_pengeluaran->id_header_pengeluaran);?>">
 						<div class="col-sm-6 form-group">
 							<label>Nomor Pengeluaran</label>
+							<?php 
+								if($header_pengeluaran->status == 0){
+							?>
 							<input type="text" placeholder="Nomor Pengeluaran" class="form-control" name="id_head" value="<?php echo $header_pengeluaran->id_header_pengeluaran;?>" disabled/>
+							<?php
+								}else{
+							?>
+							<input type="text" placeholder="Nomor Pengeluaran" class="form-control" name="id_head" value="<?php echo $header_pengeluaran->nomor_pengeluaran;?>" disabled/>
+							<?php
+								}
+							?>
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Tanggal Pengeluaran</label>

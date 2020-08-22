@@ -1554,8 +1554,8 @@ class Penjualan extends CI_Controller {
 			$conditions = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
 			$headers_penjualan = $this->all_model->getDataByCondition('header_penjualan', $conditions)->row();
 
-			if($headers_penjualan->nomor_penjualan != $this->input->post('nmr_penjualan')){
-				$counter_in = explode("/", $this->input->post('nmr_penjualan'));
+			if($headers_penjualan->nomor_penjualan != $this->input->post('nmrs_penjualan')){
+				$counter_in = explode("/", $this->input->post('nmrs_penjualan'));
 				$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
 				$nmr_penjualan = $this->all_model->getHeaderPenjualanByLimitDesc($nmr)->row();
 				$counter_db = explode("/", $nmr_penjualan->nomor_penjualan);

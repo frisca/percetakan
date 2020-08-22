@@ -14,10 +14,16 @@ class Pengeluaran extends CI_Controller {
 		// $condition = array('status_delete' => 0);
 		// $data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->result();
 		// if($this->session->userdata('role') != 3){
-			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaran()->result();
+			// $data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaran()->result();
 		// }else{
 		// 	$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($this->session->userdata('location'))->result();
 		// }
+		if($this->session->userdata('role') == 3){
+			$user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
+			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($user->id_location)->result();
+		}else{
+			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaran()->result();
+		}
 		$this->load->view('pengeluaran/index', $data);
 	}
 
@@ -93,7 +99,7 @@ class Pengeluaran extends CI_Controller {
 				'status' => 0,
 				'created_date' => date('Y-m-d'),
 				'created_by' => $this->session->userdata('id'),
-				'id_header_pengeluaran' => $this->input->post('id_header_pengeluaran')
+				'nomor_pengeluaran' => $this->input->post('id_head_pengeluaran')
 			);
 			$res = $this->all_model->insertData("pengeluaran", $data);
 			if($res == true){
@@ -206,10 +212,39 @@ class Pengeluaran extends CI_Controller {
 
 	public function checkout($id){
 		$condition = array('id_header_pengeluaran' => $id);
+
+		$tahun = date('y');
+		$bulan = date('m');
+
+		$con = array('id_user' => $this->session->userdata('id'));
+		$user = $this->all_model->getDataByCondition('user', $con)->row();
+		// var_dump($user->id_location);exit();
+		$nmr = sprintf('%02d', $user->id_location);
+		$p = $this->all_model->getHeaderPengeluaranByLimit($nmr)->row();
+		// var_dump($nmr);exit();
+		if(empty($p)){
+			$nmrs = $nmr. '/OUT/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', 1);
+		}else{
+			$counter_in = explode("/", $p->nomor_pengeluaran);
+			if($counter_in[3] == $bulan && $counter_in[2] == $tahun){
+				$tamp = sprintf('%04d', $counter_in[4] + 1);
+				$nmrs = $nmr. '/OUT/' . $tahun . '/' . $bulan . '/' . $tamp;
+			}else{
+				$nmrs = $nmr. '/OUT/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', 1);
+			}
+			// }else if($counter_in[3] != $bulan && $counter_in[2] == $tahun){
+			// 	$nmrs = $nmr. '/INV/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', 1);
+			// }else if($counter_in[3] == $bulan && $counter_in[2] != $tahun){
+			// 	$nmrs = $nmr. '/INV/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', 1);
+			// }
+		}
+
 		$pengeluaran = array(
 			'status' => 1
 		);
+
 		$header_pengeluaran = array(
+			'nomor_pengeluaran' => $nmrs,
 			'status' => 1
 		);
 
@@ -269,6 +304,27 @@ class Pengeluaran extends CI_Controller {
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'pengeluaran/detail/' . $this->input->post('id_header_pengeluaran'));
 		}else{ 
+			$condition = array('id_header_pengeluaran' => $this->input->post('id_header_pengeluaran'));
+			$headers_pengeluaran = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
+
+			if($headers_pengeluaran->nomor_pengeluaran != $this->input->post('nmr_pengeluaran')){
+				$counter_in = explode("/", $this->input->post('nmr_pengeluaran'));
+				$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
+				$nmr_pengeluaran = $this->all_model->getHeaderPengeluaranByLimitDesc($nmr)->row();
+				$counter_db = explode("/", $nmr_pengeluaran->nomor_pengeluaran);
+				$tamp_db = (int)$counter_db[4] + 1;
+				
+				// var_dump($tamp_db);exit();
+				if($counter_in[4] != sprintf('%04d', $tamp_db)){
+					$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+					$this->session->set_flashdata('error', $error);
+					return redirect(base_url().'pengeluaran/open/' . $this->input->post('id_header_pengeluaran'));
+				}
+				$nmrs = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+			}else{
+				$nmrs = $headers_pengeluaran->nomor_pengeluaran;
+			}
+			var_dump($nmrs);exit();
 			$harga = str_replace(".", "", $this->input->post('harga'));
 			$data = array(
 				'item' => $this->input->post('item'),
@@ -285,7 +341,8 @@ class Pengeluaran extends CI_Controller {
 				$res = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
 				$total = $res->total + $harga;
 				$dataHeaderPengeluaran = array(
-					'total' => $total
+					'total' => $total,
+					'nomor_pengeluaran' => $nmrs
 				);
 				// var_dump($dataHeaderPenjualan);exit();
 				$headerPengeluaran = $this->all_model->updateData('header_pengeluaran', $condition, $dataHeaderPengeluaran);
@@ -350,11 +407,32 @@ class Pengeluaran extends CI_Controller {
 
 	public function open_checkout($id){
 		$condition = array('id_header_pengeluaran' => $id);
+		$headers_pengeluaran = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
+		// var_dump($this->input->post('id_head'));exit();
+		if($headers_pengeluaran->nomor_pengeluaran != $this->input->post('id_head')){
+			$counter_in = explode("/", $this->input->post('id_head'));
+			$nmr = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/';
+			$nmr_pengeluaran = $this->all_model->getHeaderPengeluaranByLimitDesc($nmr)->row();
+			$counter_db = explode("/", $nmr_pengeluaran->nomor_pengeluaran);
+			$tamp_db = (int)$counter_db[4] + 1;
+			
+			// var_dump($tamp_db);exit();
+			if($counter_in[4] != sprintf('%04d', $tamp_db)){
+				$error = "Nomor invoice seharusnya : " .  $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+				$this->session->set_flashdata('error', $error);
+				return redirect(base_url().'pengeluaran/open/' . $id);
+			}
+			$nmrs = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
+		}else{
+			$nmrs = $header_pengeluaran->nomor_pengeluaran;
+		}
+
 		$pengeluaran = array(
 			'status' => 1
 		);
 		$header_pengeluaran = array(
-			'status' => 1
+			'status' => 1,
+			'nomor_pengeluaran' => $nmrs
 		);
 
 		$res_pengeluaran = $this->all_model->updateData('pengeluaran', $condition, $pengeluaran);

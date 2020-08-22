@@ -79,7 +79,17 @@
 					<form style="margin-top:50px;" method="post" action="<?php echo base_url('pengeluaran/open_checkout/' . $header_pengeluaran->id_header_pengeluaran);?>">
 						<div class="col-sm-6 form-group">
 							<label>Nomor Pengeluaran</label>
-							<input type="text" placeholder="Nomor Pengeluaran" class="form-control" name="id_head" value="<?php echo $header_pengeluaran->id_header_pengeluaran;?>" disabled/>
+							<?php 
+								if($header_pengeluaran->status == 0){
+							?>
+							<input type="text" placeholder="Nomor Pengeluaran" class="form-control nmr_pengeluaran" name="id_head" value="<?php echo $header_pengeluaran->id_header_pengeluaran;?>"/>
+							<?php
+								}else{
+							?>
+							<input type="text" placeholder="Nomor Pengeluaran" class="form-control nmr_pengeluaran" name="id_head" value="<?php echo $header_pengeluaran->nomor_pengeluaran;?>"/>
+							<?php
+								}
+							?>
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Tanggal Pengeluaran</label>
@@ -178,6 +188,7 @@
 					        	<div class="modal-body">
 					            	<div class="row">
 					            		<input type="hidden" class="form-control" name="id_header_pengeluaran" value="<?php echo $header_pengeluaran->id_header_pengeluaran;?>" />
+										<input type="hidden" id="nmr_pengeluaran" name="nmr_pengeluaran" value="<?php echo $header_pengeluaran->nomor_pengeluaran;?>"/>
 					            		<div class="col-sm-12 form-group">
 											<label>Nama Item</label>
 											<input type="text" class="form-control" name="item" value="" required />
@@ -215,7 +226,7 @@
 					            	<div class="row">
 					            		<input type="hidden" class="form-control" name="id_header_pengeluaran" value="" />
 					            		<input type="hidden" class="form-control" name="id_pengeluaran" value="" />
-
+										<input type="hidden" id="nmr_pengeluaran" name="nmrs_pengeluaran" value="<?php echo $header_pengeluaran->nomor_pengeluaran;?>"/>
 					            		<div class="col-sm-12 form-group">
 											<label>Nama Item</label>
 											<input type="text" class="form-control" name="item" value="" required />

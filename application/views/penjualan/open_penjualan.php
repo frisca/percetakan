@@ -379,7 +379,7 @@
 					            		<input type="hidden" class="form-control satuan" name="id_satuan" value="" />
 					            		<input type="hidden" class="form-control" name="tgl_penjualan" value="<?php echo date('d-m-Y', strtotime($header_penjualan->tgl_penjualan));?>" id="transaksiDate">
 					            		<input type="hidden" name="customers" value="<?php echo $header_penjualan->id_customer;?>">
-										<input type="hidden" id="nmr_penjualan" name="nmr_penjualan" value="<?php echo $header_penjualan->nomor_penjualan;?>"/>
+										<input type="hidden" id="nmr_penjualan" name="nmrs_penjualan" value="<?php echo $header_penjualan->nomor_penjualan;?>"/>
 						            	<div class="col-sm-12 form-group">
 											<label>Nama Item</label>
 											<select name="id_item" class="select2" id="item" data-placeholder="Click to Choose..." style="width: 100%" required>

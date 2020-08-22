@@ -117,6 +117,10 @@
 													<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
 										<?php 
 													}
+												}else{
+										?>
+													<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
+										<?php
 												}
 											}
 										?>
