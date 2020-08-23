@@ -231,4 +231,16 @@ class All_model extends CI_Model {
 		and p.status = 1";
 		return $this->db->query($query);
 	}
+
+	public function getHeaderPengeluaransByOperator($location, $month, $year){
+		$query = "select hp.*, u.* from header_pengeluaran hp left join user u on u.id_user = hp.created_by 
+				 where hp.status_delete = 0 and u.id_location = " . $location . " and month(hp.tgl_pengeluaran) = '".$month."' 
+				 and day(hp.tgl_pengeluaran) = '".$year."'";
+		return $this->db->query($query);
+	}
+
+	public function getPengeluaranByDesc(){
+		$query = "select p.* from header_pengeluaran p order by p.id_header_pengeluaran desc";
+		return $this->db->query($query);
+	}
 }

@@ -28,11 +28,17 @@ class Pengeluaran extends CI_Controller {
 	}
 
 	public function add(){
+		$month = date('m');
+		$date = date('d');
+
 		$order = "id_header_pengeluaran desc";
-		$header_pengeluaran = $this->all_model->getDataByLimitPengeluaran(array('status_delete'=>0), 1, $order, 'header_pengeluaran')->row();
+		$user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
+		$header_pengeluaran = $this->all_model->getHeaderPengeluaransByOperator($user->id_location, $month, $date)->row();
+		// $header_pengeluaran = $this->all_model->getDataByLimitPengeluaran(array('status_delete'=>0), 1, $order, 'header_pengeluaran')->row();
 
 		if(empty($header_pengeluaran)){
-			$pengeluaran = $this->all_model->getDataByLimitPengeluaran(array('status_delete'=>1), 1, $order, 'header_pengeluaran')->row();
+			// $pengeluaran = $this->all_model->getDataByLimitPengeluaran(array('status_delete'=>1), 1, $order, 'header_pengeluaran')->row();
+			$pengeluaran = $this->all_model->getPengeluaranByDesc()->row();
 			if(empty($pengeluaran)){
 				$data['id_header_pengeluaran'] = 1;
 				$data['tgl_pengeluaran'] = date('Y-m-d');
@@ -85,7 +91,7 @@ class Pengeluaran extends CI_Controller {
 	public function detail($id){
 		$condition = array('id_header_pengeluaran' => $id);
 		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
-		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0))->result();
+		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0, 'id_header_pengeluaran' => $id))->result();
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 		$this->load->view('pengeluaran/add_pengeluaran', $data);
@@ -171,7 +177,7 @@ class Pengeluaran extends CI_Controller {
 					'id_header_pengeluaran' => $this->input->post('id_header_pengeluaran')
 				);
 
-				$res_pengeluaran = $this->all_model->updateData("pengeluaran", $condition, $data);
+				$res_pengeluaran = $this->all_model->updateData("pengeluaran", $con, $data);
 				if($res_pengeluaran == true){
 					$this->session->set_flashdata('success', 'Data item berhasil disimpan');
 					redirect(base_url() . 'pengeluaran/detail/' . $this->input->post('id_header_pengeluaran'));
@@ -259,20 +265,20 @@ class Pengeluaran extends CI_Controller {
 		if($res_pengeluaran == true){
 			$res_header = $this->all_model->updateData('header_pengeluaran', $condition, $header_pengeluaran);
 			if($res_header == true){
-				$this->session->set_flashdata('success', 'Berhasil checkout');
+				$this->session->set_flashdata('success', 'Data pengeluaran berhasil checkout');
 				redirect(base_url() . 'pengeluaran/detail/' . $id);
 			} 
-			$this->session->set_flashdata('error', 'Gagal checkout');
+			$this->session->set_flashdata('error', 'Data pengeluaran gagal checkout');
 			redirect(base_url() . 'pengeluaran/detail/' . $id);
 		}
-		$this->session->set_flashdata('error', 'Gagal checkout');
+		$this->session->set_flashdata('error', 'Data pengeluaran gagal checkout');
 		redirect(base_url() . 'pengeluaran/detail/' . $id);
 	}
 
 	public function view($id){
 		$condition = array('id_header_pengeluaran' => $id);
 		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
-		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0))->result();
+		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0, 'id_header_pengeluaran' => $id))->result();
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 		$this->load->view('pengeluaran/view_pengeluaran', $data);
@@ -298,7 +304,7 @@ class Pengeluaran extends CI_Controller {
 	public function open($id){
 		$condition = array('id_header_pengeluaran' => $id);
 		$data['header_pengeluaran'] = $this->all_model->getDataByCondition('header_pengeluaran', $condition)->row();
-		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0))->result();
+		$data['pengeluaran'] = $this->all_model->getDataByCondition('pengeluaran', array('status_delete' => 0, 'id_header_pengeluaran' => $id))->result();
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 		$this->load->view('pengeluaran/open_pengeluaran', $data);
@@ -331,7 +337,7 @@ class Pengeluaran extends CI_Controller {
 			}else{
 				$nmrs = $headers_pengeluaran->nomor_pengeluaran;
 			}
-			
+
 			$harga = str_replace(".", "", $this->input->post('harga'));
 			$data = array(
 				'item' => $this->input->post('item'),
@@ -399,7 +405,7 @@ class Pengeluaran extends CI_Controller {
 					'id_header_pengeluaran' => $this->input->post('id_header_pengeluaran')
 				);
 
-				$res_pengeluaran = $this->all_model->updateData("pengeluaran", $condition, $data);
+				$res_pengeluaran = $this->all_model->updateData("pengeluaran", $con, $data);
 				if($res_pengeluaran == true){
 					$this->session->set_flashdata('success', 'Data item berhasil disimpan');
 					redirect(base_url() . 'pengeluaran/open/' . $this->input->post('id_header_pengeluaran'));
@@ -431,7 +437,7 @@ class Pengeluaran extends CI_Controller {
 			}
 			$nmrs = $counter_in[0] . '/' . $counter_in[1] . '/' . $counter_in[2] . '/' . $counter_in[3]. '/' . sprintf('%04d', $tamp_db);
 		}else{
-			$nmrs = $header_pengeluaran->nomor_pengeluaran;
+			$nmrs = $headers_pengeluaran->nomor_pengeluaran;
 		}
 
 		
@@ -447,13 +453,14 @@ class Pengeluaran extends CI_Controller {
 		if($res_pengeluaran == true){
 			$res_header = $this->all_model->updateData('header_pengeluaran', $condition, $header_pengeluaran);
 			if($res_header == true){
-				$this->session->set_flashdata('success', 'Berhasil checkout');
-				redirect(base_url() . 'pengeluaran/open/' . $id);
+				$this->session->set_flashdata('success', 'Data pengeluaran berhasil diedit');
+				// redirect(base_url() . 'pengeluaran/open/' . $id);
+				redirect(base_url() . 'pengeluaran/index');
 			} 
-			$this->session->set_flashdata('error', 'Gagal checkout');
+			$this->session->set_flashdata('error', 'Data pengeluaran gagal checkout');
 			redirect(base_url() . 'pengeluaran/open/' . $id);
 		}
-		$this->session->set_flashdata('error', 'Gagal checkout');
+		$this->session->set_flashdata('error', 'Data pengeluaran gagal checkout');
 		redirect(base_url() . 'pengeluaran/open/' . $id);
 	}
 }
