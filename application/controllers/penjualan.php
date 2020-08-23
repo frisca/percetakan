@@ -58,7 +58,24 @@ class Penjualan extends CI_Controller {
 			'status'  => 0,
 			'createdBy' => $this->session->userdata('id'),
 			'createdDate' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('createdDate'), '-', '-'))),
-			'id_customer' => $this->input->post('id_customer')
+			'id_customer' => $this->input->post('id_customer'),
+			'updatedDate' => '0000-00-00 00:00:00',
+			'updatedBy' => 0,
+			'keterangan_delete' => '',
+			'total' => 0,
+			'status_delete' => 0,
+			'deleted_date' => '0000-00-00 00:00:00',
+			'deleted_by' => 0,
+			'nomor_penjualan' => '',
+			'discount' => 0,
+			'counter_dp1' => 0,
+			'counter_dp2' => 0,
+			'counter_lunas' => 0,
+			'dp1' => 0,
+			'dp2' => 0,
+			'grandtotal' => 0,
+			'metode_pembayaran' => 0,
+			'sisa_pembayaran' => 0
 		);
 
 		$result = $this->all_model->insertData('header_penjualan', $data);
@@ -121,7 +138,13 @@ class Penjualan extends CI_Controller {
 					'created_by' => $this->session->userdata('id'),
 					'id_header_penjualan' => $this->input->post('id_header_penjualan'),
 					'id_user' => $this->session->userdata('id'),
-					'keterangan' => $this->input->post('keterangan')
+					'keterangan' => $this->input->post('keterangan'),
+					'updated_date' => '0000-00-00 00:00:00',
+					'updated_by' => 0,
+					'status_delete' => 0,
+					'keterangan_delete' => '',
+					'deleted_by' => 0,
+					'deleted_date' => '0000-00-00 00:00:00'
 				);
 				// var_dump($datas);exit();
 				$result = $this->all_model->insertData("penjualan", $datas);
@@ -1360,7 +1383,13 @@ class Penjualan extends CI_Controller {
 					'created_by' => $this->session->userdata('id'),
 					'id_header_penjualan' => $this->input->post('id_header_penjualan'),
 					'id_user' => $this->session->userdata('id'),
-					'keterangan' => $this->input->post('keterangan')
+					'keterangan' => $this->input->post('keterangan'),
+					'updated_date' => '0000-00-00 00:00:00',
+					'updated_by' => 0,
+					'status_delete' => 0,
+					'keterangan_delete' => '',
+					'deleted_by' => 0,
+					'deleted_date' => '0000-00-00 00:00:00'
 				);
 				// var_dump($datas);exit();
 				$result = $this->all_model->insertData("penjualan", $datas);

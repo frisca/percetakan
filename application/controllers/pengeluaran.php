@@ -63,9 +63,16 @@ class Pengeluaran extends CI_Controller {
 			'tgl_pengeluaran' => date('Y-m-d', strtotime($this->input->post('tgl_pengeluaran'))),
 			'status'  => 0,
 			'created_by' => $this->session->userdata('id'),
-			'created_date' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('createdDate'), '-', '-')))
+			'created_date' => date('Y-m-d H:i:s', strtotime(strtr($this->input->post('createdDate'), '-', '-'))),
+			'updated_date' => '0000-00-00 00:00:00',
+			'updated_by' => 0,
+			'keterangan_delete' => '',
+			'total' => 0,
+			'status_delete' => 0,
+			'deleted_date' => '0000-00-00 00:00:00',
+			'deleted_by' => 0,
+			'nomor_pengeluaran' => ''
 		);
-
 		$result = $this->all_model->insertData('header_pengeluaran', $data);
 		if($result == true){
 			$order = "id_header_pengeluaran desc";
@@ -99,7 +106,7 @@ class Pengeluaran extends CI_Controller {
 				'status' => 0,
 				'created_date' => date('Y-m-d'),
 				'created_by' => $this->session->userdata('id'),
-				'nomor_pengeluaran' => $this->input->post('id_head_pengeluaran')
+				'id_header_pengeluaran' => $this->input->post('id_header_pengeluaran')
 			);
 			$res = $this->all_model->insertData("pengeluaran", $data);
 			if($res == true){
@@ -324,7 +331,7 @@ class Pengeluaran extends CI_Controller {
 			}else{
 				$nmrs = $headers_pengeluaran->nomor_pengeluaran;
 			}
-			var_dump($nmrs);exit();
+			
 			$harga = str_replace(".", "", $this->input->post('harga'));
 			$data = array(
 				'item' => $this->input->post('item'),

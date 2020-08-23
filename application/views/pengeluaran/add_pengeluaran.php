@@ -117,11 +117,17 @@
 						<div class="col-xs-12">
 							<div class="table-header">
 								Item
+								<?php
+									if($header_pengeluaran->status == 0){
+								?>
 								<div class="pull-right tableTools-container">
 									<div class="dt-buttons btn-overlap btn-group" style="margin: 1px 5px 5px 0px;">
 										<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" type="button">Tambah</button>
 									</div>
 								</div>
+								<?php
+									}
+								?>
 							</div>
 
 							<!-- div.dataTables_borderWrap -->
