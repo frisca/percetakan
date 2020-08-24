@@ -141,7 +141,7 @@ class Report_Penjualan extends CI_Controller {
 		$no_invoice = $this->input->get('no_invoice');
 		$customer = ($this->input->get('customer')  == 0) ? 0 : $this->input->get('customer');
 		$invoice = ($this->input->get('invoice') == -99) ? 0 : $this->input->get('invoice');
-		$status_pembayaran = ((int)$this->input->get('status_pembayaran') == -99) ? 0 : $this->input->post('status_pembayaran');
+		$status_pembayaran = ((int)$this->input->get('status_pembayaran') == -99) ? 0 : $this->input->get('status_pembayaran');
 		// var_dump($invoice);exit();
 		if($from != '1970-01-01' && $to != '1970-01-01' && $no_invoice == '' && $customer == 0 && $this->input->get('invoice') == -99 && 
 			$this->input->get('status_pembayaran')== -99){
@@ -194,7 +194,7 @@ class Report_Penjualan extends CI_Controller {
 			}else{
 				$s_pembayaran = "p.status_pembayaran = " . $status_pembayaran; 
 			}
-
+			// var_dump($s_pembayaran);exit();
 			if ($customer == 0){
 				$c_customer = "p.id_customer >= 0 ";
 			}else{
