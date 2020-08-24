@@ -90,7 +90,7 @@ class All_model extends CI_Model {
 	public function getReportPenjualanByCondition($froms, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($status_invoice);exit();
 		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
-				where p.status_delete = 0 and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
+				where p.status_delete = 0 and (".$customer." and p.nomor_penjualan like '%".$no_invoice."%'
 				and ".$status_invoice." and ".$status_pembayaran.") " . $froms . " group by p.id_header_penjualan order by p.tgl_penjualan desc";
 				// var_dump($query);exit();
 		return $this->db->query($query);

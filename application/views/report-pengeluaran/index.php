@@ -106,7 +106,14 @@
 										?>
 										<tr>
 											<td>
-                                                <?php echo $value->id_header_pengeluaran;?>	
+                                                <!-- <?php echo $value->id_header_pengeluaran;?>	 -->
+												<?php 
+                                                    if($value->status == 0){
+                                                        echo $value->id_header_pengeluaran;
+                                                    }else{
+                                                        echo $value->nomor_pengeluaran;
+                                                    }
+                                                ?>	
 											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
                                             <td>

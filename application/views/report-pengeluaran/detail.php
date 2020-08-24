@@ -129,7 +129,16 @@
 									?>
 									<tr>
 										<td><?php echo $no;?></td>
-										<td><?php echo $list->id_header_pengeluaran;?></td>
+										<td>
+											<!-- <?php echo $list->id_header_pengeluaran;?> -->
+											<?php 
+												if($list->status == 0){
+													echo $list->id_header_pengeluaran;
+												}else{
+													echo $list->nomor_pengeluaran;
+												}
+											?>	
+										</td>
 										<td><?php echo $tgl_pengeluaran;?></td>
 										<td><?php echo 'Rp ' . number_format($list->total, 0, '', '.');?></td>
 										<td><?php echo $stat;?></td>

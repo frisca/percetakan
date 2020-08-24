@@ -30,7 +30,7 @@ class Report_Pengeluaran extends CI_Controller {
 		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->post('status') == -99){
 			$data['report'] = $this->all_model->getReportPengeluaranDate($from, $to)->result();
 		}else if($from != '1970-01-01' && $to != '1970-01-01'){
-			if ($this->input->post('invoice') == -99){
+			if ($this->input->post('status') == -99){
 				$status1 = " and p.status >= 0 ";
 			}else{
 				$status1 = " and p.status = " . $status . " " ; 
@@ -43,7 +43,7 @@ class Report_Pengeluaran extends CI_Controller {
 				$to = '';
 			}
 
-			if ($this->input->post('invoice') == -99){
+			if ($this->input->post('status') == -99){
 				$status1 = " and p.status >= 0 ";
 			}else{
 				$status1 = " and p.status = " . $status . " " ; 
@@ -61,14 +61,14 @@ class Report_Pengeluaran extends CI_Controller {
 	}
 
 	public function export(){
-		$from = date('Y-m-d', strtotime($this->input->post('from_date')));
-		$to = date('Y-m-d', strtotime(strtr($this->input->post('to_date'), '-', '-')));
-		$status = ($this->input->post('status')  == -99) ? 0 : $this->input->post('status');
+		$from = date('Y-m-d', strtotime($this->input->get('from_date')));
+		$to = date('Y-m-d', strtotime(strtr($this->input->get('to_date'), '-', '-')));
+		$status = ($this->input->get('status')  == -99) ? 0 : $this->input->get('status');
 		// var_dump($invoice);exit();
-		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->post('status') == -99){
+		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->get('status') == -99){
 			$report = $this->all_model->getReportPengeluaranDate($from, $to)->result();
 		}else if($from != '1970-01-01' && $to != '1970-01-01'){
-			if ($this->input->post('invoice') == -99){
+			if ($this->input->get('status') == -99){
 				$status1 = " and p.status >= 0 ";
 			}else{
 				$status1 = " and p.status = " . $status . " " ; 
@@ -81,7 +81,7 @@ class Report_Pengeluaran extends CI_Controller {
 				$to = '';
 			}
 
-			if ($this->input->post('invoice') == -99){
+			if ($this->input->get('status') == -99){
 				$status1 = " and p.status >= 0 ";
 			}else{
 				$status1 = " and p.status = " . $status . " " ; 
@@ -131,8 +131,10 @@ class Report_Pengeluaran extends CI_Controller {
 
 			if($list->status == 1){
 				$stat = 'Close';
+				$header = $list->nomor_pengeluaran;
 			}else{
 				$stat = 'Open';
+				$header = $list->id_header_pengeluaran;
 			}
 
 			$list->tgl_pengeluaran = explode(" ", $list->tgl_pengeluaran);
@@ -158,7 +160,7 @@ class Report_Pengeluaran extends CI_Controller {
 			}
 			
 			$objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $no);
-			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $list->id_header_pengeluaran);
+			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $header);
 			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $tgl_pengeluaran);
 			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
 			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $stat);
@@ -209,8 +211,8 @@ class Report_Pengeluaran extends CI_Controller {
 
 	public function printDetail($id){
 		// var_dump('test');exit(); 
-		$from = date('Y-m-d', strtotime($this->input->post('from_date')));
-		$to = date('Y-m-d', strtotime(strtr($this->input->post('to_date'), '-', '-')));
+		$from = date('Y-m-d', strtotime($this->input->get('from_date')));
+		$to = date('Y-m-d', strtotime(strtr($this->input->get('to_date'), '-', '-')));
 		
 		if($from == '1970-01-01' || $to == '1970-01-01'){
 			$from = '';
@@ -264,8 +266,10 @@ class Report_Pengeluaran extends CI_Controller {
 
 			if($list->status == 1){
 				$stat = 'Close';
+				$header = $list->nomor_pengeluaran;
 			}else{
 				$stat = 'Open';
+				$header = $list->id_header_pengeluaran;
 			}
 
 			$list->tgl_pengeluaran = explode(" ", $list->tgl_pengeluaran);
@@ -291,7 +295,7 @@ class Report_Pengeluaran extends CI_Controller {
 			}
 			
 			$objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $no);
-			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $list->id_header_pengeluaran);
+			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $header);
 			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $tgl_pengeluaran);
 			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
 			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $stat);

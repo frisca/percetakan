@@ -153,13 +153,13 @@ class Report_Penjualan extends CI_Controller {
 					$to = '';
 				}
 
-				if ($this->input->post('invoice') == -99){
+				if ($this->input->get('invoice') == -99){
 					$s_invoice = "p.status >= 0 ";
 				}else{
 					$s_invoice = "p.status = " . $invoice . " " ; 
 				}
 	
-				if ($this->input->post('status_pembayaran') == -99){
+				if ($this->input->get('status_pembayaran') == -99){
 					$s_pembayaran = "p.status_pembayaran >= 0";
 				}else{
 					$s_pembayaran = "p.status_pembayaran = " . $status_pembayaran; 
@@ -172,6 +172,7 @@ class Report_Penjualan extends CI_Controller {
 				}
 				$report = $this->all_model->getReportPenjualanByWithoutDate($c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
 		}else if($from != '1970-01-01' && $to != '1970-01-01'){
+			// var_dump('oi');exit();
 			if($from == '1970-01-01' || $to == '1970-01-01'){
 				$froms = '';
 				$from = '';
@@ -182,13 +183,13 @@ class Report_Penjualan extends CI_Controller {
 				$froms = " and p.tgl_penjualan between '".$from."' and '".$to."' ";
 			}
 
-			if ($this->input->post('invoice') == -99){
+			if ($this->input->get('invoice') == -99){
 				$s_invoice = "p.status >= 0 ";
 			}else{
 				$s_invoice = "p.status = " . $invoice . " " ; 
 			}
 
-			if ($this->input->post('status_pembayaran') == -99){
+			if ($this->input->get('status_pembayaran') == -99){
 				$s_pembayaran = "p.status_pembayaran >= 0";
 			}else{
 				$s_pembayaran = "p.status_pembayaran = " . $status_pembayaran; 
