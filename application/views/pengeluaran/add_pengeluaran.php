@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">Pengeluaran</li>
 				</ul><!-- /.breadcrumb -->
@@ -108,7 +108,7 @@
 						date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 						<div class="col-sm-6 form-group">
 							<label>Total</label>
-							<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_pengeluaran->total,0,'','.');?>" disabled>
+							<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_pengeluaran->total,0,'',',');?>" disabled>
 						</div>
 						<!-- </div> -->
 					</div>
@@ -147,7 +147,7 @@
 										?>
 										<tr>
 											<td><?php echo $value->item;?></td>
-											<td><?php echo number_format($value->price, 0, '', '.');?></td>
+											<td><?php echo number_format($value->price, 0, '', ',');?></td>
 											<td><?php echo $value->keterangan;?></td>
 											<td>
 												<?php 
@@ -236,7 +236,7 @@
 					        <!-- Modal Header -->
 					        <div class="modal-header">
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        					<h4 class="modal-title">Edit Item</h4>
+	        					<h4 class="modal-title">Ubah Item</h4>
 					        </div>
 					        <form action="<?php echo base_url('pengeluaran/processEditPengeluaran')?>" method="post">
 					        	<div class="modal-body">
@@ -275,7 +275,7 @@
 					        <!-- Modal Header -->
 					        <div class="modal-header">
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        					<h4 class="modal-title">Delete Item</h4>
+	        					<h4 class="modal-title">Hapus Item</h4>
 					        </div>
 					        <form action="<?php echo base_url('pengeluaran/deleteItem')?>" method="post">
 					        	<div class="modal-body">

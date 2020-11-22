@@ -18,7 +18,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="#">Home</a>
+							<a href="#">Beranda</a>
 						</li>
 						<li class="active">Pengeluaran</li>
 					</ul><!-- /.breadcrumb -->
@@ -59,7 +59,7 @@
 							</div>	
 							<?php } ?>
 							<div class="table-header">
-								List Pengeluaran
+								Daftar Pengeluaran
 							</div>
 
 							<!-- div.table-responsive -->
@@ -90,7 +90,7 @@
 												?>
 											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
-											<td><?php echo number_format($value->total, 0, '', '.');?></td>
+											<td><?php echo number_format($value->total, 0, '', ',');?></td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
 													<a class="blue" href="<?php echo base_url('pengeluaran/view/' . $value->id_header_pengeluaran);?>">
@@ -153,7 +153,7 @@
 					        <!-- Modal Header -->
 					        <div class="modal-header">
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        					<h4 class="modal-title">Delete Data Pengeluaran</h4>
+	        					<h4 class="modal-title">Hapus Data Pengeluaran</h4>
 					        </div>
 					        <form action="<?php echo base_url('pengeluaran/delete')?>" method="post">
 					        	<div class="modal-body">

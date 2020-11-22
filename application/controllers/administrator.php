@@ -11,7 +11,7 @@ class Administrator extends CI_Controller {
 
 	public function index()
 	{
-		$condition = array('role' => 1);
+		$condition = array('role' => 1, 'is_deleted' => 0);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->result();
 		$this->load->view('administrator/index', $data);
 	}
@@ -34,7 +34,8 @@ class Administrator extends CI_Controller {
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
 			'role' => 1,
-			'id_location' => $this->input->post('id_location')
+			'id_location' => $this->input->post('id_location'),
+			'is_deleted' => 0
 		);
 
 		if($this->form_validation->run() == false){
@@ -156,8 +157,9 @@ class Administrator extends CI_Controller {
 	}
 
 	public function delete($id){
-		$condition = array("id_user" => $id);
-		$res  = $this->all_model->deleteData("user", $condition);
+		$condition = array('id_user' => $id);
+		$data = array('is_deleted' => 1);
+		$res  = $this->all_model->updateData('user', $condition, $data);
 		if($res == false){
 			$this->session->set_flashdata('error', 'Data administrator berhasil dihapus');
 			redirect(base_url() . "administrator/index");

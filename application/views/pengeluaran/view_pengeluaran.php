@@ -101,7 +101,7 @@
 						date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 						<div class="col-sm-6 form-group">
 							<label>Total</label>
-							<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_pengeluaran->total,0,'','.');?>" disabled>
+							<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_pengeluaran->total,0,'',',');?>" disabled>
 						</div>
 						<!-- </div> -->
 					</div>
@@ -128,7 +128,7 @@
 										?>
 										<tr>
 											<td><?php echo $value->item;?></td>
-											<td><?php echo number_format($value->price, 0, '', '.');?></td>
+											<td><?php echo number_format($value->price, 0, '', ',');?></td>
 											<td><?php echo $value->keterangan;?></td>
 										</tr>
 										<?php

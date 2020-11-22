@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">User</li>
 					<li class="active">Administrator</li>
@@ -61,7 +61,7 @@
 						</div>	
 						<?php } ?>
 						<div class="table-header">
-							List Administrator
+							Daftar Administrator
 						</div>
 
 						<!-- div.table-responsive -->

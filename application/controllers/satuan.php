@@ -11,7 +11,9 @@ class Satuan extends CI_Controller {
 
 	public function index()
 	{
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		$condition = array('is_deleted' => 0);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $condition)->result();
 		$this->load->view('satuan/index', $data);
 	}
 
@@ -24,12 +26,15 @@ class Satuan extends CI_Controller {
 		$this->form_validation->set_rules('satuan', 'Satuan', 'required');
 
 		$data = array(
-			'satuan' => $this->input->post('satuan')
+			'satuan' => $this->input->post('satuan'),
+			'status' => $this->input->post('status'),
+			'is_deleted' => 0
 		);
 
 		if($this->form_validation->run() == false){
 			$input = array(
-				'satuan' => $this->input->post('satuan')
+				'satuan' => $this->input->post('satuan'),
+				'status' => $this->input->post('status')
 			);
 
 			$this->session->set_flashdata('inputs', $input);
@@ -43,7 +48,8 @@ class Satuan extends CI_Controller {
 					redirect(base_url() . 'satuan/index');
 				}else{
 					$input = array(
-						'satuan' => $this->input->post('satuan')
+						'satuan' => $this->input->post('satuan'),
+						'status' => $this->input->post('status')
 					);
 		
 					$this->session->set_flashdata('inputs', $input);
@@ -52,7 +58,8 @@ class Satuan extends CI_Controller {
 				}
 			}else{
 				$input = array(
-					'satuan' => $this->input->post('satuan')
+					'satuan' => $this->input->post('satuan'),
+					'status' => $this->input->post('status')
 				);
 	
 				$this->session->set_flashdata('inputs', $input);
@@ -81,7 +88,8 @@ class Satuan extends CI_Controller {
 			$satuan = $this->all_model->getListDataByNama('satuan', 'satuan', $this->input->post('satuan'))->row();
 			if(($satuan->satuan == $this->input->post('satuan') && $name->id_item == $this->input->post('id')) || empty($satuan)){
 				$data = array(
-					'satuan' => $this->input->post('satuan')
+					'satuan' => $this->input->post('satuan'),
+					'status' => $this->input->post('status')
 				);
 
 				$result = $this->all_model->updateData("satuan", $condition, $data);
@@ -90,7 +98,8 @@ class Satuan extends CI_Controller {
 					redirect(base_url() . 'satuan/index');
 				}else{
 					$input = array(
-						'satuan' => $this->input->post('satuan')
+						'satuan' => $this->input->post('satuan'),
+						'status' => $this->input->post('status')
 					);
 		
 					$this->session->set_flashdata('inputs', $input);
@@ -99,7 +108,8 @@ class Satuan extends CI_Controller {
 				}
 			}else{
 				$input = array(
-					'satuan' => $this->input->post('satuan')
+					'satuan' => $this->input->post('satuan'),
+					'status' => $this->input->post('status')
 				);
 	
 				$this->session->set_flashdata('inputs', $input);
@@ -118,7 +128,8 @@ class Satuan extends CI_Controller {
 
 	public function delete($id){
 		$condition = array('id_satuan' => $id);
-		$res  = $this->all_model->deleteData("satuan", $condition);
+		$data = array('is_deleted' => 1);
+		$res  = $this->all_model->updateData("satuan", $condition, $data);
 		if($res == false){
 			$this->session->set_flashdata('error', 'Data satuan berhasil dihapus');
 			redirect(base_url() . "satuan/index");

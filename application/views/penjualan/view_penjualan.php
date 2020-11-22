@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">Penjualan</li>
 				</ul><!-- /.breadcrumb -->
@@ -101,16 +101,16 @@
 					date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 					<div class="col-sm-6 form-group">
 						<label>Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,0,'','.');?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,0,'',',');?>" disabled>
 						<input type="hidden"  name="total" value="<?php echo $header_penjualan->total;?>">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Discount</label>
-						<input type="text" placeholder="Discount" class="form-control discount" name="discounts" value="<?php echo number_format($header_penjualan->discount, 0, '', '.');?>" disabled>
+						<input type="text" placeholder="Discount" class="form-control discount" name="discounts" value="<?php echo number_format($header_penjualan->discount, 0, '', ',');?>" disabled>
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Grand Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,0,'','.');?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,0,'',',');?>" disabled>
 						<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
 					</div>
 					<div class="col-sm-6 form-group">
@@ -206,8 +206,8 @@
 											</td>
 											<td><?php echo $value->keterangan;?></td>
 											<td><?php echo $value->qty;?></td>
-											<td><?php echo number_format($value->harga_satuan,0,'','.');?></td>
-											<td><?php echo number_format($value->total_harga,0,'','.');?></td>
+											<td><?php echo number_format($value->harga_satuan,0,'',',');?></td>
+											<td><?php echo number_format($value->total_harga,0,'',',');?></td>
 										</tr>
 									<?php
 										}

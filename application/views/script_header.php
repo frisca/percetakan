@@ -25,5 +25,7 @@
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="<?php echo base_url();?>assets/css/dataTables.bootstrap.min.css" />
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/ckeditor/ckeditor.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/ckfinder/ckfinder.js"></script>
 		<script src="<?php echo base_url();?>assets/js/ace-extra.min.js"></script>
 	</head>

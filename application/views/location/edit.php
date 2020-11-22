@@ -18,9 +18,9 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
-					<li class="active">Location</li>
+					<li class="active">Lokasi</li>
 				</ul><!-- /.breadcrumb -->
 
 				<div class="nav-search" id="nav-search">
@@ -36,10 +36,10 @@
 			<div class="page-content">
 				<div class="page-header">
 					<h1>
-						Location
+						Lokasi
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Location
+							Lokasi
 						</small>
 					</h1>
 				</div>
@@ -69,7 +69,7 @@
 						<?php } ?>
 						
 						<div class="table-header">
-							Ubah Data Location
+							Ubah Data Lokasi
 						</div>
 					</div>
 
@@ -82,11 +82,20 @@
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;" method="post" action="<?php echo base_url('location/processEdit');?>">
 							<input type="hidden" name="id" value="<?php echo $location->id_location;?>">
 							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Kode Lokasi</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Kode Lokasi" class="form-control" required name="kode_lokasi" 
+									value="<?php if(!empty($inputs)){echo $inputs['code_location'];}else{ echo $location->code_location; }?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" required name="nama" 
-									value="<?php if(!empty($inputs['nama_location'])){ echo $inputs['nama_location'];}else{ echo $location->nama_location;}?>" />
+									value="<?php if(!empty($inputs['name_location'])){ echo $inputs['name_location'];}else{ echo $location->name_location;}?>" />
 								</div>
 							</div>
 
@@ -94,10 +103,10 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Alamat</label>
 
 								<div class="col-sm-9">
-									<textarea name="alamat" rows="10" cols="50" style="width: 100%"><?php if(!empty($inputs['alamat_location'])){ echo $inputs['alamat_location'];}else{ echo $location->alamat_location;}?></textarea>
+									<textarea name="alamat" id="edi" rows="10" cols="50" style="width: 100%"><?php if(!empty($inputs['address_location'])){ echo $inputs['address_location'];}else{ echo $location->address_location;}?></textarea>
 								</div>
 							</div>
-
+<!-- 
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Kecamatan</label>
 
@@ -114,7 +123,7 @@
 									<input type="text" id="form-field-1-1" placeholder="Kota" class="form-control" required name="kota" 
 									value="<?php if(empty($inputs['kota'])){ echo $location->kota; }else{ echo $inputs['kota'];}?>"/>
 								</div>
-							</div>
+							</div> -->
 
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Email</label>
@@ -135,7 +144,34 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Instagran</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama Bank</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Nama Bank" class="form-control" required name="bank_account" 
+									value="<?php if(!empty($inputs)){echo $inputs['bank_account'];}else{ echo $location->bank_account; }?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama Rekening</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Nama Rekening" class="form-control" required name="bank_account_name" 
+									value="<?php if(!empty($inputs)){echo $inputs['bank_account_name'];}else{ echo $location->bank_account_name; }?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nomor Rekening</label>
+
+								<div class="col-sm-9">
+									<input type="text" id="form-field-1-1" placeholder="Nomor Rekening" class="form-control" required name="bank_no" 
+									value="<?php if(!empty($inputs)){echo $inputs['bank_no'];}else{ echo $location->bank_no; }?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Sosial Media</label>
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Instagram" class="form-control" required name="ig" 

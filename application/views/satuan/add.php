@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">User</li>
 					<li class="active">Satuan</li>
@@ -78,6 +78,35 @@
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Satuan" class="form-control" required name="satuan" 
 									value="<?php if(!empty($inputs)){ echo $inputs['satuan'];}?>"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Status</label>
+
+								<div class="col-sm-9">
+									<select name="status"  data-placeholder="Click to Choose...">
+										<?php
+										if(!empty($inputs)){
+											if($inputs['status'] == 0){
+										?>
+											<option value="0" selected>Tidak Aktif</option>
+											<option value="1">Aktif</option>
+										<?php
+											}else{
+										?>
+											<option value="0">Tidak Aktif</option>
+											<option value="1" selected>Aktif</option>
+										<?php
+											}
+										}else{
+										?>
+											<option value="0">Tidak Aktif</option>
+											<option value="1">Aktif</option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
 							</div>
 

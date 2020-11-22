@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">User</li>
 					<li class="active">Admin</li>
@@ -81,11 +81,11 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Lokasi</label>
 
 								<div class="col-sm-9">
 									<select name="id_location" class="select2" data-placeholder="Click to Choose..." disabled>
-										<option value="">Pilih Location</option>
+										<option value="">Pilih Lokasi</option>
 										<?php 
 											foreach ($location as $key => $value) {
 												if($user->id_location == $value->id_location){

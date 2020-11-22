@@ -18,7 +18,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="#">Home</a>
+							<a href="#">Beranda</a>
 						</li>
 						<li class="active">Penjualan</li>
 					</ul><!-- /.breadcrumb -->
@@ -41,7 +41,7 @@
 									<div class="dt-buttons btn-overlap btn-group">
 										<a class="dt-button buttons-collection buttons-colvis btn btn-white btn-primary btn-bold" tabindex="0" aria-controls="dynamic-table" href="<?php echo base_url('penjualan/add');?>">
 											<span><i class="fa fa-plus bigger-110 blue"></i> 
-												<span class="hidden">Add Data Penjualan</span>
+												<span class="hidden">Tambah Data Penjualan</span>
 											</span>
 										</a>
 									</div>
@@ -59,7 +59,7 @@
 							</div>	
 							<?php } ?>
 							<div class="table-header">
-								List Penjualan
+								Daftar Penjualan
 							</div>
 
 							<!-- div.table-responsive -->
@@ -98,9 +98,9 @@
 											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_penjualan));?></td>
 											<td><?php echo $value->first_name . ' ' . $value->last_name;?></td>
-											<td><?php echo number_format($value->total, 0, '', '.');?></td>
-											<td><?php echo number_format($value->discount, 0, '', '.');?></td>
-											<td><?php echo number_format($value->grandtotal, 0, '', '.');?></td>
+											<td><?php echo number_format($value->total, 0, '', ',');?></td>
+											<td><?php echo number_format($value->discount, 0, '', ',');?></td>
+											<td><?php echo number_format($value->grandtotal, 0, '', ',');?></td>
 											<td>
 												<?php 
 													if($value->metode_pembayaran == 2){
@@ -117,7 +117,7 @@
 													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 														Print
 													</button>
-													<p class="prints_dp1">Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
+													<p class="prints_dp1">Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', ','); } ?></p>
 												<?php 
 															}else if($this->session->userdata('role') != 3 && ($value->counter_dp1 >= 0 || empty($value->counter_dp1))){
 												?>
@@ -125,7 +125,7 @@
 													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 														Print
 													</button>
-													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', '.'); } ?></p>
+													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', ','); } ?></p>
 												<?php
 															}
 														}
@@ -154,7 +154,7 @@
 														data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 															Print
 														</button>
-														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', ','); } ?></p>
 												<?php
 														}else if($this->session->userdata('role') != 3 && ($value->counter_dp2 >= 0 || empty($value->counter_dp2))){
 												?>
@@ -162,7 +162,7 @@
 													    data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 															Print
 														</button>
-														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', ','); } ?></p>
 												<?php
 														}
 													}else if($value->dp1 != 0 && $value->dp2 != 0){
@@ -172,7 +172,7 @@
 													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 														Print
 													</button>
-													<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+													<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', ','); } ?></p>
 												<?php
 														}else if($this->session->userdata('role') != 3 && ($value->counter_lunas >= 0 || empty($value->counter_lunas))){
 												?>
@@ -180,7 +180,7 @@
 														data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 															Print
 														</button>
-														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', '.'); } ?></p>
+														<p>Total : <?php if(!empty($value->grandtotal)){ echo number_format($value->grandtotal, 0, '', ','); } ?></p>
 												<?php
 														}
 													} 
@@ -337,7 +337,7 @@
 					        <!-- Modal Header -->
 					        <div class="modal-header">
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        					<h4 class="modal-title">Delete Data Penjualan</h4>
+	        					<h4 class="modal-title">Hapus Data Penjualan</h4>
 					        </div>
 					        <form action="<?php echo base_url('penjualan/delete')?>" method="post">
 					        	<div class="modal-body">

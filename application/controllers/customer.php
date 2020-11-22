@@ -11,7 +11,9 @@ class Customer extends CI_Controller {
 
 	public function index()
 	{
-		$data['customer'] = $this->all_model->getAllData('customer')->result();
+		// $data['customer'] = $this->all_model->getAllData('customer')->result();
+		$condition = array('is_deleted' => 0);
+		$data['customer'] = $this->all_model->getDataByCondition('customer', $condition)->result();
 		$this->load->view('customer/index', $data);
 	}
 
@@ -34,7 +36,8 @@ class Customer extends CI_Controller {
             'status' => $this->input->post('status'),
             'email' => $this->input->post('email'),
             'created_date' => date('Y-m-d'),
-            'created_by' => $this->session->userdata('id')
+            'created_by' => $this->session->userdata('id'),
+            'is_deleted' => 0
 		);
 
 		if($this->form_validation->run() == false){
@@ -218,7 +221,8 @@ class Customer extends CI_Controller {
 
 	public function delete($id){
 		$condition = array("id_customer" => $id);
-		$res  = $this->all_model->deleteData("customer", $condition);
+		$data = array('is_deleted' => 1);
+		$res  = $this->all_model->updateData("customer", $condition, $data);
 		if($res == false){
 			$this->session->set_flashdata('error', 'Data customer berhasil dihapus');
 			redirect(base_url() . "customer/index");

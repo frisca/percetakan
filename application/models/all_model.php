@@ -27,12 +27,12 @@ class All_model extends CI_Model {
 	}
 
 	public function getListItem(){
-		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan";
+		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where i.is_deleted = 0";
 		return $this->db->query($query);
 	}
 
 	public function getItemById($id){
-		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where id_item = " . $id;
+		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where i.id_item = " . $id;
 		return $this->db->query($query);
 	}
 
@@ -241,6 +241,16 @@ class All_model extends CI_Model {
 
 	public function getPengeluaranByDesc(){
 		$query = "select p.* from header_pengeluaran p order by p.id_header_pengeluaran desc";
+		return $this->db->query($query);
+	}
+
+	public function getKodeLocationByDesc(){
+		$query = "select * from location order by code_location desc limit 1";
+		return $this->db->query($query);
+	}
+
+	public function getLocationByUser($id){
+		$query = "select u.*, l.* from user u left join location l on u.id_location = l.id_location where u.id_user = " . $id;
 		return $this->db->query($query);
 	}
 }

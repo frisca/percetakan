@@ -114,8 +114,10 @@ class Penjualan extends CI_Controller {
 			return redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 		}else{ 
 
-			$str = explode(',', $this->input->post('harga_satuan'));
-			$harga = str_replace(".", "", $str[0]);
+			// $str = explode(',', $this->input->post('harga_satuan'));
+			// $harga = str_replace(",", "", $str[0]);
+
+			$harga = str_replace(',', '', $this->input->post('harga_satuan'));
 
 			if(!$_FILES['line_item']['name']){
 
@@ -179,8 +181,11 @@ class Penjualan extends CI_Controller {
 					redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 				}
 			}else{
-				
-				$new_name                   = time().$_FILES["line_item"]['name'];
+				// $dname = explode(".", $_FILES["line_item"]['name']);
+				// $ext = end($dname);
+				$imageExtention = pathinfo($_FILES["line_item"]['name'], PATHINFO_EXTENSION);
+				$new_name                   = time() . "." . $imageExtention;
+				// var_dump($new_name);exit();
 		        $config['file_name']        = $new_name;
 				$config['upload_path']      = './gambar/';
 				$config['allowed_types']    = 'gif|jpg|png';
@@ -273,11 +278,12 @@ class Penjualan extends CI_Controller {
 		}
 
 		$con = array('id_user' => $this->session->userdata('id'));
-		$user = $this->all_model->getDataByCondition('user', $con)->row();
+		// $user = $this->all_model->getDataByCondition('user', $con)->row();
 		// var_dump($user->id_location);exit();
-		$nmr = sprintf('%02d', $user->id_location);
+		$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+		$nmr = $user->code_location;
 		$p = $this->all_model->getHeaderPenjualanByLimit($nmr)->row();
-		// var_dump($nmr);exit();
+		// var_dump($user);exit();
 		if(empty($p)){
 			$nmrs = $nmr. '/INV/' . $tahun . '/' . $bulan . '/' . sprintf('%04d', 1);
 		}else{
@@ -326,8 +332,8 @@ class Penjualan extends CI_Controller {
 	public function edit(){
 		$condition = array('id_penjualan' => $this->input->get('id'));
     	$penjualan = $this->all_model->getDataByCondition('penjualan', $condition)->row();
-    	$penjualan->harga_satuan = number_format($penjualan->harga_satuan, 0,'','.');
-    	$penjualan->total_harga = number_format($penjualan->total_harga, 0,'','.');
+    	$penjualan->harga_satuan = number_format($penjualan->harga_satuan, 0,'',',');
+    	$penjualan->total_harga = number_format($penjualan->total_harga, 0,'',',');
     	$data['penjualan'] = $penjualan;
     	$data['item'] = $this->all_model->getAllData('item')->result();
     	$data['satuan'] = $this->all_model->getAllData('satuan')->result();
@@ -422,7 +428,10 @@ class Penjualan extends CI_Controller {
 						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 					}
 				}else{
-					$new_name                   = time().$_FILES["line_item"]['name'];
+					$dname = explode(".", $_FILES["line_item"]['name']);
+					$ext = end($dname);
+					$new_name                   = time().$ext;
+					// $new_name                   = time().$_FILES["line_item"]['name'];
 			        $config['file_name']        = $new_name;
 					// $config['upload_path']      = './gambar/';
 					// $config['allowed_types']    = 'gif|jpg|png';
@@ -524,7 +533,7 @@ class Penjualan extends CI_Controller {
 
 	public function getItem(){
 		$data = $this->all_model->getItemById($this->input->get('id'))->row();
-		$data->harga = number_format($data->harga, 0,'','.');
+		$data->harga = number_format($data->harga, 0,'',',');
     	echo json_encode($data); 
 	}
 
@@ -538,7 +547,7 @@ class Penjualan extends CI_Controller {
 		$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
     	$h_penjualan = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();
     	
-    	$dp1 = str_replace(".", "", $this->input->post('dp1'));
+    	$dp1 = str_replace(",", "", $this->input->post('dp1'));
 
     	$data  = array(
     		'dp1' => $dp1,
@@ -1338,8 +1347,10 @@ class Penjualan extends CI_Controller {
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'penjualan/open/' . $this->input->post('id_header_penjualan'));
 		}else{ 
-			$str = explode(',', $this->input->post('harga_satuan'));
-			$harga = str_replace(".", "", $str[0]);
+			// $str = explode(',', $this->input->post('harga_satuan'));
+			// $harga = str_replace(",", "", $str[0]);
+
+			$harga = str_replace(',', '', $this->input->post('harga_satuan'));
 
 			$condition = array('id_header_penjualan' => $this->input->post('id_header_penjualan'));
 			$headers_penjualan = $this->all_model->getDataByCondition('header_penjualan', $condition)->row();

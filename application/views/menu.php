@@ -1,6 +1,6 @@
 <ul class="nav nav-list">
 	<?php 
-		if($this->session->userdata('role') != 3){
+		if($this->session->userdata('role') == 1){
 	?>
 	<li class="active">
 		<a href="<?php echo base_url('home/index');?>">

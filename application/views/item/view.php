@@ -18,9 +18,8 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
-					<li class="active">User</li>
 					<li class="active">Item</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
@@ -104,7 +103,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control" name="hargas" required 
-									value="<?php echo number_format($item->harga, 0, '', '.');?>" disabled/>
+									value="<?php echo number_format($item->harga, 0, '', ',');?>" disabled/>
 								</div>
 							</div>
 

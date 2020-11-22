@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">Satuan</li>
 				</ul><!-- /.breadcrumb -->
@@ -60,7 +60,7 @@
 						</div>	
 						<?php } ?>
 						<div class="table-header">
-							List Satuan
+							Daftar Satuan
 						</div>
 
 						<!-- div.table-responsive -->

@@ -17,7 +17,8 @@ class Item extends CI_Controller {
 
 	public function add()
 	{
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		$condition = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $condition)->result();
 		$this->load->view('item/add', $data);
 	}
 
@@ -26,14 +27,14 @@ class Item extends CI_Controller {
 		$this->form_validation->set_rules('id_satuan', 'Satuan', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
 
-		$str = explode(',', $this->input->post('harga'));
-		$harga = str_replace(".", "", $str[0]);
+		$harga = str_replace(",", "", $this->input->post('harga'));
 
 		$data = array(
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'harga' => $harga,
-			'is_design' => $this->input->post('is_design')
+			'is_design' => $this->input->post('is_design'),
+			'is_deleted' => 0
 		);
 
 		if($this->form_validation->run() == false){
@@ -83,7 +84,10 @@ class Item extends CI_Controller {
 
 	public function edit($id)
 	{
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$condition = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $condition)->result();
 		$data['item'] = $this->all_model->getItemById($id)->row();
 		$this->load->view('item/edit', $data);
 	}
@@ -95,15 +99,19 @@ class Item extends CI_Controller {
 		$this->form_validation->set_rules('id_satuan', 'Satuan', 'required');
 		$this->form_validation->set_rules('hargas', 'Harga', 'required');
 
-		$str = explode(',', $this->input->post('hargas'));
-		$harga = str_replace(".", "", $str[0]);
+		// $str = explode(',', $this->input->post('hargas'));
+		// $harga = str_replace(".", "", $str[0]);
+
+		$harga = str_replace(",", "", $this->input->post('harga'));
 
 		$old_item = $this->all_model->getDataByCondition('item', $condition)->row();
 		$old_harga = $old_item->harga;
 
 		$history = array(
 			'harga' => $old_harga,
-			'id_item' => $this->input->post('id')
+			'id_item' => $this->input->post('id'),
+			'updated_by' => $this->session->userdata('id'),
+			'updated_date' => date('d-m-Y')
 		);
 
 		$data = array(
@@ -164,8 +172,9 @@ class Item extends CI_Controller {
 
 
 	public function delete($id){
-		$condition = array("id_item" => $id);
-		$res  = $this->all_model->deleteData("id_item", $condition);
+		$condition = array('id_item' => $id);
+		$data = array('is_deleted' => 1);
+		$res  = $this->all_model->updateData('item', $condition, $data);
 		if($res == false){
 			$this->session->set_flashdata('error', 'Data item berhasil dihapus');
 			redirect(base_url() . "item/index");
@@ -179,7 +188,9 @@ class Item extends CI_Controller {
 	{
 		$condition = array('id_item' => $id);
 		$data['item'] = $this->all_model->getDataByCondition('item', $condition)->row();
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$condition = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $condition)->result();
 		$this->load->view('item/view', $data);
 	}
 }

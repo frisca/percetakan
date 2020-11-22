@@ -85,7 +85,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" name="nama" 
-									value="<?php if(empty($inputs['nama'])) { echo $user->nama; }else{ echo $inputs['nama']; }?>" />
+									value="<?php if(empty($inputs['nama'])) { echo $user->nama; }else{ echo $inputs['nama']; }?>" disabled />
 								</div>
 							</div>
 
@@ -94,7 +94,7 @@
 
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1-1" placeholder="Username" class="form-control" name="username" 
-									value="<?php if(empty($inputs['username'])) { echo $user->username; }else{ echo $inputs['username']; }?>"/>
+									value="<?php if(empty($inputs['username'])) { echo $user->username; }else{ echo $inputs['username']; }?>" disabled />
 								</div>
 							</div>
 
@@ -107,20 +107,20 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Lokasi</label>
 
 								<div class="col-sm-9">
-									<select name="id_location" class="select2" data-placeholder="Click to Choose...">
+									<select name="id_location" class="select2" data-placeholder="Click to Choose..." disabled>
 										<?php if(empty($inputs['id_location'])) { ?>
 											<?php 
 												foreach ($location as $key => $value) {
 													if($user->id_location == $value->id_location){
 											?>
-												<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>
+												<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
 											<?php 
 												}else{ 
 											?>
-												<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
+												<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
 											<?php 
 													}
 												}
@@ -130,11 +130,11 @@
 												foreach ($location as $key => $value) {
 													if($inputs['id_location'] == $value->id_location){
 											?>
-														<option value="<?php echo $value->id_location;?>" selected><?php echo $value->nama_location;?></option>
+														<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
 											<?php
 													}else{
 											?>
-														<option value="<?php echo $value->id_location;?>"><?php echo $value->nama_location;?></option>
+														<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
 											<?php 
 													}
 												}

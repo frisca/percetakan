@@ -18,19 +18,19 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
-					<li class="active">Location</li>
+					<li class="active">Lokasi</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 
 			<div class="page-content">
 				<div class="page-header">
 					<h1>
-						Location
+						Lokasi
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Location
+							Lokasi
 						</small>
 					</h1>
 				</div>
@@ -42,7 +42,7 @@
 								<div class="dt-buttons btn-overlap btn-group">
 									<a class="dt-button buttons-collection buttons-colvis btn btn-white btn-primary btn-bold" tabindex="0" aria-controls="dynamic-table" data-original-title="" title="" href="<?php echo base_url('location/add');?>">
 										<span><i class="fa fa-plus bigger-110 blue"></i> 
-											<span class="hidden">Add Data Location</span>
+											<span class="hidden">Tambah Data Lokasi</span>
 										</span>
 									</a>
 								</div>
@@ -60,7 +60,7 @@
 						</div>	
 						<?php } ?>
 						<div class="table-header">
-							List Location
+							Daftar Lokasi
 						</div>
 
 						<!-- div.table-responsive -->
@@ -81,8 +81,8 @@
 										foreach ($location as $key => $value) {
 									?>
 									<tr>
-										<td><?php echo $value->nama_location;?></td>
-										<td><?php echo $value->alamat_location?></td>
+										<td><?php echo $value->name_location;?></td>
+										<td><?php echo $value->address_location?></td>
 										<td>
 											<?php 
 												if($value->status == 0){ 

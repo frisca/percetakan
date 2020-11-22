@@ -19,8 +19,9 @@ class Pengeluaran extends CI_Controller {
 		// 	$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($this->session->userdata('location'))->result();
 		// }
 		if($this->session->userdata('role') == 3){
-			$user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
-			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($user->id_location)->result();
+			// $user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
+			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($user->code_location)->result();
 		}else{
 			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaran()->result();
 		}
@@ -32,8 +33,9 @@ class Pengeluaran extends CI_Controller {
 		$date = date('d');
 
 		$order = "id_header_pengeluaran desc";
-		$user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
-		$header_pengeluaran = $this->all_model->getHeaderPengeluaransByOperator($user->id_location, $month, $date)->row();
+		// $user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
+		$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+		$header_pengeluaran = $this->all_model->getHeaderPengeluaransByOperator($user->code_location, $month, $date)->row();
 		// $header_pengeluaran = $this->all_model->getDataByLimitPengeluaran(array('status_delete'=>0), 1, $order, 'header_pengeluaran')->row();
 
 		if(empty($header_pengeluaran)){
@@ -104,7 +106,7 @@ class Pengeluaran extends CI_Controller {
 		if($this->form_validation->run() == false){
 			return redirect(base_url() . 'pengeluaran/detail/' . $this->input->post('id_header_pengeluaran'));
 		}else{ 
-			$harga = str_replace(".", "", $this->input->post('harga'));
+			$harga = str_replace(",", "", $this->input->post('harga'));
 			$data = array(
 				'item' => $this->input->post('item'),
 				'price' => $harga,
@@ -147,7 +149,7 @@ class Pengeluaran extends CI_Controller {
 		$this->form_validation->set_rules('item', 'Nama item', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
 
-		$harga = str_replace(".", "", $this->input->post('harga'));
+		$harga = str_replace(",", "", $this->input->post('harga'));
 
 		$con = array('id_pengeluaran' => $this->input->post('id_pengeluaran'));
 		$result = $this->all_model->getDataByCondition('pengeluaran', $con)->row();
@@ -230,9 +232,11 @@ class Pengeluaran extends CI_Controller {
 		$bulan = date('m');
 
 		$con = array('id_user' => $this->session->userdata('id'));
-		$user = $this->all_model->getDataByCondition('user', $con)->row();
+		// $user = $this->all_model->getDataByCondition('user', $con)->row();
 		// var_dump($user->id_location);exit();
-		$nmr = sprintf('%02d', $user->id_location);
+		// $nmr = sprintf('%02d', $user->id_location);
+		$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+		$nmr = $user->code_location;
 		$p = $this->all_model->getHeaderPengeluaranByLimit($nmr)->row();
 		// var_dump($nmr);exit();
 		if(empty($p)){
@@ -338,7 +342,7 @@ class Pengeluaran extends CI_Controller {
 				$nmrs = $headers_pengeluaran->nomor_pengeluaran;
 			}
 
-			$harga = str_replace(".", "", $this->input->post('harga'));
+			$harga = str_replace(",", "", $this->input->post('harga'));
 			$data = array(
 				'item' => $this->input->post('item'),
 				'price' => $harga,
@@ -375,7 +379,7 @@ class Pengeluaran extends CI_Controller {
 		$this->form_validation->set_rules('item', 'Nama item', 'required');
 		$this->form_validation->set_rules('harga', 'Harga', 'required');
 
-		$harga = str_replace(".", "", $this->input->post('harga'));
+		$harga = str_replace(",", "", $this->input->post('harga'));
 
 		$con = array('id_pengeluaran' => $this->input->post('id_pengeluaran'));
 		$result = $this->all_model->getDataByCondition('pengeluaran', $con)->row();

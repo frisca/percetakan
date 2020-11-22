@@ -41,6 +41,9 @@
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			$(document).ready(function(){
+				CKEDITOR.replace('edi');
+				$('[data-toggle="tooltip"]').tooltip();
+				
 				$('#example').DataTable({
 					"scrollX": true
 				});
@@ -60,10 +63,10 @@
 					}
 
 					if($('#hrga_satuan').val() != '' && this.value.length > 0){
-						var total_harga = parseInt($('#hrga_satuan').autoNumeric('get'), 10) * parseInt($('#qty').val(), 10);
+						var total_harga = parseInt($('#hrga_satuan').autoNumeric('get'), 10) * parseFloat($('#qty').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
-						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+						$('input[name="ttl_harga"]').val(total_harga).autoNumeric('update', {aSep: ',', aDec: '.', mDec: '0'});
 						// $('input[name="ttl_harga"]').each(function(){
 						// 	$('input[name="ttl_harga"]').val(total_harga).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
 						// })
@@ -84,7 +87,7 @@
 				// 	}
 				// });
 
-				$('#total_hargas').autoNumeric("init");
+				// $('#total_hargas').autoNumeric("init");
 
 				$('#quantity').keyup(function(){
 					if(this.value.length == 0){
@@ -93,10 +96,10 @@
 					}
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
 						console.log('harga: ', $('input[name="harga_satuan"]').val());
-						var total_harga = parseInt($('input[name="harga_satuan"]').val(), 10) * parseInt($('#quantity').val(), 10);
+						var total_harga = parseInt($('input[name="harga_satuan"]').val(), 10) * parseFloat($('#quantity').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
-						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('update', {aSep: ',', aDec: '.', mDec: '0'});
 					}
 				});
 
@@ -109,24 +112,20 @@
 			              method:'GET',
 			              dataType:'json',
 			              success:function(response) {
-							console.log('response: ', response.penjualan.id_item);
-							// $('#item option[value='+response.penjualan.id_item+']').attr('selected','selected');
+							console.log('response penjualan: ', response.penjualan);
+							console.log('harga satuan: ', response.penjualan.harga_satuan.replace(".", ","));
 							$("#item").val(response.penjualan.id_item).change();
-							// $("#item").selectmenu('refresh', true);
 			                $('input[name="id_penjualan"]').val(response.penjualan.id_penjualan);
 			                $('input[name="id_header_penjualan"]').val(response.penjualan.id_header_penjualan);
 			                $("#item option[value="+response.penjualan.id_item+"]").attr('selected', 'selected');
 			                $("#satuan option[value="+response.penjualan.id_satuan+"]").attr('selected', 'selected');
-			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan.replace('.', ''));
+			                $('input[name="harga_satuan"]').val(response.penjualan.harga_satuan);
 			                $('input[name="hargas_satuan"]').val(response.penjualan.harga_satuan);
-							// var harga_satuan = response.penjualan.harga_satuan.split(",");
-							// var harga = harga_satuan[0].replace(".", "");
-							// $('input[name="harga_satuan"]').val(harga);
 			                $('input[name="qty"]').val(response.penjualan.qty);
-			                $('input[name="ttls_harga"]').val(response.penjualan.total_harga);
-							var total_harga = response.penjualan.total_harga.split(",");
-							var total = total_harga[0].replace(".", "");
-			                $('input[name="total_harga"]').val(total);
+			                console.log('ttls harga: ', response.penjualan.total_harga)
+							var total_harga = response.penjualan.total_harga;
+			                $('#total_hargas').val(total_harga);
+			                $('input[name="total_harga"]').val(total_harga);
 			                $('input[name="keterangan"]').val(response.penjualan.keterangan);
 			                if(response.design.is_design == 0){
 			                	$("img#my_image").attr("src", "<?php echo base_url();?>gambar/no_img.png");
@@ -135,7 +134,6 @@
 			                	console.log('line item: ', response.penjualan.line_item);
 			                	$("img#my_image").attr("src", "<?php echo base_url();?>gambar/" + response.penjualan.line_item);
 			                	$('.images').css('display', 'block');
-			                	// $('.description').css('display', 'block');
 			                }
 			                console.log('design: ', response.design.is_design);
 			                $('#show_modal').modal({backdrop: 'static', keyboard: true, show: true});
@@ -151,10 +149,11 @@
 		              method:'GET',
 		              dataType:'json',
 		              success:function(response) {
+		              	// console.log('harga: ', harga);
 		                // $(".satuan option[value="+response.id_satuan+"]").attr('selected', 'selected');
 		                $('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
-		                $('input[name="harga_satuan"]').val(response.harga);
+		                $('input[name="harga_satuan"]').val(response.harga.replace(',', ''));
 		                $('input[name="harga"]').val(response.harga);
 		                if(response.is_design == 0){
 		                	$('.images').css('display', 'none');
@@ -191,7 +190,7 @@
 		        }
 				// $('#hrga_satuan').click(function(){
 				// 	$('#total_harga').val();
-				// 	if($('#qty').val() == ''){
+				// 	if($('#qty').val() == ''){.
 				// 		alert('Harga satuan tidak boleh kosong');
 				// 		return false;
 				// 	}
@@ -210,23 +209,23 @@
 					// grandtotal = $('input[name="total"]').val() - $(this).val();
 					// $('input[name="grandtotal"]').val(grandtotal);
 					if($('input[name="total"]').val() == 0){
-						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="discount"]').val($(this).val().replace('.', ''));
+						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+						$('input[name="discount"]').val($(this).val().replace(',', ''));
 					}else{
-						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="discount"]').val($(this).val().replace('.', ''));
-						grandtotal = parseInt($('input[name="total"]').val(),10) - parseInt($(this).val().replace('.', ''), 10);
+						$('input[name="discounts"]').val($(this).val()).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+						$('input[name="discount"]').val($(this).val().replace(',', ''));
+						grandtotal = parseInt($('input[name="total"]').val(),10) - parseInt($(this).val().replace(',', ''), 10);
 						$('input[name="grandtotal"]').val(grandtotal);
-						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+						$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: ',', aDec: '.', mDec: '0'});
 					}
 				});
 
 				if($('.discount').val() == 0){
 					grandtotal = $('input[name="total"]').val();
 					$('input[name="grandtotal"]').val(grandtotal);
-					$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-					$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+					$('input[name="grandtotals"]').val(grandtotal).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+					$('input[name="grandtotals"]').val(grandtotal).autoNumeric('update', {aSep: ',', aDec: '.', mDec: '0'});
 					// grandtotal = $('input[name="total"]').val();
 					// $('input[name="grandtotal"]').val(grandtotal);
 					// if($('input[name="total"]').val() == 0){
@@ -254,15 +253,15 @@
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                // $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
-						var harga_satuan = response.harga.split(",");
-						var harga = harga_satuan[0].replace(".", "");
+						// var harga_satuan = response.harga.split(",");
+						var harga = response.harga.replace(",", "");
 						console.log("harga : ", harga);
 						$('input[name="hargas_satuan"]').val(response.harga);
 						$('input[name="harga_satuan"]').val(harga);
-						var total = parseInt($('#quantity').val(), 10) * harga;
+						var total = parseFloat($('#quantity').val(), 10) * harga;
 						$('input[name="total_harga"]').val(total);
-						$('input[name="ttls_harga"]').val(total).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-						$('input[name="ttls_harga"]').val(total).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+						$('input[name="ttls_harga"]').val(total).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+						$('input[name="ttls_harga"]').val(total).autoNumeric('update', {aSep: ',', aDec: '.' , mDec: '0'});
 		                if(response.is_design == 0){
 		                	$('.images').css('display', 'none');
 		                }else{
@@ -346,8 +345,8 @@
 	              method:'GET',
 	              dataType:'json',
 	              success:function(response) {
-	                $('input[name="grandtotals"]').val(response.header_penjualan.grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-	                $('input[name="grandtotals"]').val(response.header_penjualan.grandtotal).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+	                $('input[name="grandtotals"]').val(response.header_penjualan.grandtotal).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+	                $('input[name="grandtotals"]').val(response.header_penjualan.grandtotal).autoNumeric('update', {aSep: ',', aDec: '.', mDec: '0'});
 	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal);
 	                $('input[name="id_header_penjualan"]').val(response.header_penjualan.id_header_penjualan);
 	                $('#dp1_modal').modal({backdrop: 'static', keyboard: true, show: true});
@@ -356,7 +355,7 @@
         });
 
         $(".submit_dp1").click(function(){
-        	if(parseInt($('input[name="dp1"]').val().replace('.', ''), 10) > parseInt($('input[name="grandtotal"]').val().replace('.', ''), 10)){
+        	if(parseInt($('input[name="dp1"]').val().replace(',', ''), 10) > parseInt($('input[name="grandtotal"]').val().replace(',', ''), 10)){
         		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
         		return false;
         	}
@@ -370,17 +369,17 @@
 	              method:'GET',
 	              dataType:'json',
 	              success:function(response) {
-	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+	                $('input[name="grandtotal"]').val(response.header_penjualan.grandtotal).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
 	                $('input[name="id_header_penjualan"]').val(response.header_penjualan.id_header_penjualan);
-	                $('input[name="dp1"]').val(response.header_penjualan.dp1).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-	                $('input[name="dp"]').val(response.header_penjualan.sisa_pembayaran).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+	                $('input[name="dp1"]').val(response.header_penjualan.dp1).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+	                $('input[name="dp"]').val(response.header_penjualan.sisa_pembayaran).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
 	                $('#dp2_modal').modal({backdrop: 'static', keyboard: true, show: true});
 	              }
         	});
         });
 
         $(".submit_dp2").click(function(){
-        	if(parseInt($('input[name="dp2"]').val().replace('.', ''), 10) > parseInt($('input[name="grandtotal"]').val().replace('.', ''),10)){
+        	if(parseInt($('input[name="dp2"]').val().replace(',', ''), 10) > parseInt($('input[name="grandtotal"]').val().replace(',', ''),10)){
         		alert('Jumlah pembayaran untuk DP tidak boleh lebih besar dari grandtotal');
         		return false;
         	}
@@ -406,11 +405,11 @@
 		// 	$('input[name="totals"]').val(grandtotal).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
 		// });
 
-		$('.harga_item').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-		$('#hrga_satuan').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-		$('#dp1').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+		$('.harga_item').autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+		$('#hrga_satuan').autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+		$('#dp1').autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
 
-		$('.harga').autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
+		$('.harga').autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
 
 		$('.edit_pengeluaran').click(function(){
 	      	var id = $(this).attr('pengeluaranid'); //get the attribute value
@@ -424,8 +423,8 @@
                 $('input[name="item"]').val(response.pengeluaran.item);
                 $('input[name="keterangan"]').val(response.pengeluaran.keterangan);
                 $('input[name="id_header_pengeluaran"]').val(response.pengeluaran.id_header_pengeluaran);
-                $('input[name="harga"]').val(response.pengeluaran.price).autoNumeric('init', {aSep: '.', aDec: ',', mDec: '0'});
-                $('input[name="harga"]').val(response.pengeluaran.price).autoNumeric('update', {aSep: '.', aDec: ',', mDec: '0'});
+                $('input[name="harga"]').val(response.pengeluaran.price).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
+                $('input[name="harga"]').val(response.pengeluaran.price).autoNumeric('update', {aSep: ',', aDec: '.', mDec: '0'});
                 $('#show_modal').modal({backdrop: 'static', keyboard: true, show: true});
               }
 	    	});

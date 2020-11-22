@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">Customer</li>
 				</ul><!-- /.breadcrumb -->
@@ -37,6 +37,9 @@
 
 				<div class="row">
 					<div class="col-xs-12">
+						<?php 
+							if($this->session->userdata('role') == 1){
+						?>
 						<div class="clearfix">
 							<div class="pull-right tableTools-container">
 								<div class="dt-buttons btn-overlap btn-group">
@@ -48,19 +51,24 @@
 								</div>
 							</div>
 						</div>
+						<?php
+							}
+						?>
+						
 						<?php if($this->session->flashdata('success') != ""){ ?>
-						<div class="alert alert-success alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<?php echo $this->session->flashdata('success');?>
-						</div>	
+							<div class="alert alert-success alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								<?php echo $this->session->flashdata('success');?>
+							</div>	
 						<?php }else if($this->session->flashdata('error') != ""){ ?>
-						<div class="alert alert-danger alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<?php echo $this->session->flashdata('error');?>
-						</div>	
+							<div class="alert alert-danger alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								<?php echo $this->session->flashdata('error');?>
+							</div>	
 						<?php } ?>
+						
 						<div class="table-header">
-							List Customer
+							Daftar Customer
 						</div>
 
 						<!-- div.table-responsive -->

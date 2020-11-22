@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">Penjualan</li>
 				</ul><!-- /.breadcrumb -->
@@ -108,17 +108,17 @@
 					date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s');?>"/>
 					<div class="col-sm-6 form-group">
 						<label>Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,0,'','.');?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="totals" value="<?php echo number_format($header_penjualan->total,0,'',',');?>" disabled>
 						<input type="hidden"  name="total" value="<?php echo $header_penjualan->total;?>">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Discount</label>
-						<input type="text" placeholder="Discount" class="form-control discount" name="discounts" value="<?php echo number_format($header_penjualan->discount, 0, '', '.');?>">
+						<input type="text" placeholder="Discount" class="form-control discount" name="discounts" value="<?php echo number_format($header_penjualan->discount, 0, '', ',');?>">
 						<input type="hidden" name="discount" value="<?php echo $header_penjualan->discount;?>" class="form-control discount">
 					</div>
 					<div class="col-sm-6 form-group">
 						<label>Grand Total</label>
-						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,0,'','.');?>" disabled>
+						<input type="text" placeholder="Total" class="form-control" name="grandtotals" value="<?php echo number_format($header_penjualan->grandtotal,0,'',',');?>" disabled>
 						<input type="hidden" name="grandtotal" value="<?php echo $header_penjualan->grandtotal;?>">
 					</div>
 					<div class="col-sm-6 form-group">
@@ -244,8 +244,8 @@
 											</td>
 											<td><?php echo $value->keterangan;?></td>
 											<td><?php echo $value->qty;?></td>
-											<td><?php echo number_format($value->harga_satuan,0,'','.');?></td>
-											<td><?php echo number_format($value->total_harga,0,'','.');?></td>
+											<td><?php echo number_format($value->harga_satuan,0,'',',');?></td>
+											<td><?php echo number_format($value->total_harga,0,'',',');?></td>
 											<td>
                                                 <div class="hidden-sm hidden-xs action-buttons">
                                                     <a class="green edit" href="#" penjualanid="<?php echo $value->id_penjualan;?>">
@@ -364,7 +364,7 @@
 					    <div class="modal-content">
 					      	<div class="modal-header">
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        					<h4 class="modal-title">Edit Item</h4>
+	        					<h4 class="modal-title">Ubah Item</h4>
 					        </div>
 					        <form action="<?php echo base_url('penjualan/processOpenEditPenjualan')?>" method="post" enctype="multipart/form-data">
 						      	<div class="modal-body">
@@ -437,7 +437,7 @@
 					        <!-- Modal Header -->
 					        <div class="modal-header">
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        					<h4 class="modal-title">Delete Item</h4>
+	        					<h4 class="modal-title">Hapus Item</h4>
 					        </div>
 					        <form action="<?php echo base_url('penjualan/deleteItem')?>" method="post">
 					        	<div class="modal-body">

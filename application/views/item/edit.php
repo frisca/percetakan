@@ -18,9 +18,8 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
-					<li class="active">User</li>
 					<li class="active">Item</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
