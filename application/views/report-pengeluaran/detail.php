@@ -18,7 +18,7 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
 					<li class="active">Lihat Report Pengeluaran</li>
 				</ul><!-- /.breadcrumb -->
@@ -140,7 +140,7 @@
 											?>	
 										</td>
 										<td><?php echo $tgl_pengeluaran;?></td>
-										<td><?php echo 'Rp ' . number_format($list->total, 0, '', '.');?></td>
+										<td><?php echo 'Rp ' . number_format($list->total, 0, '', ',');?></td>
 										<td><?php echo $stat;?></td>
 										<td><?php echo $createdDate;?></td>
 										<td>
@@ -167,7 +167,7 @@
 											?>
 										</td>
 										<td><?php echo $list->item;?></td>
-										<td><?php echo 'Rp ' . number_format($list->total_harga, 0, '', '.')?></td>
+										<td><?php echo 'Rp ' . number_format($list->total_harga, 0, '', ',')?></td>
 										<td><?php echo $list->keterangan;?></td>
 									</tr>
 									<?php

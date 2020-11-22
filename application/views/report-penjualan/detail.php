@@ -159,11 +159,11 @@
 										<td><?php echo $nomor_invoice;?></td>
 										<td><?php echo $tgl_penjualan;?></td>
 										<td><?php echo $list->first_name . ' ' . $list->last_name;?></td>
-										<td><?php echo 'Rp ' . number_format($list->total, 0, '', '.');?></td>
-										<td><?php echo 'Rp ' . number_format($list->discount, 0, '', '.');?></td>
-										<td><?php echo 'Rp ' . number_format($list->grandtotal, 0, '', '.');?></td>
-										<td><?php echo 'Rp ' . number_format($list->dp1, 0, '', '.');?></td>
-										<td><?php echo 'Rp ' . number_format($list->dp2, 0, '', '.');?></td>
+										<td><?php echo 'Rp ' . number_format($list->total, 0, '', ',');?></td>
+										<td><?php echo 'Rp ' . number_format($list->discount, 0, '', ',');?></td>
+										<td><?php echo 'Rp ' . number_format($list->grandtotal, 0, '', ',');?></td>
+										<td><?php echo 'Rp ' . number_format($list->dp1, 0, '', ',');?></td>
+										<td><?php echo 'Rp ' . number_format($list->dp2, 0, '', ',');?></td>
 										<td><?php echo $stat_payment;?></td>
 										<td><?php echo $stat_invoice;?></td>
 										<td><?php echo $createdDate;?></td>

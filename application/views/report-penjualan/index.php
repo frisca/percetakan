@@ -118,7 +118,7 @@
 							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 								<thead>
 									<tr>
-										<th width="20%">Nomor Invoice</th>
+										<th width="15%">Nomor Invoice</th>
 										<th>Tanggal Invoice</th>
 										<th>Nama Customer</th>
 										<th>Total</th>
@@ -150,6 +150,8 @@
 											$dp1 = $dp1 + $value->dp1;
 											$dp2 = $dp2 + $value->dp2;
 											// var_dump($value->updatedDate);exit();
+											$createdDates = $value->createdDate;
+											$updatedDates = $value->updatedDate;
 											$value->tgl_penjualan = explode(" ", $value->tgl_penjualan);
 											$value->updatedDate = explode(" ", $value->updatedDate);
 											$value->createdDate = explode(" ", $value->createdDate);
@@ -164,13 +166,13 @@
 											if($value->updatedDate[0] == '1970-01-01' || $value->updatedDate[0] == '0000-00-00'){
 												$updatedDate = '';
 											}else{
-												$updatedDate = date('d-m-Y', strtotime($value->updatedDate[0]));
+												$updatedDate = date('d-m-Y H:i:s', strtotime($updatedDates));
 											}
 
 											if($value->createdDate[0] == '1970-01-01' || $value->createdDate[0] == '0000-00-00'){
 												$createdDate = '';
 											}else{
-												$createdDate = date('d-m-Y', strtotime($value->createdDate[0]));
+												$createdDate = date('d-m-Y H:i:s', strtotime($createdDates));
 											}
 									?>
 									<tr>
@@ -185,20 +187,20 @@
 										</td>
 										<td><?php echo $tgl_penjualan;?></td>
 										<td><?php echo $value->first_name . ' ' . $value->last_name;?></td>
-										<td><?php echo number_format($value->total, 0, '', '.');?></td>
-										<td><?php echo number_format($value->discount, 0, '', '.');?></td>
-										<td><?php echo number_format($value->grandtotal, 0, '', '.');?></td>
+										<td><?php echo number_format($value->total, 0, '', ',');?></td>
+										<td><?php echo number_format($value->discount, 0, '', ',');?></td>
+										<td><?php echo number_format($value->grandtotal, 0, '', ',');?></td>
 										<td>
 											<?php 
 												if($value->dp1 != ""){
-													echo number_format($value->dp1, 0, '', '.');
+													echo number_format($value->dp1, 0, '', ',');
 												}
 											?>
 										</td>
 										<td>
 											<?php 
 												if($value->dp2 != ""){
-													echo number_format($value->dp2, 0, '', '.');
+													echo number_format($value->dp2, 0, '', ',');
 												}
 											?>
 										</td>
@@ -299,23 +301,23 @@
 								<tbody>
 									<tr style="width:10%;">
 										<th>Sum Total</th>
-										<td><?php echo number_format($total, 0, '', '.');?></td>
+										<td><?php echo number_format($total, 0, '', ',');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum Total Discount</th>
-										<td><?php echo number_format($discount, 0, '', '.');?></td>
+										<td><?php echo number_format($discount, 0, '', ',');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum GrandTotal</th>
-										<td><?php echo number_format($grandtotal, 0, '', '.');?></td>
+										<td><?php echo number_format($grandtotal, 0, '', ',');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum DP 1</th>
-										<td><?php echo number_format($dp1, 0, '', '.');?></td>
+										<td><?php echo number_format($dp1, 0, '', ',');?></td>
 									</tr>
 									<tr style="width:10%;">
 										<th>Sum DP 2</th>
-										<td><?php echo number_format($dp2, 0, '', '.');?></td>
+										<td><?php echo number_format($dp2, 0, '', ',');?></td>
 									</tr>
 								</tbody>
 							</table>

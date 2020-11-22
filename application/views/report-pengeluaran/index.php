@@ -18,7 +18,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="#">Home</a>
+							<a href="#">Beranda</a>
 						</li>
 						<li>Report</li>
 						<li class="active">Pengeluaran</li>
@@ -117,7 +117,7 @@
 											</td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
                                             <td>
-                                                <?php echo number_format($value->total, 0, '', '.');?>	
+                                                <?php echo number_format($value->total, 0, '', ',');?>	
 											</td>
                                             <td>
                                                 <?php 
@@ -128,7 +128,7 @@
                                                     }
                                                 ?>	
 											</td>
-                                            <td><?php echo date('d-m-Y', strtotime($value->created_date));?></td>
+                                            <td><?php echo date('d-m-Y H:i:s', strtotime($value->created_date));?></td>
 											<td>
 												<?php
 													if(!empty($user)){
@@ -140,7 +140,7 @@
 													}
 												?>
 											</td>
-											<td><?php if($value->updated_date != '0000-00-00 00:00:00'){ echo date('d-m-Y', strtotime($value->updated_date));}?></td>
+											<td><?php if($value->updated_date != '0000-00-00 00:00:00'){ echo date('d-m-Y H:i:s', strtotime($value->updated_date));}?></td>
 											<td>
 												<?php
 													if(!empty($user)){
@@ -177,7 +177,7 @@
 									<tbody>
 										<tr style="width:10%;">
 											<th>Sum Total</th>
-											<td><?php echo number_format($total, 0, '', '.');?></td>
+											<td><?php echo number_format($total, 0, '', ',');?></td>
 										</tr>
 									</tbody>
 								</table>
