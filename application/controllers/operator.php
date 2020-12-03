@@ -18,7 +18,7 @@ class Operator extends CI_Controller {
 
 	public function add()
 	{
-		$location = array('status' => 1);
+		$location = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
 		$this->load->view('operator/add', $data);
 	}
@@ -96,7 +96,7 @@ class Operator extends CI_Controller {
 		$condition = array('role' => 3, 'id_user' => $id);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 
-		$condition = array('status' => 1);
+		$condition = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
 		$this->load->view('operator/edit', $data);
 	}

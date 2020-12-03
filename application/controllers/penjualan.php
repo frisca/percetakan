@@ -13,7 +13,7 @@ class Penjualan extends CI_Controller {
 	public function index()
 	{
 		// $data['header_penjualan'] = $this->all_model->getDataByCondition('header_penjualan', array('status_delete' => 0))->result();
-		if($this->session->userdata('role') != 3){
+		if($this->session->userdata('role') == 1){
 			$data['header_penjualan'] = $this->all_model->getHeaderPenjualan()->result();
 		}else{
 			$data['header_penjualan'] = $this->all_model->getHeaderPenjualanByOperator($this->session->userdata('location'))->result();
@@ -1431,7 +1431,9 @@ class Penjualan extends CI_Controller {
 				}
 			}else{
 				
-				$new_name                   = time().$_FILES["line_item"]['name'];
+				$imageExtention = pathinfo($_FILES["line_item"]['name'], PATHINFO_EXTENSION);
+				$new_name                   = time() . "." . $imageExtention;
+				// var_dump($new_name);exit();
 		        $config['file_name']        = $new_name;
 				$config['upload_path']      = './gambar/';
 				$config['allowed_types']    = 'gif|jpg|png';
@@ -1681,15 +1683,22 @@ class Penjualan extends CI_Controller {
 						redirect(base_url() . 'penjualan/open/' . $this->input->post('id_header_penjualan'));
 					}
 				}else{
-					$new_name                   = time().$_FILES["line_item"]['name'];
-			        $config['file_name']        = $new_name;
-					// $config['upload_path']      = './gambar/';
-					// $config['allowed_types']    = 'gif|jpg|png';
-					$config['upload_path'] = './gambar/';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					$config['max_size'] = 2000;
-					$config['max_width'] = 1500;
-					$config['max_height'] = 1500;
+					// $new_name                   = time().$_FILES["line_item"]['name'];
+			        // $config['file_name']        = $new_name;
+					// // $config['upload_path']      = './gambar/';
+					// // $config['allowed_types']    = 'gif|jpg|png';
+					// $config['upload_path'] = './gambar/';
+					// $config['allowed_types'] = 'gif|jpg|png|jpeg';
+					// $config['max_size'] = 2000;
+					// $config['max_width'] = 1500;
+					// $config['max_height'] = 1500;
+
+					$imageExtention = pathinfo($_FILES["line_item"]['name'], PATHINFO_EXTENSION);
+					$new_name                   = time() . "." . $imageExtention;
+					// var_dump($new_name);exit();
+					$config['file_name']        = $new_name;
+					$config['upload_path']      = './gambar/';
+					$config['allowed_types']    = 'gif|jpg|png';
 
 					$this->load->library('upload', $config);
 

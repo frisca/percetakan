@@ -32,7 +32,7 @@ class All_model extends CI_Model {
 	}
 
 	public function getItemById($id){
-		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where i.id_item = " . $id;
+		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where i.status = 1 and i.id_item = " . $id;
 		return $this->db->query($query);
 	}
 
@@ -87,18 +87,22 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getReportPenjualanByCondition($froms, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
+	public function getReportPenjualanByCondition($froms, $customer,  $no_invoice, $status_invoice, $status_pembayaran, $location){
 		// var_dump($status_invoice);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		$query = "SELECT p.*, p.status as status_invoice, c.*, l.name_location from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				left join user u on u.id_user = p.createdBy
+				left join `location` l on l.id_location = u.id_location
 				where p.status_delete = 0 and (".$customer." and p.nomor_penjualan like '%".$no_invoice."%'
-				and ".$status_invoice." and ".$status_pembayaran.") " . $froms . " group by p.id_header_penjualan order by p.tgl_penjualan desc";
+				and ".$status_invoice." and ".$status_pembayaran." and ".$location.") " . $froms . " group by p.id_header_penjualan order by p.tgl_penjualan desc";
 				// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 
 	public function getReportPenjualanByDate($from_date, $to, $customer,  $no_invoice, $status_invoice, $status_pembayaran){
 		// var_dump($from_date);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		$query = "SELECT p.*, p.status as status_invoice, c.*, l.name_location from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+				left join user u on u.id_user = p.createdBy
+				left join `location` l on l.id_location = u.id_location
 				where p.status_delete = 0 and p.tgl_penjualan between '".$from_date."' and '".$to."' group by p.id_header_penjualan order by p.tgl_penjualan desc";
 		return $this->db->query($query);
 	}
@@ -119,11 +123,13 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getReportPenjualanByWithoutDate($customer,  $no_invoice, $status_invoice, $status_pembayaran){
+	public function getReportPenjualanByWithoutDate($customer,  $no_invoice, $status_invoice, $status_pembayaran, $location){
 		// var_dump($status_invoice);exit();
-		$query = "SELECT p.*, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		$query = "SELECT p.*, p.status as status_invoice, c.*, l.name_location from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+			    left join user u on u.id_user = p.createdBy
+				left join `location` l on l.id_location = u.id_location
 				where p.status_delete = 0 and (".$customer." and p.nomor_penjualan like '%".$no_invoice."'
-				and ".$status_invoice." and ".$status_pembayaran.") group by p.id_header_penjualan order by p.tgl_penjualan desc ";
+				and ".$status_invoice." and ".$status_pembayaran." and " .$location. ") group by p.id_header_penjualan order by p.tgl_penjualan desc ";
 				// var_dump($query);exit();
 		return $this->db->query($query);
 	}

@@ -131,7 +131,7 @@
 							</div>
 
 							<!-- div.dataTables_borderWrap -->
-							<div>
+							<div class="tables">
 								<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 									<thead>
 										<tr>

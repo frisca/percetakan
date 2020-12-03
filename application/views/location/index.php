@@ -66,8 +66,8 @@
 						<!-- div.table-responsive -->
 
 						<!-- div.dataTables_borderWrap -->
-						<div>
-							<table id="example" class="table table-striped table-bordered nowrap" cellspacing="1" width="100%">
+						<div class="tables">
+							<table id="example" class="table table-striped table-bordered nowrap" cellspacing="1" style="width:100%">
 								<thead>
 									<tr>
 										<th>Nama</th>

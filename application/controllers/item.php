@@ -34,7 +34,8 @@ class Item extends CI_Controller {
 			'id_satuan' => $this->input->post('id_satuan'),
 			'harga' => $harga,
 			'is_design' => $this->input->post('is_design'),
-			'is_deleted' => 0
+			'is_deleted' => 0,
+			'status' => $this->input->post('status')
 		);
 
 		if($this->form_validation->run() == false){
@@ -42,7 +43,8 @@ class Item extends CI_Controller {
 				'nama' => $this->input->post('nama'),
 				'id_satuan' => $this->input->post('id_satuan'),
 				'harga' => $harga,
-				'is_design' => $this->input->post('is_design')
+				'is_design' => $this->input->post('is_design'),
+				'status' => $this->input->post('status')
 			);
 
 			$this->session->set_flashdata('inputs', $input);
@@ -60,7 +62,8 @@ class Item extends CI_Controller {
 						'nama' => $this->input->post('nama'),
 						'id_satuan' => $this->input->post('id_satuan'),
 						'harga' => $this->input->post('harga'),
-						'is_design' => $this->input->post('is_design')
+						'is_design' => $this->input->post('is_design'),
+						'status' => $this->input->post('status')
 					);
 		
 					$this->session->set_flashdata('inputs', $input);
@@ -72,7 +75,8 @@ class Item extends CI_Controller {
 					'nama' => $this->input->post('nama'),
 					'id_satuan' => $this->input->post('id_satuan'),
 					'harga' => $harga,
-					'is_design' => $this->input->post('is_design')
+					'is_design' => $this->input->post('is_design'),
+					'status' => $this->input->post('status')
 				);
 	
 				$this->session->set_flashdata('inputs', $input);
@@ -118,7 +122,8 @@ class Item extends CI_Controller {
 			'nama' => $this->input->post('nama'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'harga' => $harga,
-			'is_design' => $this->input->post('is_design')
+			'is_design' => $this->input->post('is_design'),
+			'status' => $this->input->post('status')
 		);
 
 		if($this->form_validation->run() == false){
@@ -126,7 +131,8 @@ class Item extends CI_Controller {
 				'nama' => $this->input->post('nama'),
 				'id_satuan' => $this->input->post('id_satuan'),
 				'harga' => $harga,
-				'is_design' => $this->input->post('is_design')
+				'is_design' => $this->input->post('is_design'),
+				'status' => $this->input->post('status')
 			);
 
 			$this->session->set_flashdata('inputs', $input);
@@ -148,7 +154,8 @@ class Item extends CI_Controller {
 						'nama' => $this->input->post('nama'),
 						'id_satuan' => $this->input->post('id_satuan'),
 						'harga' => $harga,
-						'is_design' => $this->input->post('is_design')
+						'is_design' => $this->input->post('is_design'),
+						'status' => $this->input->post('status')
 					);
 		
 					$this->session->set_flashdata('inputs', $input);
@@ -160,7 +167,8 @@ class Item extends CI_Controller {
 					'nama' => $this->input->post('nama'),
 					'id_satuan' => $this->input->post('id_satuan'),
 					'harga' => $this->input->post('harga'),
-					'is_design' => $this->input->post('is_design')
+					'is_design' => $this->input->post('is_design'),
+					'status' => $this->input->post('status')
 				);
 	
 				$this->session->set_flashdata('inputs', $input);

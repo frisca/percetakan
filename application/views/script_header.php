@@ -29,3 +29,13 @@
 		<script type="text/javascript" src="<?php echo base_url(); ?>assets/ckfinder/ckfinder.js"></script>
 		<script src="<?php echo base_url();?>assets/js/ace-extra.min.js"></script>
 	</head>
+
+	<style>
+		.tables {
+			width: 100%;
+		}
+
+		.dataTables_scroll{
+			margin-bottom: 5px;
+		}
+	</style>

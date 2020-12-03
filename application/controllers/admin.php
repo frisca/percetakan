@@ -18,7 +18,7 @@ class Admin extends CI_Controller {
 
 	public function add()
 	{
-		$condition = array('status' => 1);
+		$condition = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
 		$this->load->view('admin/add', $data);
 	}
@@ -97,7 +97,7 @@ class Admin extends CI_Controller {
 		$condition = array('role' => 2,"id_user" => $id);
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 
-		$location = array('status' => 1);
+		$location = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
 		
 		$this->load->view('admin/edit', $data);

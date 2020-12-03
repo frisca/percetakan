@@ -17,6 +17,9 @@ class Report_Penjualan extends CI_Controller {
 		$data['user'] = $this->all_model->getAllData('user')->result();
 		$data['from'] = $from;
 		$data['to'] = $to;
+		$condition = array('status' => 1, 'is_deleted' => 0);
+		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
+		var_dump($data);exit();
 		$this->load->view('report-penjualan/index', $data);
 	}
 
@@ -28,9 +31,10 @@ class Report_Penjualan extends CI_Controller {
 		$customer = ($this->input->post('customer')  == 0) ? 0 : $this->input->post('customer');
 		$invoice = ($this->input->post('invoice') == -99) ? 0 : $this->input->post('invoice');
 		$status_pembayaran = ((int)$this->input->post('status_pembayaran') == -99) ? 0 : $this->input->post('status_pembayaran');
+		$location = $this->input->post('id_location');
 
 		if($from != '1970-01-01' && $to != '1970-01-01' && $no_invoice == '' && $customer == 0 && $this->input->post('invoice') == -99 && 
-			$this->input->post('status_pembayaran')== -99){
+			$this->input->post('status_pembayaran')== -99 && $location == ''){
 			$data['from'] = $from;
 			$data['to'] = $to;
 			$data['report'] = $this->all_model->getReportPenjualanByDate($from, $to, $customer, $no_invoice, (int)$invoice, (int)$status_pembayaran)->result();
@@ -58,10 +62,16 @@ class Report_Penjualan extends CI_Controller {
 				}else{
 					$c_customer = "p.id_customer = " . $customer . " "; 
 				}
+
+				if ($location == ''){
+					$c_location = "l.id_location ilike %" . $location . "% ";
+				}else{
+					$c_location = "l.id_location = " . $location . " "; 
+				}
 	
 				$data['from'] = $from;
 				$data['to'] = $to;
-				$data['report'] = $this->all_model->getReportPenjualanByWithoutDate($c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
+				$data['report'] = $this->all_model->getReportPenjualanByWithoutDate($c_customer, $no_invoice, $s_invoice, $s_pembayaran, $c_location)->result();
 		}else if($from != '1970-01-01' && $to != '1970-01-01'){
 			// var_dump($from);exit();
 			if($from == '1970-01-01' || $to == '1970-01-01'){
@@ -92,9 +102,15 @@ class Report_Penjualan extends CI_Controller {
 				$c_customer = "p.id_customer = " . $customer . " "; 
 			}
 
+			if ($location == ''){
+				$c_location = "l.id_location ilike %" . $location . "% ";
+			}else{
+				$c_location = "l.id_location = " . $location . " "; 
+			}
+
 			$data['from'] = $from;
 			$data['to'] = $to;
-			$data['report'] = $this->all_model->getReportPenjualanByCondition($froms, $c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
+			$data['report'] = $this->all_model->getReportPenjualanByCondition($froms, $c_customer, $no_invoice, $s_invoice, $s_pembayaran, $c_location)->result();
 			// var_dump($c_customer . " and " . $s_invoice . "and " . $s_pembayaran);exit();
 			// var_dump($data['report']);exit();
 		}
@@ -104,6 +120,10 @@ class Report_Penjualan extends CI_Controller {
 		$data['status_pembayaran'] = $status_pembayaran;
 		$data['status_invoice'] = $this->input->post('invoice');
 		$data['customer'] = $this->all_model->getDataByCondition("customer", array("id_customer" => $this->input->post('customer')))->row();
+		$condition = array('status' => 1, 'is_deleted' => 0);
+		$data['locations'] = $this->all_model->getDataByCondition('location', $condition)->result();
+		$data['location'] = $location;
+		// var_dump($data['report']);exit();
 		$this->load->view('report-penjualan/index', $data);
 		// return redirect(base_url() . 'report_penjualan/index');
 	}

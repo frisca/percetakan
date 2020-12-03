@@ -73,7 +73,7 @@
 						<!-- div.table-responsive -->
 
 						<!-- div.dataTables_borderWrap -->
-						<div>
+						<div class="tables">
 							<table id="example" class="table table-striped table-bordered table-hover display nowrap" style="width:100%">
 								<thead>
 									<tr>

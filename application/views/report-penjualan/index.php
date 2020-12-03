@@ -105,6 +105,31 @@
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
+								<!-- <input type="text" placeholder="Customer" class="form-control customer" name="customer" value="<?php if(!empty($customer)){ echo $customer;}?>" id="customer"/> -->
+								<input type="text" placeholder="Customer" class="form-control customer" name="customers" value="<?php if(!empty($customer)){ echo $customer->first_name . ' ' . $customer->last_name;}?>">
+								<input type="hidden" class="form-control customers" name="customer" value="<?php if(!empty($customer)){ echo $customer->id_customer;}?>" id="customer">
+							</div>
+
+							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
+								<select name="id_location" class="select2" data-placeholder="Click to Choose..." style="width: 100%;">
+									<option value="">Pilih Lokasi</option>
+									<?php 
+										foreach ($locations as $key => $value) {
+											if($location == $value->id_location) {
+									?>
+											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
+									<?php
+											}else{
+									?>
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
+									<?php 
+											}
+										}
+									?>
+								</select>
+							</div>
+
+							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 								<button type="submit" class="search btn btn-sm btn-success fa fa-search" style="margin-bottom: 10px;">
 								<!-- Cari -->
 								</button>
@@ -114,13 +139,14 @@
 							</div>
 						</form>
 
-						<div class="col-xs-12">
+						<div class="col-xs-12 tables">
 							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%;">
 								<thead>
 									<tr>
 										<th width="15%">Nomor Invoice</th>
 										<th>Tanggal Invoice</th>
 										<th>Nama Customer</th>
+										<th>Lokasi</th>
 										<th>Total</th>
 										<th>Discount</th>
 										<th>GrandTotal</th>
@@ -187,6 +213,7 @@
 										</td>
 										<td><?php echo $tgl_penjualan;?></td>
 										<td><?php echo $value->first_name . ' ' . $value->last_name;?></td>
+										<td><?php echo $value->name_location;?></td>
 										<td><?php echo number_format($value->total, 0, '', ',');?></td>
 										<td><?php echo number_format($value->discount, 0, '', ',');?></td>
 										<td><?php echo number_format($value->grandtotal, 0, '', ',');?></td>
