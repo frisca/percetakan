@@ -136,10 +136,12 @@ class All_model extends CI_Model {
 
 	public function getReportPenjualanDetail($id){
 		// var_dump($status_invoice);exit();
-		$query = "SELECT p.*, sum(pj.qty) as qty_item, sum(pj.total_harga) as total_harga, pj.harga_satuan, s.satuan as unit, i.nama as item, pj.keterangan, p.status as status_invoice, c.* from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		$query = "SELECT p.*, sum(pj.qty) as qty_item, sum(pj.total_harga) as total_harga, pj.harga_satuan, s.satuan as unit, i.nama as item, pj.keterangan, p.status as status_invoice, c.*, l.name_location from header_penjualan p left join customer c on c.id_customer = p.id_customer 
 				 left join penjualan pj on pj.id_header_penjualan = p.id_header_penjualan
 				 left join item i on i.id_item = pj.id_item
 				 left join satuan s on s.id_satuan = i.id_satuan
+				 left join user u on u.id_user = p.createdBy
+				 left join `location` l on l.id_location = u.id_location
 				 where pj.id_header_penjualan = ".$id." and pj.status_delete = 0 group by pj.id_item order by p.tgl_penjualan desc";
 				// var_dump($query);exit();
 		return $this->db->query($query);

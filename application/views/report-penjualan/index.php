@@ -111,7 +111,7 @@
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
-								<select name="id_location" class="select2" data-placeholder="Click to Choose..." style="width: 100%;">
+								<select name="id_location" class="select2" data-placeholder="Click to Choose..." style="width: 100%;" id="id_location">
 									<option value="">Pilih Lokasi</option>
 									<?php 
 										foreach ($locations as $key => $value) {

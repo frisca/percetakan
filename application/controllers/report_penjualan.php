@@ -162,10 +162,11 @@ class Report_Penjualan extends CI_Controller {
 		$customer = ($this->input->get('customer')  == 0) ? 0 : $this->input->get('customer');
 		$invoice = ($this->input->get('invoice') == -99) ? 0 : $this->input->get('invoice');
 		$status_pembayaran = ((int)$this->input->get('status_pembayaran') == -99) ? 0 : $this->input->get('status_pembayaran');
+		$location = $this->input->get('location');
 		// var_dump($invoice);exit();
 		if($from != '1970-01-01' && $to != '1970-01-01' && $no_invoice == '' && $customer == 0 && $this->input->get('invoice') == -99 && 
-			$this->input->get('status_pembayaran')== -99){
-			$report = $this->all_model->getReportPenjualanByDate($from, $to, $customer, $no_invoice, (int)$invoice, (int)$status_pembayaran)->result();
+			$this->input->get('status_pembayaran')== -99 && $location == ''){
+			$report = $this->all_model->getReportPenjualanByDate($from, $to, $customer, $no_invoice, (int)$invoice, (int)$status_pembayaran, $location)->result();
 		}else if($from == '1970-01-01' && $to == '1970-01-01'){
 				if($from == '1970-01-01' || $to == '1970-01-01'){
 					$froms = '';
@@ -190,7 +191,13 @@ class Report_Penjualan extends CI_Controller {
 				}else{
 					$c_customer = "p.id_customer = " . $customer . " "; 
 				}
-				$report = $this->all_model->getReportPenjualanByWithoutDate($c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
+
+				if ($location == ''){
+					$c_location = "l.id_location ilike %" . $location . "% ";
+				}else{
+					$c_location = "l.id_location = " . $location . " "; 
+				}
+				$report = $this->all_model->getReportPenjualanByWithoutDate($c_customer, $no_invoice, $s_invoice, $s_pembayaran, $c_location)->result();
 		}else if($from != '1970-01-01' && $to != '1970-01-01'){
 			// var_dump('oi');exit();
 			if($from == '1970-01-01' || $to == '1970-01-01'){
@@ -220,7 +227,14 @@ class Report_Penjualan extends CI_Controller {
 			}else{
 				$c_customer = "p.id_customer = " . $customer . " "; 
 			}
-			$report = $this->all_model->getReportPenjualanByCondition($froms, $c_customer, $no_invoice, $s_invoice, $s_pembayaran)->result();
+
+			if ($location == ''){
+				$c_location = "l.id_location ilike %" . $location . "% ";
+			}else{
+				$c_location = "l.id_location = " . $location . " "; 
+			}
+
+			$report = $this->all_model->getReportPenjualanByCondition($froms, $c_customer, $no_invoice, $s_invoice, $s_pembayaran, $c_location)->result();
 		}
 
 		$user = $this->all_model->getAllData('user')->result();
@@ -244,17 +258,18 @@ class Report_Penjualan extends CI_Controller {
         $objPHPExcel->getActiveSheet()->SetCellValue('B5', 'Nomor Invoice');
         $objPHPExcel->getActiveSheet()->SetCellValue('C5', 'Tgl Invoice');
 		$objPHPExcel->getActiveSheet()->SetCellValue('D5', 'Nama Customer');
-		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Total');
-        $objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Discount');
-        $objPHPExcel->getActiveSheet()->SetCellValue('G5', 'GrandTotal');
-		$objPHPExcel->getActiveSheet()->SetCellValue('H5', 'DP 1');
-		$objPHPExcel->getActiveSheet()->SetCellValue('I5', 'DP 2');
-        $objPHPExcel->getActiveSheet()->SetCellValue('J5', 'Status Pembayaran');
-        $objPHPExcel->getActiveSheet()->SetCellValue('K5', 'Status Invoice');
-		$objPHPExcel->getActiveSheet()->SetCellValue('L5', 'Tgl Dibuat');
-		$objPHPExcel->getActiveSheet()->SetCellValue('M5', 'Dibuat Oleh');
-        $objPHPExcel->getActiveSheet()->SetCellValue('N5', 'Tgl Diubah');
-        $objPHPExcel->getActiveSheet()->SetCellValue('O5', 'Diubah Oleh');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Lokasi');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Total');
+        $objPHPExcel->getActiveSheet()->SetCellValue('G5', 'Discount');
+        $objPHPExcel->getActiveSheet()->SetCellValue('H5', 'GrandTotal');
+		$objPHPExcel->getActiveSheet()->SetCellValue('I5', 'DP 1');
+		$objPHPExcel->getActiveSheet()->SetCellValue('J5', 'DP 2');
+        $objPHPExcel->getActiveSheet()->SetCellValue('K5', 'Status Pembayaran');
+        $objPHPExcel->getActiveSheet()->SetCellValue('L5', 'Status Invoice');
+		$objPHPExcel->getActiveSheet()->SetCellValue('M5', 'Tgl Dibuat');
+		$objPHPExcel->getActiveSheet()->SetCellValue('N5', 'Dibuat Oleh');
+        $objPHPExcel->getActiveSheet()->SetCellValue('O5', 'Tgl Diubah');
+        $objPHPExcel->getActiveSheet()->SetCellValue('P5', 'Diubah Oleh');
 
 		$rowCount = 6;
 		$no = 1;
@@ -338,26 +353,27 @@ class Report_Penjualan extends CI_Controller {
 			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $nomor_invoice);
 			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $tgl_penjualan);
 			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $list->first_name . ' ' . $list->last_name);
-			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, 'Rp ' . number_format($list->discount, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, 'Rp ' . number_format($list->grandtotal, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, 'Rp ' . number_format($list->dp1, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, 'Rp ' . number_format($list->dp2, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, $stat_payment);
-			$objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, $stat_invoice);
-			$objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, $createdDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $list->name_location);
+			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, 'Rp ' . number_format($list->discount, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, 'Rp ' . number_format($list->grandtotal, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, 'Rp ' . number_format($list->dp1, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, 'Rp ' . number_format($list->dp2, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, $stat_payment);
+			$objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, $stat_invoice);
+			$objPHPExcel->getActiveSheet()->SetCellValue('M' . $rowCount, $createdDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->createdBy){
-						$objPHPExcel->getActiveSheet()->SetCellValue('M' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('N' . $rowCount, $values->nama);
 					}
 				}
 			}
-			$objPHPExcel->getActiveSheet()->SetCellValue('N' . $rowCount, $updatedDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('O' . $rowCount, $updatedDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->updatedBy){
-						$objPHPExcel->getActiveSheet()->SetCellValue('O' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('P' . $rowCount, $values->nama);
 					}
 				}
 			}
@@ -371,20 +387,20 @@ class Report_Penjualan extends CI_Controller {
 		// $rowCount_dp1 = $rowCount_grandtotal + 1;
 		// $rowCount_dp2 = $rowCount_dp1 + 1;
 
-		$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount_tot, 'Total');
-		$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount_tot, 'Total');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_discount, 'SUM Total Diskon');
-		$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount_tot, 'Rp ' . number_format($discount, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount_tot, 'Rp ' . number_format($discount, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_grandtotal, 'SUM Total GrandTotal');
-		$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount_tot, 'Rp ' . number_format($grandtotal, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount_tot, 'Rp ' . number_format($grandtotal, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_dp1, 'SUM DP 1');
-		$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount_tot, 'Rp ' . number_format($dp1, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount_tot, 'Rp ' . number_format($dp1, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_dp2, 'SUM DP 2');
-		$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount_tot, 'Rp ' . number_format($dp2, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount_tot, 'Rp ' . number_format($dp2, 0, '', '.'));
 
 		
 		// Proses file excel
@@ -448,23 +464,24 @@ class Report_Penjualan extends CI_Controller {
         $objPHPExcel->getActiveSheet()->SetCellValue('B5', 'Nomor Invoice');
         $objPHPExcel->getActiveSheet()->SetCellValue('C5', 'Tgl Invoice');
 		$objPHPExcel->getActiveSheet()->SetCellValue('D5', 'Nama Customer');
-		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Total');
-        $objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Discount');
-        $objPHPExcel->getActiveSheet()->SetCellValue('G5', 'GrandTotal');
-		$objPHPExcel->getActiveSheet()->SetCellValue('H5', 'DP 1');
-		$objPHPExcel->getActiveSheet()->SetCellValue('I5', 'DP 2');
-        $objPHPExcel->getActiveSheet()->SetCellValue('J5', 'Status Pembayaran');
-        $objPHPExcel->getActiveSheet()->SetCellValue('K5', 'Status Invoice');
-		$objPHPExcel->getActiveSheet()->SetCellValue('L5', 'Tgl Dibuat');
-		$objPHPExcel->getActiveSheet()->SetCellValue('M5', 'Dibuat Oleh');
-        $objPHPExcel->getActiveSheet()->SetCellValue('N5', 'Tgl Diubah');
-		$objPHPExcel->getActiveSheet()->SetCellValue('O5', 'Diubah Oleh');
-		$objPHPExcel->getActiveSheet()->SetCellValue('P5', 'Item');
-		$objPHPExcel->getActiveSheet()->SetCellValue('Q5', 'Unit');
-		$objPHPExcel->getActiveSheet()->SetCellValue('R5', 'Jumlah');
-		$objPHPExcel->getActiveSheet()->SetCellValue('S5', 'Harga Satuan');
-		$objPHPExcel->getActiveSheet()->SetCellValue('T5', 'Total Harga');
-		$objPHPExcel->getActiveSheet()->SetCellValue('U5', 'Keterangan');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Lokasi');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Total');
+        $objPHPExcel->getActiveSheet()->SetCellValue('G5', 'Discount');
+        $objPHPExcel->getActiveSheet()->SetCellValue('H5', 'GrandTotal');
+		$objPHPExcel->getActiveSheet()->SetCellValue('I5', 'DP 1');
+		$objPHPExcel->getActiveSheet()->SetCellValue('J5', 'DP 2');
+        $objPHPExcel->getActiveSheet()->SetCellValue('K5', 'Status Pembayaran');
+        $objPHPExcel->getActiveSheet()->SetCellValue('L5', 'Status Invoice');
+		$objPHPExcel->getActiveSheet()->SetCellValue('M5', 'Tgl Dibuat');
+		$objPHPExcel->getActiveSheet()->SetCellValue('N5', 'Dibuat Oleh');
+        $objPHPExcel->getActiveSheet()->SetCellValue('O5', 'Tgl Diubah');
+		$objPHPExcel->getActiveSheet()->SetCellValue('P5', 'Diubah Oleh');
+		$objPHPExcel->getActiveSheet()->SetCellValue('Q5', 'Item');
+		$objPHPExcel->getActiveSheet()->SetCellValue('R5', 'Unit');
+		$objPHPExcel->getActiveSheet()->SetCellValue('S5', 'Jumlah');
+		$objPHPExcel->getActiveSheet()->SetCellValue('T5', 'Harga Satuan');
+		$objPHPExcel->getActiveSheet()->SetCellValue('U5', 'Total Harga');
+		$objPHPExcel->getActiveSheet()->SetCellValue('V5', 'Keterangan');
 
 		$rowCount = 6;
 		$no = 1;
@@ -530,35 +547,36 @@ class Report_Penjualan extends CI_Controller {
 			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $nomor_invoice);
 			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $tgl_penjualan);
 			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $list->first_name . ' ' . $list->last_name);
-			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, 'Rp ' . number_format($list->discount, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, 'Rp ' . number_format($list->grandtotal, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, 'Rp ' . number_format($list->dp1, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, 'Rp ' . number_format($list->dp2, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, $stat_payment);
-			$objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, $stat_invoice);
-			$objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, $createdDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $list->name_location);
+			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, 'Rp ' . number_format($list->discount, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, 'Rp ' . number_format($list->grandtotal, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, 'Rp ' . number_format($list->dp1, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, 'Rp ' . number_format($list->dp2, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, $stat_payment);
+			$objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, $stat_invoice);
+			$objPHPExcel->getActiveSheet()->SetCellValue('M' . $rowCount, $createdDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->createdBy){
-						$objPHPExcel->getActiveSheet()->SetCellValue('M' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('N' . $rowCount, $values->nama);
 					}
 				}
 			}
-			$objPHPExcel->getActiveSheet()->SetCellValue('N' . $rowCount, $updatedDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('O' . $rowCount, $updatedDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->updatedBy){
-						$objPHPExcel->getActiveSheet()->SetCellValue('O' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('P' . $rowCount, $values->nama);
 					}
 				}
 			}
-			$objPHPExcel->getActiveSheet()->SetCellValue('P' . $rowCount, $list->item);
-			$objPHPExcel->getActiveSheet()->SetCellValue('Q' . $rowCount, $list->unit);
-			$objPHPExcel->getActiveSheet()->SetCellValue('R' . $rowCount, $list->qty_item);
-			$objPHPExcel->getActiveSheet()->SetCellValue('S' . $rowCount, 'Rp ' . number_format($list->harga_satuan, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('T' . $rowCount, 'Rp ' . number_format($list->total_harga, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('U' . $rowCount, $list->keterangan);
+			$objPHPExcel->getActiveSheet()->SetCellValue('Q' . $rowCount, $list->item);
+			$objPHPExcel->getActiveSheet()->SetCellValue('R' . $rowCount, $list->unit);
+			$objPHPExcel->getActiveSheet()->SetCellValue('S' . $rowCount, $list->qty_item);
+			$objPHPExcel->getActiveSheet()->SetCellValue('T' . $rowCount, 'Rp ' . number_format($list->harga_satuan, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('U' . $rowCount, 'Rp ' . number_format($list->total_harga, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('V' . $rowCount, $list->keterangan);
 			$rowCount++;
 			$no++;
 		}
@@ -569,20 +587,20 @@ class Report_Penjualan extends CI_Controller {
 		// $rowCount_dp1 = $rowCount_grandtotal + 1;
 		// $rowCount_dp2 = $rowCount_dp1 + 1;
 
-		$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount_tot, 'Total');
-		$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount_tot, 'Total');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_discount, 'SUM Total Diskon');
-		$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount_tot, 'Rp ' . number_format($discount, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount_tot, 'Rp ' . number_format($discount, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_grandtotal, 'SUM Total GrandTotal');
-		$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount_tot, 'Rp ' . number_format($grandtotal, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount_tot, 'Rp ' . number_format($grandtotal, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_dp1, 'SUM DP 1');
-		$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount_tot, 'Rp ' . number_format($dp1, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount_tot, 'Rp ' . number_format($dp1, 0, '', '.'));
 
 		// $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount_dp2, 'SUM DP 2');
-		$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount_tot, 'Rp ' . number_format($dp2, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount_tot, 'Rp ' . number_format($dp2, 0, '', '.'));
 
 		
 		// Proses file excel

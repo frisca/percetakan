@@ -508,6 +508,7 @@
 			var customer = $('#customer').val();
 			var status = $('#status').val();
 			var status_pembayaran = $('#status_pembayaran').val();
+			var location = $('#id_location').val();
 
 			// $.ajax({
             //   url : "<?php echo base_url();?>report_penjualan/export",
@@ -521,7 +522,7 @@
 	    	// });
 			// console.log('status : ' + status + 'status pembayaran : ' + status_pembayaran);
 			window.location = "<?php echo base_url('report_penjualan/export');?>" + "?from_date=" + from_date + "&to_date=" + to_date + 
-			"&no_invoice=" + no_invoice + "&customer=" + customer + "&invoice=" + status + "&status_pembayaran=" + status_pembayaran;
+			"&no_invoice=" + no_invoice + "&customer=" + customer + "&invoice=" + status + "&status_pembayaran=" + status_pembayaran + "&location=" + location;
 		});
 
 		$('.csv_det_penjualan').on('click',function(){
@@ -548,7 +549,7 @@
 	    	// });
 			// console.log('status : ' + status + 'status pembayaran : ' + status_pembayaran);
 			window.location = "<?php echo base_url('report_pengeluaran/export');?>" + "?from_date=" + from_date + "&to_date=" + to_date + 
-			"&status=" + status;
+			"&status=" + status 
 		});
 
 		$('.csv_det_pengeluaran').on('click',function(){

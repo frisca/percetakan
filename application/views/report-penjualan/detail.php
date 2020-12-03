@@ -76,6 +76,7 @@
 										<th>Nomor Invoice</th>
 										<th>Tgl Invoice</th>
 										<th>Nama Customer</th>
+										<th>Lokasi</th>
 										<th>Total</th>
 										<th>Discount</th>
 										<th>GrandTotal</th>
@@ -159,6 +160,7 @@
 										<td><?php echo $nomor_invoice;?></td>
 										<td><?php echo $tgl_penjualan;?></td>
 										<td><?php echo $list->first_name . ' ' . $list->last_name;?></td>
+										<td><?php echo $list->name_location;?></td>
 										<td><?php echo 'Rp ' . number_format($list->total, 0, '', ',');?></td>
 										<td><?php echo 'Rp ' . number_format($list->discount, 0, '', ',');?></td>
 										<td><?php echo 'Rp ' . number_format($list->grandtotal, 0, '', ',');?></td>
