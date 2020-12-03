@@ -19,7 +19,6 @@ class Report_Penjualan extends CI_Controller {
 		$data['to'] = $to;
 		$condition = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
-		var_dump($data);exit();
 		$this->load->view('report-penjualan/index', $data);
 	}
 
