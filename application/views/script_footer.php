@@ -44,8 +44,12 @@
 				CKEDITOR.replace('edi');
 				$('[data-toggle="tooltip"]').tooltip();
 				
-				$('#example').DataTable({
-					"scrollX": true
+				$('#example').removeAttr('width').DataTable({
+					"scrollX": true,
+					"autowidth": false,
+					"columnDefs" : [
+						{ width: '500px', target: 0}
+					]
 				});
 
 				// $('#savePenjualan').click(function(){

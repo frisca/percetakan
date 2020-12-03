@@ -428,18 +428,12 @@ class Penjualan extends CI_Controller {
 						redirect(base_url() . 'penjualan/detail/' . $this->input->post('id_header_penjualan'));
 					}
 				}else{
-					$dname = explode(".", $_FILES["line_item"]['name']);
-					$ext = end($dname);
-					$new_name                   = time().$ext;
-					// $new_name                   = time().$_FILES["line_item"]['name'];
+					$imageExtention = pathinfo($_FILES["line_item"]['name'], PATHINFO_EXTENSION);
+					$new_name                   = time() . "." . $imageExtention;
+					// var_dump($new_name);exit();
 			        $config['file_name']        = $new_name;
-					// $config['upload_path']      = './gambar/';
-					// $config['allowed_types']    = 'gif|jpg|png';
-					$config['upload_path'] = './gambar/';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					$config['max_size'] = 2000;
-					$config['max_width'] = 1500;
-					$config['max_height'] = 1500;
+					$config['upload_path']      = './gambar/';
+					$config['allowed_types']    = 'gif|jpg|png';
 
 					$this->load->library('upload', $config);
 

@@ -67,7 +67,7 @@
 
 						<!-- div.dataTables_borderWrap -->
 						<div>
-							<table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+							<table id="example" class="table table-striped table-bordered nowrap" cellspacing="1" width="100%">
 								<thead>
 									<tr>
 										<th>Nama</th>
