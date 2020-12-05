@@ -219,7 +219,8 @@ class Customer extends CI_Controller {
 		}
 	}
 
-	public function delete($id){
+	public function delete(){
+		$id = $this->input->post('id');
 		$condition = array("id_customer" => $id);
 		$data = array('is_deleted' => 1);
 		$res  = $this->all_model->updateData("customer", $condition, $data);

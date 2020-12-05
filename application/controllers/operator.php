@@ -168,8 +168,9 @@ class Operator extends CI_Controller {
 		}
 	}
 
-	public function delete($id){
-		$condition = array('id_user' => $id);
+	public function delete(){
+		// $condition = array('id_user' => $id);
+		$id = $this->input->post('id');
 		$data = array('is_deleted' => 1);
 		$res  = $this->all_model->updateData('user', $condition, $data);
 		if($res == false){

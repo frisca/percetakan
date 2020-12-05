@@ -100,7 +100,7 @@
 													<i class="ace-icon fa fa-pencil bigger-130"></i>
 												</a>
 
-												<a class="red" href="<?php echo base_url('satuan/delete/' . $value->id_satuan);?>">
+												<a class="red delete" href="#" deleteid="<?php echo $value->id_satuan;?>">
 													<i class="ace-icon fa fa-trash-o bigger-130"></i>
 												</a>
 											</div>
@@ -111,6 +111,28 @@
 									?>
 								</tbody>
 							</table>
+
+							<div id="delete_modal" class="modal">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">Hapus Satuan</h4>
+										</div>
+										<form action="<?php echo base_url('satuan/delete')?>" method="post">
+											<input type="hidden" class="form-control" name="id" value="" />
+											<div class="modal-body">
+												<p>Apakah Anda yakin ingin menghapus data ini?</p>
+											</div>
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-primary">Hapus</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal" id="batalPenjualan">Batal</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

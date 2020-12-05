@@ -355,7 +355,8 @@ class Location extends CI_Controller {
 		}
 	}
 
-	public function delete($id){
+	public function delete(){
+		$id = $this->input->post('id');
 		$condition = array("id_location" => $id);
 		$data = array('is_deleted' => 1);
 		$res  = $this->all_model->updateData("location", $condition, $data);
