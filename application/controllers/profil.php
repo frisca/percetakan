@@ -11,10 +11,10 @@ class Profil extends CI_Controller {
     
 	public function index()
 	{
-        $condition = array('id_user' => $this->session->userdata('id'));
+		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 
-		$location = array('status' => 1);
+		$location = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
 		$this->load->view('profil/index', $data);
 	}
@@ -24,7 +24,7 @@ class Profil extends CI_Controller {
 		$condition = array("id_user" => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
 
-		$location = array('status' => 1);
+		$location = array('status' => 1, 'is_deleted' => 0);
 		$data['location'] = $this->all_model->getDataByCondition('location', $location)->result();
 		
 		$this->load->view('profil/edit', $data);

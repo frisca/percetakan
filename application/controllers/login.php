@@ -16,8 +16,10 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
 		$data = array(
-			"username" => $this->input->post('username'),
-			'password' => md5($this->input->post('password'))
+			'username' => $this->input->post('username'),
+			'password' => md5($this->input->post('password')),
+			'is_deleted' => 0,
+			'status' => 1
 		);
 
 		if($this->form_validation->run() == false){

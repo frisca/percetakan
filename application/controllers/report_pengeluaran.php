@@ -13,11 +13,20 @@ class Report_Pengeluaran extends CI_Controller {
 	{
 		$from = date('Y-m-d');
 		$to = date('Y-m-d');
-		$data['report'] = $this->all_model->getReportPengeluaranDate($from, $to)->result();
+		if($this->session->userdata('role') == 1) {
+			$data['report'] = $this->all_model->getReportPengeluaranDate($from, $to)->result();
+		} else {
+			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+			$data['report'] = $this->all_model->getReportPengeluaranDateByAdmin($from, $to, $user->id_location)->result();
+		}
+		
 		$data['user'] = $this->all_model->getAllData('user')->result();
 		$data['from'] = $from;
 		$data['to'] = $to;
 		$data['status'] = -99;
+		$condition = array('status' => 1, 'is_deleted' => 0);
+		$data['locations'] = $this->all_model->getDataByCondition('location', $condition)->result();
+		$data['location'] = $user->id_location;
 		$this->load->view('report-pengeluaran/index', $data);
 	}
 
@@ -26,8 +35,9 @@ class Report_Pengeluaran extends CI_Controller {
 		$from = date('Y-m-d', strtotime($this->input->post('from_date')));
 		$to = date('Y-m-d', strtotime(strtr($this->input->post('to_date'), '-', '-')));
 		$status = ($this->input->post('status')  == -99) ? 0 : $this->input->post('status');
+		$location = $this->input->post('id_location');
 		// var_dump($invoice);exit();
-		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->post('status') == -99){
+		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->post('status') == -99 && $location){
 			$data['report'] = $this->all_model->getReportPengeluaranDate($from, $to)->result();
 		}else if($from != '1970-01-01' && $to != '1970-01-01'){
 			if ($this->input->post('status') == -99){
@@ -36,7 +46,13 @@ class Report_Pengeluaran extends CI_Controller {
 				$status1 = " and p.status = " . $status . " " ; 
 			}
 
-			$data['report'] = $this->all_model->getReportPengeluaranByCondition($from, $to, $status1)->result();
+			if ($location == ''){
+				$c_location = "l.id_location ilike %" . $location . "% ";
+			}else{
+				$c_location = "l.id_location = " . $location . " "; 
+			}
+
+			$data['report'] = $this->all_model->getReportPengeluaranByCondition($from, $to, $status1, $c_location)->result();
 		}else if($from == '1970-01-01' && $to == '1970-01-01'){
 			if($from == '1970-01-01' || $to == '1970-01-01'){
 				$from = '';
@@ -49,7 +65,13 @@ class Report_Pengeluaran extends CI_Controller {
 				$status1 = " and p.status = " . $status . " " ; 
 			}
 
-			$data['report'] = $this->all_model->getReportPengeluaranWithoutDate($status1)->result();
+			if ($location == ''){
+				$c_location = "l.id_location ilike %" . $location . "% ";
+			}else{
+				$c_location = "l.id_location = " . $location . " "; 
+			}
+
+			$data['report'] = $this->all_model->getReportPengeluaranWithoutDate($status1, $c_location)->result();
 		}
 		// var_dump($data['report']);exit();
 		$data['user'] = $this->all_model->getAllData('user')->result();
@@ -64,6 +86,7 @@ class Report_Pengeluaran extends CI_Controller {
 		$from = date('Y-m-d', strtotime($this->input->get('from_date')));
 		$to = date('Y-m-d', strtotime(strtr($this->input->get('to_date'), '-', '-')));
 		$status = ($this->input->get('status')  == -99) ? 0 : $this->input->get('status');
+		$location = $this->input->get('location');
 		// var_dump($invoice);exit();
 		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->get('status') == -99){
 			$report = $this->all_model->getReportPengeluaranDate($from, $to)->result();
@@ -74,7 +97,13 @@ class Report_Pengeluaran extends CI_Controller {
 				$status1 = " and p.status = " . $status . " " ; 
 			}
 
-			$report = $this->all_model->getReportPengeluaranByCondition($from, $to, $status1)->result();
+			if ($location == ''){
+				$c_location = "l.id_location ilike %" . $location . "% ";
+			}else{
+				$c_location = "l.id_location = " . $location . " "; 
+			}
+
+			$report = $this->all_model->getReportPengeluaranByCondition($from, $to, $status1, $c_location)->result();
 		}else if($from == '1970-01-01' && $to == '1970-01-01'){
 			if($from == '1970-01-01' || $to == '1970-01-01'){
 				$from = '';
@@ -87,7 +116,13 @@ class Report_Pengeluaran extends CI_Controller {
 				$status1 = " and p.status = " . $status . " " ; 
 			}
 
-			$report = $this->all_model->getReportPengeluaranWithoutDate($status1)->result();
+			if ($location == ''){
+				$c_location = "l.id_location ilike %" . $location . "% ";
+			}else{
+				$c_location = "l.id_location = " . $location . " "; 
+			}
+
+			$report = $this->all_model->getReportPengeluaranWithoutDate($status1, $c_location)->result();
 		}
 		// var_dump($report);exit();
 		$user = $this->all_model->getAllData('user')->result();
@@ -108,14 +143,15 @@ class Report_Pengeluaran extends CI_Controller {
 		$objPHPExcel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		$objPHPExcel->getActiveSheet()->SetCellValue('A5', 'No.');
-        $objPHPExcel->getActiveSheet()->SetCellValue('B5', 'Nomor Pengeluaran');
-        $objPHPExcel->getActiveSheet()->SetCellValue('C5', 'Tgl Pengeluaran');
-		$objPHPExcel->getActiveSheet()->SetCellValue('D5', 'Total');
-		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Status Pengeluaran');
-		$objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Tgl Dibuat');
-		$objPHPExcel->getActiveSheet()->SetCellValue('G5', 'Dibuat Oleh');
-        $objPHPExcel->getActiveSheet()->SetCellValue('H5', 'Tgl Diubah');
-        $objPHPExcel->getActiveSheet()->SetCellValue('I5', 'Diubah Oleh');
+		$objPHPExcel->getActiveSheet()->SetCellValue('B5', 'Nomor Pengeluaran');
+		$objPHPExcel->getActiveSheet()->SetCellValue('C5', 'Lokasi');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D5', 'Tgl Pengeluaran');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Total');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Status Pengeluaran');
+		$objPHPExcel->getActiveSheet()->SetCellValue('G5', 'Tgl Dibuat');
+		$objPHPExcel->getActiveSheet()->SetCellValue('H5', 'Dibuat Oleh');
+        $objPHPExcel->getActiveSheet()->SetCellValue('I5', 'Tgl Diubah');
+        $objPHPExcel->getActiveSheet()->SetCellValue('J5', 'Diubah Oleh');
 
 		$rowCount = 6;
 		$no = 1;
@@ -161,22 +197,23 @@ class Report_Pengeluaran extends CI_Controller {
 			
 			$objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $no);
 			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $header);
-			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $tgl_pengeluaran);
-			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $stat);
-			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $createdDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list->name_location);
+			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $tgl_pengeluaran);
+			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $stat);
+			$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $createdDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->created_by){
-						$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $values->nama);
 					}
 				}
 			}
-			$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $updatedDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, $updatedDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->updated_by){
-						$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, $values->nama);
 					}
 				}
 			}
@@ -186,8 +223,8 @@ class Report_Pengeluaran extends CI_Controller {
 		
 		$rowCount_tot = $rowCount + 1;
 
-		$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount_tot, 'Total');
-		$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount_tot, 'Total');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
 		
 		// Proses file excel
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -240,17 +277,18 @@ class Report_Pengeluaran extends CI_Controller {
 		$objPHPExcel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		$objPHPExcel->getActiveSheet()->SetCellValue('A5', 'No.');
-        $objPHPExcel->getActiveSheet()->SetCellValue('B5', 'Nomor Pengeluaran');
-        $objPHPExcel->getActiveSheet()->SetCellValue('C5', 'Tgl Pengeluaran');
-		$objPHPExcel->getActiveSheet()->SetCellValue('D5', 'Total');
-		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Status Pengeluaran');
-		$objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Tgl Dibuat');
-		$objPHPExcel->getActiveSheet()->SetCellValue('G5', 'Dibuat Oleh');
-        $objPHPExcel->getActiveSheet()->SetCellValue('H5', 'Tgl Diubah');
-		$objPHPExcel->getActiveSheet()->SetCellValue('I5', 'Diubah Oleh');
-		$objPHPExcel->getActiveSheet()->SetCellValue('J5', 'Item');
-		$objPHPExcel->getActiveSheet()->SetCellValue('K5', 'Total Harga');
-		$objPHPExcel->getActiveSheet()->SetCellValue('L5', 'Keterangan');
+		$objPHPExcel->getActiveSheet()->SetCellValue('B5', 'Nomor Pengeluaran');
+		$objPHPExcel->getActiveSheet()->SetCellValue('C5', 'Lokasi');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D5', 'Tgl Pengeluaran');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E5', 'Total');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F5', 'Status Pengeluaran');
+		$objPHPExcel->getActiveSheet()->SetCellValue('G5', 'Tgl Dibuat');
+		$objPHPExcel->getActiveSheet()->SetCellValue('H5', 'Dibuat Oleh');
+        $objPHPExcel->getActiveSheet()->SetCellValue('I5', 'Tgl Diubah');
+		$objPHPExcel->getActiveSheet()->SetCellValue('J5', 'Diubah Oleh');
+		$objPHPExcel->getActiveSheet()->SetCellValue('K5', 'Item');
+		$objPHPExcel->getActiveSheet()->SetCellValue('L5', 'Total Harga');
+		$objPHPExcel->getActiveSheet()->SetCellValue('M5', 'Keterangan');
 
 		$rowCount = 6;
 		$no = 1;
@@ -296,29 +334,30 @@ class Report_Pengeluaran extends CI_Controller {
 			
 			$objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $no);
 			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $header);
-			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $tgl_pengeluaran);
-			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $stat);
-			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $createdDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list->name_location);
+			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $tgl_pengeluaran);
+			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, 'Rp ' . number_format($list->total, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $stat);
+			$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $createdDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->created_by){
-						$objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $values->nama);
 					}
 				}
 			}
-			$objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $updatedDate);
+			$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, $updatedDate);
 			if(!empty($user)){
 				foreach ($user as $keys => $values) {
 					if($values->id_user == $list->updated_by){
-						$objPHPExcel->getActiveSheet()->SetCellValue('I' . $rowCount, $values->nama);
+						$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, $values->nama);
 					}
 				}
 			}
 
-			$objPHPExcel->getActiveSheet()->SetCellValue('J' . $rowCount, $list->item);
-			$objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, 'Rp ' . number_format($list->total_harga, 0, '', '.'));
-			$objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, $list->keterangan);
+			$objPHPExcel->getActiveSheet()->SetCellValue('K' . $rowCount, $list->item);
+			$objPHPExcel->getActiveSheet()->SetCellValue('L' . $rowCount, 'Rp ' . number_format($list->total_harga, 0, '', '.'));
+			$objPHPExcel->getActiveSheet()->SetCellValue('M' . $rowCount, $list->keterangan);
 
 			$rowCount++;
 			$no++;
@@ -326,8 +365,8 @@ class Report_Pengeluaran extends CI_Controller {
 		
 		$rowCount_tot = $rowCount + 1;
 
-		$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount_tot, 'Total');
-		$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
+		$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount_tot, 'Total');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount_tot, 'Rp ' . number_format($total, 0, '', '.'));
 		
 		// Proses file excel
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

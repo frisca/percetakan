@@ -35,14 +35,16 @@ class Admin extends CI_Controller {
 			'password' => md5($this->input->post('password')),
 			'role' => 2,
 			'id_location' => $this->input->post('id_location'),
-			'is_deleted' => 0
+			'is_deleted' => 0,
+			'status' => $this->input->post('status')
 		);
 
 		if($this->form_validation->run() == false){
 			$input = array(
 				'nama' => $this->input->post('nama'),
 				'username' => $this->input->post('username'),
-				'id_location' => $this->input->post('id_location')
+				'id_location' => $this->input->post('id_location'),
+				'status' => $this->input->post('status')
 			);
 
 			$this->session->set_flashdata('inputs', $input);
@@ -55,7 +57,8 @@ class Admin extends CI_Controller {
 				$input = array(
 					'nama' => $this->input->post('nama'),
 					'username' => $this->input->post('username'),
-					'id_location' => $this->input->post('id_location')
+					'id_location' => $this->input->post('id_location'),
+					'status' => $this->input->post('status')
 				);
 	
 				$this->session->set_flashdata('inputs', $input);
@@ -70,7 +73,8 @@ class Admin extends CI_Controller {
 					$input = array(
 						'nama' => $this->input->post('nama'),
 						'username' => $this->input->post('username'),
-						'id_location' => $this->input->post('stid_location')
+						'id_location' => $this->input->post('stid_location'),
+						'status' => $this->input->post('status')
 					);
 		
 					$this->session->set_flashdata('inputs', $input);
@@ -115,7 +119,8 @@ class Admin extends CI_Controller {
 			$input = array(
 				'nama' => $this->input->post('nama'),
 				'username' => $this->input->post('username'),
-				'id_location' => $this->input->post('id_location')
+				'id_location' => $this->input->post('id_location'),
+				'status' => $this->input->post('status')
 			);
 
 			$this->session->set_flashdata('inputs', $input);
@@ -130,7 +135,8 @@ class Admin extends CI_Controller {
 					'nama' => $this->input->post('nama'),
 					'username' => $this->input->post('username'),
 					'password' => empty($this->input->post('password')) ? $user->password : md5($this->input->post('password')),
-					'id_location' => $this->input->post('id_location')
+					'id_location' => $this->input->post('id_location'),
+					'status' => $this->input->post('status')
 				);
 
 				$result = $this->all_model->updateData("user", $condition, $data);
@@ -141,7 +147,8 @@ class Admin extends CI_Controller {
 					$input = array(
 						'nama' => $this->input->post('nama'),
 						'username' => $this->input->post('username'),
-						'id_location' => $this->input->post('id_location')
+						'id_location' => $this->input->post('id_location'),
+						'status' => $this->input->post('status')
 					);
 		
 					$this->session->set_flashdata('inputs', $input);
@@ -152,7 +159,8 @@ class Admin extends CI_Controller {
 				$input = array(
 					'nama' => $this->input->post('nama'),
 					'username' => $this->input->post('username'),
-					'id_location' => $this->input->post('id_location')
+					'id_location' => $this->input->post('id_location'),
+					'status' => $this->input->post('status')
 				);
 	
 				$this->session->set_flashdata('inputs', $input);

@@ -206,7 +206,7 @@
 														<i class="ace-icon fa fa-search-plus bigger-130"></i>
 													</a>
 													<?php 
-														if((int)$this->session->userdata('role') != 3){
+														if((int)$this->session->userdata('role') != 3 || (int)$this->session->userdata('role') != 2){
 													?>
 														<?php 
 															if($value->status_invoice != 1){ 

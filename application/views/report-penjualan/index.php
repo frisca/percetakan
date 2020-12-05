@@ -111,7 +111,10 @@
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
-								<select name="id_location" class="select2" data-placeholder="Click to Choose..." style="width: 100%;" id="id_location">
+								<?php 
+									if($this->session->userdata('role') == 1){
+								?>
+								<select name="id_location" class="form-control" data-placeholder="Click to Choose..." style="width: 100%;" id="id_location">
 									<option value="">Pilih Lokasi</option>
 									<?php 
 										foreach ($locations as $key => $value) {
@@ -127,6 +130,28 @@
 										}
 									?>
 								</select>
+								<?php
+									}else if($this->session->userdata('role') == 2){
+								?>
+								<select name="id_location" class="form-control" data-placeholder="Click to Choose..." style="width: 100%;" id="id_location" disabled>
+									<option value="">Pilih Lokasi</option>
+									<?php 
+										foreach ($locations as $key => $value) {
+											if($location == $value->id_location) {
+									?>
+											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
+									<?php
+											}else{
+									?>
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
+									<?php 
+											}
+										}
+									?>
+								</select>
+								<?php
+									}
+								?>
 							</div>
 
 							<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">

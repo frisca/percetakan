@@ -18,9 +18,9 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="ace-icon fa fa-home home-icon"></i>
-						<a href="#">Home</a>
+						<a href="#">Beranda</a>
 					</li>
-					<li class="active">Profil</li>
+					<li class="active">History Item</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 
@@ -28,17 +28,17 @@
 
 				<div class="page-header">
 					<h1>
-						Profil
+						History Item
 						<small>
 							<i class="ace-icon fa fa-angle-double-right"></i>
-							Profil
+							History Item
 						</small>
 					</h1>
 				</div>
 
 				<div class="row">
 					<div class="col-xs-12" style="margin-bottom:10px;">
-						<a href="<?php echo base_url('home/index');?>">
+						<a href="<?php echo base_url('satuan/index');?>">
 							<button class="btn" type="button">
 								<i class="ace-icon fa fa-undo"></i>
 								Kembali
@@ -48,7 +48,7 @@
 
 					<div class="col-xs-12">
 						<div class="table-header">
-							Data Profil
+							Lihat Data History item
 						</div>
 					</div>
 
@@ -56,56 +56,40 @@
 						<!-- PAGE CONTENT BEGINS -->
 						<form class="form-horizontal" role="form" style="margin: 15px 0px;">
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Nama</label>
-
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Item</label>
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" disabled name="nama" value="<?php echo $user->nama;?>" />
+									<input type="text" id="form-field-1-1" placeholder="Nama" class="form-control" name="item" value="<?php echo $history->nama;?>" 
+                                    disabled/>
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Username</label>
-
+                            <div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Harga</label>
 								<div class="col-sm-9">
-									<input type="text" id="form-field-1-1" placeholder="Username" class="form-control" name="username" value="<?php echo $user->username;?>" disabled/>
+									<input type="text" id="form-field-1-1" placeholder="Harga" class="form-control" name="harga" value="<?php echo number_format($history->harga,0,'',',');?>" 
+                                    disabled/>
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Passsword</label>
-
+                            <div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Diubah Oleh</label>
 								<div class="col-sm-9">
-									<input type="password" id="form-field-1-1" placeholder="Password" class="form-control" name="password" disabled />
+									<input type="text" id="form-field-1-1" placeholder="Diubah Oleh" class="form-control" name="updated_by" value="<?php echo $history->username;?>" 
+                                    disabled/>
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Location</label>
-
+                            <div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Diubah Tanggal</label>
 								<div class="col-sm-9">
-									<select name="id_location" class="select2" data-placeholder="Click to Choose..." disabled>
-										<?php 
-											
-											foreach ($location as $key => $value) {
-												if((int)$user->id_location == $value->id_location){
-													
-										?>
-											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
-										<?php 
-											}else{ 
-										?>
-											<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
-										<?php 
-												}
-											}
-										?>
-									</select>
+									<input type="text" id="form-field-1-1" placeholder="Diubah Tanggal" class="form-control" name="updated_date" value="<?php echo date('d-M-Y', strtotime($history->updated_date));?>" 
+                                    disabled/>
 								</div>
 							</div>
 
 							<div class="clearfix form-actions">
 								<div class="col-md-offset-3 col-md-9">
-									<a href="<?php echo base_url('home/index');?>">
+									<a href="<?php echo base_url('history_item/index');?>">
 										<button class="btn" type="button">
 											<i class="ace-icon fa fa-undo"></i>
 											Kembali

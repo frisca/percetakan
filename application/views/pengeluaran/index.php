@@ -82,7 +82,7 @@
 										<tr>
 											<td>
 												<?php 
-													if($value->status != 0){
+													if($value->status_pengeluaran != 0){
 														echo $value->nomor_pengeluaran;
 													}else{
 														echo $value->id_header_pengeluaran;
@@ -110,7 +110,7 @@
 														}
 													?>
 													<?php 
-														if($this->session->userdata('role') != 3){
+														if($this->session->userdata('role') != 3 || (int)$this->session->userdata('role') != 2){
 													?>
 														<?php if($value->status == 0){ ?>
 															<a class="green" href="<?php echo base_url('pengeluaran/detail/' . $value->id_header_pengeluaran)?>">

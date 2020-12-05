@@ -81,6 +81,7 @@
 										<th>Satuan</th>
 										<th>Harga</th>
 										<th>Desain</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -98,6 +99,15 @@
 											}else{ 
 												echo 'Ya'; 
 											};?>		
+										</td>
+										<td>
+											<?php 
+												if($value->status == 0){ 
+													echo "Tidak Aktif";
+												}else{
+													echo "Aktif";
+												}
+											?>
 										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">

@@ -37,9 +37,6 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<?php 
-							if($this->session->userdata('role') == 1){
-						?>
 						<div class="clearfix">
 							<div class="pull-right tableTools-container">
 								<div class="dt-buttons btn-overlap btn-group">
@@ -51,9 +48,6 @@
 								</div>
 							</div>
 						</div>
-						<?php
-							}
-						?>
 						
 						<?php if($this->session->flashdata('success') != ""){ ?>
 							<div class="alert alert-success alert-dismissible">

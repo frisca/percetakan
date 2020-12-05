@@ -25,9 +25,9 @@ class Item extends CI_Controller {
 	public function processAdd(){
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('id_satuan', 'Satuan', 'required');
-		$this->form_validation->set_rules('harga', 'Harga', 'required');
+		$this->form_validation->set_rules('hargas', 'Harga', 'required');
 
-		$harga = str_replace(",", "", $this->input->post('harga'));
+		$harga = str_replace(",", "", $this->input->post('hargas'));
 
 		$data = array(
 			'nama' => $this->input->post('nama'),
@@ -106,7 +106,7 @@ class Item extends CI_Controller {
 		// $str = explode(',', $this->input->post('hargas'));
 		// $harga = str_replace(".", "", $str[0]);
 
-		$harga = str_replace(",", "", $this->input->post('harga'));
+		$harga = str_replace(",", "", $this->input->post('hargas'));
 
 		$old_item = $this->all_model->getDataByCondition('item', $condition)->row();
 		$old_harga = $old_item->harga;
@@ -115,7 +115,7 @@ class Item extends CI_Controller {
 			'harga' => $old_harga,
 			'id_item' => $this->input->post('id'),
 			'updated_by' => $this->session->userdata('id'),
-			'updated_date' => date('d-m-Y')
+			'updated_date' => date('Y-m-d')
 		);
 
 		$data = array(

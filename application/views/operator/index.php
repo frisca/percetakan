@@ -73,6 +73,7 @@
 									<tr>
 										<th>Nama</th>
 										<th>Username</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -83,6 +84,15 @@
 									<tr>
 										<td><?php echo $value->nama;?></td>
 										<td><?php echo $value->username?></td>
+										<td>
+											<?php 
+												if($value->status == 0){ 
+													echo "Tidak Aktif";
+												}else{
+													echo "Aktif";
+												}
+											?>
+										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
 												<a class="blue" href="<?php echo base_url('operator/view/' . $value->id_user);?>">

@@ -48,15 +48,15 @@
 
 							<!-- div.dataTables_borderWrap -->
 							<form method="post" action="<?php echo base_url('report_pengeluaran/search');?>">
-								<div class="col-xs-3" style="margin-top:10px;margin-bottom:10px;">
+								<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 									<input type="text" placeholder="Dari Tanggal" class="form-control" name="from_date" value="<?php if(!empty($from)){ echo date('d-m-Y', strtotime($from));}?>" id="from_date"/>
 								</div>
 
-								<div class="col-xs-3" style="margin-top:10px;margin-bottom:10px;">
+								<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 									<input type="text" placeholder="Sampai Tanggal" class="form-control" name="to_date" value="<?php if(!empty($to)){ echo date('d-m-Y', strtotime($to));}?>" id="to_date"/>
 								</div>
 
-								<div class="col-xs-3" style="margin-top:10px;margin-bottom:10px;">
+								<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
 									<select name="status" class="form-control" data-placeholder="Pilih status ..." id="status" style="width: 100%">
 										<?php if($status == "0"){?>
 											<option value="-99">Pilih Status</option>
@@ -74,6 +74,50 @@
 									</select>
 								</div>
 
+								<div class="col-xs-2" style="margin-top:10px;margin-bottom:10px;">
+								<?php 
+									if($this->session->userdata('role') == 1){
+								?>
+								<select name="id_location" class="form-control" data-placeholder="Click to Choose..." style="width: 100%;" id="id_location">
+									<option value="">Pilih Lokasi</option>
+									<?php 
+										foreach ($locations as $key => $value) {
+											if($location == $value->id_location) {
+									?>
+											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
+									<?php
+											}else{
+									?>
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
+									<?php 
+											}
+										}
+									?>
+								</select>
+								<?php
+									}else if($this->session->userdata('role') == 2){
+								?>
+								<select name="id_location" class="form-control" data-placeholder="Click to Choose..." style="width: 100%;" id="id_location" disabled>
+									<option value="">Pilih Lokasi</option>
+									<?php 
+										foreach ($locations as $key => $value) {
+											if($location == $value->id_location) {
+									?>
+											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
+									<?php
+											}else{
+									?>
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
+									<?php 
+											}
+										}
+									?>
+								</select>
+								<?php
+									}
+								?>
+							</div>
+
 								<div class="col-xs-3" style="margin-top:10px;margin-bottom:10px;">
 									<button type="submit" class="search btn btn-sm btn-success fa fa-search" style="margin-bottom: 10px;">
 									<!-- Cari -->
@@ -88,6 +132,7 @@
 									<thead>
 										<tr>
 											<th>Nomor Pengeluaran</th>
+											<th>Lokasi</th>
 											<th>Tanggal Pengeluaran</th>
 											<th>Total</th>
 											<th>Status Pengeluaran</th>
@@ -115,6 +160,7 @@
                                                     }
                                                 ?>	
 											</td>
+											<td><?php echo $value->name_location;?></td>
 											<td><?php echo date('d-m-Y', strtotime($value->tgl_pengeluaran));?></td>
                                             <td>
                                                 <?php echo number_format($value->total, 0, '', ',');?>	

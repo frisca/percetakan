@@ -33,9 +33,15 @@ class Penjualan extends CI_Controller {
 			$data['tgl_penjualan'] = date('d-m-Y');
 		}
 		// var_dump($data['id_header_penjualan']);exit();
-		$data['item'] = $this->all_model->getAllData('item')->result();
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
-		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
+		$c_item = array('is_deleted' => 0, 'status' => 1);
+		$data['item'] = $this->all_model->getDataByCondition('item', $c_item)->result();
+
+		$c_satuan = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $c_satuan)->result();
+
+		// $data['item'] = $this->all_model->getAllData('item')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1, 'is_deleted' => 0))->result();
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
@@ -75,7 +81,8 @@ class Penjualan extends CI_Controller {
 			'dp2' => 0,
 			'grandtotal' => 0,
 			'metode_pembayaran' => 0,
-			'sisa_pembayaran' => 0
+			'sisa_pembayaran' => 0,
+			'status_pembayaran' => 0
 		);
 
 		$result = $this->all_model->insertData('header_penjualan', $data);
@@ -93,12 +100,18 @@ class Penjualan extends CI_Controller {
 		// var_dump($data);exit();
 		$data['penjualan'] = $this->all_model->getPenjualanByHeaderPenjualan($id)->result();
 		$data['counts'] = $this->all_model->getPenjualanByStatusHeaderPenjualan($id)->num_rows();
-		$data['item'] = $this->all_model->getAllData('item')->result();
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		// $data['item'] = $this->all_model->getAllData('item')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$c_item = array('is_deleted' => 0, 'status' => 1);
+		$data['item'] = $this->all_model->getDataByCondition('item', $c_item)->result();
+
+		$c_satuan = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $c_satuan)->result();
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
-		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1, 'is_deleted' => 0))->result();
 		$this->load->view('penjualan/add_penjualan', $data);
 	}
 
@@ -335,8 +348,15 @@ class Penjualan extends CI_Controller {
     	$penjualan->harga_satuan = number_format($penjualan->harga_satuan, 0,'',',');
     	$penjualan->total_harga = number_format($penjualan->total_harga, 0,'',',');
     	$data['penjualan'] = $penjualan;
-    	$data['item'] = $this->all_model->getAllData('item')->result();
-    	$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+    	// $data['item'] = $this->all_model->getAllData('item')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		
+		$c_item = array('is_deleted' => 0, 'status' => 1);
+		$data['item'] = $this->all_model->getDataByCondition('item', $c_item)->result();
+
+		$c_satuan = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $c_satuan)->result();
+
     	$data['design'] = $this->all_model->getIsDesign($this->input->get('id'))->row();
     	echo json_encode($data); 
 	}
@@ -516,8 +536,14 @@ class Penjualan extends CI_Controller {
 		// var_dump($data);exit();
 		$data['penjualan'] = $this->all_model->getPenjualanByHeaderPenjualan($id)->result();
 		$data['counts'] = $this->all_model->getPenjualanByStatusHeaderPenjualan($id)->num_rows();
-		$data['item'] = $this->all_model->getAllData('item')->result();
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		// $data['item'] = $this->all_model->getAllData('item')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$c_item = array('is_deleted' => 0, 'status' => 1);
+		$data['item'] = $this->all_model->getDataByCondition('item', $c_item)->result();
+
+		$c_satuan = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $c_satuan)->result();
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
@@ -526,7 +552,7 @@ class Penjualan extends CI_Controller {
 	}
 
 	public function getItem(){
-		$data = $this->all_model->getItemById($this->input->get('id'))->row();
+		$data = $this->all_model->getItemByStatus($this->input->get('id'))->row();
 		$data->harga = number_format($data->harga, 0,'',',');
     	echo json_encode($data); 
 	}
@@ -1321,12 +1347,18 @@ class Penjualan extends CI_Controller {
 		// var_dump($data);exit();
 		$data['penjualan'] = $this->all_model->getPenjualanByHeaderPenjualan($id)->result();
 		$data['counts'] = $this->all_model->getPenjualanByStatusHeaderPenjualan($id)->num_rows();
-		$data['item'] = $this->all_model->getAllData('item')->result();
-		$data['satuan'] = $this->all_model->getAllData('satuan')->result();
+		// $data['item'] = $this->all_model->getAllData('item')->result();
+		// $data['satuan'] = $this->all_model->getAllData('satuan')->result();
+
+		$c_item = array('is_deleted' => 0, 'status' => 1);
+		$data['item'] = $this->all_model->getDataByCondition('item', $c_item)->result();
+
+		$c_satuan = array('is_deleted' => 0, 'status' => 1);
+		$data['satuan'] = $this->all_model->getDataByCondition('satuan', $c_satuan)->result();
 
 		$condition = array('id_user' => $this->session->userdata('id'));
 		$data['user'] = $this->all_model->getDataByCondition('user', $condition)->row();
-		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1))->result();
+		$data['customer'] = $this->all_model->getDataByCondition('customer', array('status' => 1, 'is_deleted' => 0))->result();
 		$this->load->view('penjualan/open_penjualan', $data);
 	}
 

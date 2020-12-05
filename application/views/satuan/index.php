@@ -71,6 +71,7 @@
 								<thead>
 									<tr>
 										<th>Satuan</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -80,6 +81,15 @@
 									?>
 									<tr>
 										<td><?php echo $value->satuan;?></td>
+										<td>
+											<?php 
+												if($value->status == 0){ 
+													echo "Tidak Aktif";
+												}else{
+													echo "Aktif";
+												}
+											?>
+										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
 												<a class="blue" href="<?php echo base_url('satuan/view/' . $value->id_satuan);?>">

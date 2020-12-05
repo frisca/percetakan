@@ -99,7 +99,7 @@
 						$('input[name="total_harga"]').val('');
 					}
 					if($('#harga_satuan').val() != '' && $('#quantity').val() != ''){
-						console.log('harga: ', $('input[name="harga_satuan"]').val());
+						// console.log('harga: ', $('input[name="harga_satuan"]').val());
 						var total_harga = parseInt($('input[name="harga_satuan"]').val(), 10) * parseFloat($('#quantity').val(), 10);
 						$('input[name="total_harga"]').val(total_harga);
 						$('input[name="ttls_harga"]').val(total_harga).autoNumeric('init', {aSep: ',', aDec: '.', mDec: '0'});
@@ -116,8 +116,8 @@
 			              method:'GET',
 			              dataType:'json',
 			              success:function(response) {
-							console.log('response penjualan: ', response.penjualan);
-							console.log('harga satuan: ', response.penjualan.harga_satuan.replace(".", ","));
+							// console.log('response penjualan: ', response.penjualan);
+							// console.log('harga satuan: ', response.penjualan.harga_satuan.replace(".", ","));
 							$("#item").val(response.penjualan.id_item).change();
 			                $('input[name="id_penjualan"]').val(response.penjualan.id_penjualan);
 			                $('input[name="id_header_penjualan"]').val(response.penjualan.id_header_penjualan);
@@ -170,6 +170,7 @@
 		        });
 
 		        item = $('.id_item option:selected').val();
+				console.log('item: ', item);
 		        if(item != 0){
 		        	$.ajax({
 		              url : "<?php echo base_url(); ?>penjualan/getItem",
@@ -246,20 +247,20 @@
 				}
 
 				$('#item').on('change', function(){
-					console.log('test');
+					// console.log('test');
 					$(this).removeAttr("selected");
 					$(this).attr('selected', 'selected');
 				    id = $('#item option:selected').data('id');
-				    console.log('id: ', id);
+				    // console.log('id: ', id);s
 				    $.get("<?php echo base_url('penjualan/getItem');?>" + "?id= " + id,function(response){
-				    	console.log("response: ", response);
+				    	// console.log("response: ", response);
 				    	$('input[name="satuan"]').val(response.satuan);
 		                $('input[name="id_satuan"]').val(response.id_satuan);
 		                // $('input[name="harga_satuan"]').val(response.harga);
 		                $('input[name="harga"]').val(response.harga);
 						// var harga_satuan = response.harga.split(",");
 						var harga = response.harga.replace(",", "");
-						console.log("harga : ", harga);
+						// console.log("harga : ", harga);
 						$('input[name="hargas_satuan"]').val(response.harga);
 						$('input[name="harga_satuan"]').val(harga);
 						var total = parseFloat($('#quantity').val(), 10) * harga;
@@ -307,7 +308,7 @@
 				// });
 
 				$('.customers').on('change', function(){
-					console.log('customer: ', $(this).val());
+					// console.log('customer: ', $(this).val());
 					var customer = $(this).val();
 					$('input[name="customers"]').val(customer);
 				});
@@ -536,6 +537,7 @@
 			var from_date = $('#from_date').val();
 			var to_date = $('#to_date').val();
 			var status = $('#status').val();
+			var location = $('#id_location').val();
 
 			// $.ajax({
             //   url : "<?php echo base_url();?>report_penjualan/export",
@@ -549,7 +551,7 @@
 	    	// });
 			// console.log('status : ' + status + 'status pembayaran : ' + status_pembayaran);
 			window.location = "<?php echo base_url('report_pengeluaran/export');?>" + "?from_date=" + from_date + "&to_date=" + to_date + 
-			"&status=" + status 
+			"&status=" + status + "&location=" + location;
 		});
 
 		$('.csv_det_pengeluaran').on('click',function(){

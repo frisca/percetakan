@@ -111,35 +111,19 @@
 
 								<div class="col-sm-9">
 									<select name="id_location" class="select2" data-placeholder="Click to Choose..." disabled>
-										<?php if(empty($inputs['id_location'])) { ?>
-											<?php 
-												foreach ($location as $key => $value) {
-													if($user->id_location == $value->id_location){
-											?>
-												<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
-											<?php 
-												}else{ 
-											?>
-												<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
-											<?php 
-													}
+										<?php 
+											foreach ($location as $key => $value) {
+												if((int)$user->id_location == $value->id_location){
+										?>
+											<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
+										<?php 
+											}else{ 
+										?>
+											<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
+										<?php 
 												}
-											?>
-										<?php }else{ ?>
-											<?php 
-												foreach ($location as $key => $value) {
-													if($inputs['id_location'] == $value->id_location){
-											?>
-														<option value="<?php echo $value->id_location;?>" selected><?php echo $value->name_location;?></option>
-											<?php
-													}else{
-											?>
-														<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
-											<?php 
-													}
-												}
-											?>
-										<?php } ?>
+											}
+										?>
 									</select>
 								</div>
 							</div>

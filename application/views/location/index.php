@@ -90,7 +90,8 @@
 												}else{
 													echo "Aktif";
 												}
-											?></td>
+											?>
+										</td>
 										<td>
 											<div class="hidden-sm hidden-xs action-buttons">
 												<a class="blue" href="<?php echo base_url('location/view/' . $value->id_location);?>">

@@ -18,10 +18,12 @@ class Pengeluaran extends CI_Controller {
 		// }else{
 		// 	$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($this->session->userdata('location'))->result();
 		// }
-		if($this->session->userdata('role') == 3){
+		if($this->session->userdata('role') == 3 || $this->session->userdata('role') == 2){
 			// $user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
 			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
-			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($user->code_location)->result();
+			// var_dump($user);exit();
+			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaranByOperator($user->id_location)->result();
+			// var_dump($data['header_pengeluaran']);exit();
 		}else{
 			$data['header_pengeluaran'] = $this->all_model->getHeaderPengeluaran()->result();
 		}
@@ -35,7 +37,12 @@ class Pengeluaran extends CI_Controller {
 		$order = "id_header_pengeluaran desc";
 		// $user = $this->all_model->getDataByCondition('user', array('id_user' => $this->session->userdata('id')))->row();
 		$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
-		$header_pengeluaran = $this->all_model->getHeaderPengeluaransByOperator($user->code_location, $month, $date)->row();
+		if($this->session->userdata('role') == 3 || $this->session->userdata('role') == 2){
+			$header_pengeluaran = $this->all_model->getHeaderPengeluaransByOperator($user->id_location, $month, $date)->row();
+		}else{
+			$header_pengeluaran = $this->all_model->getHeaderPengeluaransByAdmin($month, $date)->row();
+		}
+
 		// $header_pengeluaran = $this->all_model->getDataByLimitPengeluaran(array('status_delete'=>0), 1, $order, 'header_pengeluaran')->row();
 
 		if(empty($header_pengeluaran)){

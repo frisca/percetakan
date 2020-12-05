@@ -13,12 +13,18 @@ class Report_Penjualan extends CI_Controller {
 	{
 		$from = date('Y-m-d');
 		$to = date('Y-m-d');
-		$data['report'] = $this->all_model->getReportPenjualan($from, $to)->result();
+		if($this->session->userdata('role') == 1) {
+			$data['report'] = $this->all_model->getReportPenjualan($from, $to)->result();
+		} else {
+			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+			$data['report'] = $this->all_model->getReportPenjualanByAdmin($from, $to, $user->id_location)->result();
+		}
 		$data['user'] = $this->all_model->getAllData('user')->result();
 		$data['from'] = $from;
 		$data['to'] = $to;
 		$condition = array('status' => 1, 'is_deleted' => 0);
-		$data['location'] = $this->all_model->getDataByCondition('location', $condition)->result();
+		$data['locations'] = $this->all_model->getDataByCondition('location', $condition)->result();
+		$data['location'] = $user->id_location;
 		$this->load->view('report-penjualan/index', $data);
 	}
 

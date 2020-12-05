@@ -74,6 +74,7 @@
 									<tr>
 										<th>No</th>
 										<th>Nomor Pengeluaran</th>
+										<th>Lokasi</th>
 										<th>Tgl Pengeluaran</th>
 										<th>Total</th>
 										<th>Status Pengeluaran</th>
@@ -139,6 +140,7 @@
 												}
 											?>	
 										</td>
+										<td><?php echo $list->name_location;?></td>
 										<td><?php echo $tgl_pengeluaran;?></td>
 										<td><?php echo 'Rp ' . number_format($list->total, 0, '', ',');?></td>
 										<td><?php echo $stat;?></td>

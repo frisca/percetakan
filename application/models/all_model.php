@@ -31,8 +31,13 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getItemById($id){
+	public function getItemByStatus($id){
 		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where i.status = 1 and i.id_item = " . $id;
+		return $this->db->query($query);
+	}
+
+	public function getItemById($id){
+		$query = "SELECT i.*, s.* from item i left join satuan s on s.id_satuan = i.id_satuan where i.id_item = " . $id;
 		return $this->db->query($query);
 	}
 
@@ -76,13 +81,27 @@ class All_model extends CI_Model {
 	}
 
 	public function getReportPenjualan($from, $to){
-		$query = "SELECT p.*, c.*, p.status as status_invoice from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		$query = "SELECT p.*, c.*, p.status as status_invoice, l.name_location from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		left join user u on p.createdBy = u.id_user 
+		left join location l on l.id_location = u.id_location
 		where p.status_delete = 0 and (p.tgl_penjualan between '".$from."' and '".$to."') group by p.id_header_penjualan order by p.tgl_penjualan desc";
 		return $this->db->query($query);
 	}
 
-	public function getReportPengeluaranByCondition($from_date, $to, $status){
-		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 " . $status . " and p.tgl_pengeluaran between '".$from_date."' and '".$to."' 
+	public function getReportPenjualanByAdmin($from, $to, $id){
+		$query = "SELECT p.*, c.*, p.status as status_invoice, l.name_location from header_penjualan p left join customer c on c.id_customer = p.id_customer 
+		left join user u on p.createdBy = u.id_user 
+		left join location l on l.id_location = u.id_location
+		where p.status_delete = 0 and (p.tgl_penjualan between '".$from."' and '".$to."') 
+		and u.id_location = " . $id . " group by p.id_header_penjualan order by p.tgl_penjualan desc";
+		return $this->db->query($query);
+	}
+
+	public function getReportPengeluaranByCondition($from_date, $to, $status, $location){
+		$query = "SELECT p.*, l.name_location from header_pengeluaran p 
+		left join user u on u.id_user = p.created_by
+		left join `location` l on l.id_location = u.id_location
+		where p.status_delete = 0 " . $status . " and p.tgl_pengeluaran between '".$from_date."' and '".$to." and ".$location."' 
 		order by p.tgl_pengeluaran desc";
 		return $this->db->query($query);
 	}
@@ -117,7 +136,21 @@ class All_model extends CI_Model {
 	}
 
 	public function getReportPengeluaranDate($from, $to){
-		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 and p.tgl_pengeluaran between '".$from."' and '".$to."'
+		$query = "SELECT p.*, l.name_location from header_pengeluaran p 
+		left join user u on p.created_by = u.id_user 
+		left join location l on l.id_location = u.id_location
+		where p.status_delete = 0 and p.tgl_pengeluaran between '".$from."' and '".$to."'
+		order by p.tgl_pengeluaran desc";
+		// var_dump($query);exit();
+		return $this->db->query($query);
+	}
+
+	public function getReportPengeluaranDateByAdmin($from, $to, $id){
+		$query = "SELECT p.*, l.name_location from header_pengeluaran p 
+		left join user u on p.created_by = u.id_user 
+		left join location l on l.id_location = u.id_location
+		where p.status_delete = 0 and p.tgl_pengeluaran between '".$from."' and '".$to."'
+		and u.id_location = " . $id . "
 		order by p.tgl_pengeluaran desc";
 		// var_dump($query);exit();
 		return $this->db->query($query);
@@ -147,16 +180,21 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
-	public function getReportPengeluaranWithoutDate($status){
-		$query = "SELECT p.* from header_pengeluaran p where p.status_delete = 0 ".$status."
+	public function getReportPengeluaranWithoutDate($status, $location){
+		$query = "SELECT p.*, l.name_location from header_pengeluaran p 
+		left join user u on p.created_by = u.id_user 
+		left join location l on l.id_location = u.id_location
+		where p.status_delete = 0 ".$status." and ".$location."
 		order by p.tgl_pengeluaran desc";
 		// var_dump($query);exit();
 		return $this->db->query($query);
 	}
 
 	public function getReportPengeluaranDetail($id){
-		$query = "SELECT p.*, sum(pg.price) as total_harga, pg.item, pg.keterangan from header_pengeluaran p 
+		$query = "SELECT p.*, sum(pg.price) as total_harga, pg.item, pg.keterangan, l.name_location from header_pengeluaran p 
 				 left join pengeluaran pg on pg.id_header_pengeluaran = p.id_header_pengeluaran 
+				 left join user u on p.created_by = u.id_user 
+				 left join location l on l.id_location = u.id_location
 				 where p.id_header_pengeluaran = ".$id." and pg.status_delete = 0 group by pg.item
 		         order by p.tgl_pengeluaran desc";
 		return $this->db->query($query);
@@ -176,12 +214,12 @@ class All_model extends CI_Model {
 	}
 
 	public function getHeaderPengeluaran(){
-		$query = "select hp.* from header_pengeluaran hp where hp.status_delete = 0";
+		$query = "select hp.*, hp.status as status_pengeluaran from header_pengeluaran hp where hp.status_delete = 0";
 		return $this->db->query($query);
 	}
 
 	public function getHeaderPengeluaranByOperator($location){
-		$query = "select hp.*, u.* from header_pengeluaran hp left join user u on u.id_user = hp.created_by 
+		$query = "select hp.*, hp.status as status_pengeluaran, u.* from header_pengeluaran hp left join user u on u.id_user = hp.created_by 
 				 where hp.status_delete = 0 and u.id_location = " . $location;
 		return $this->db->query($query);
 	}
@@ -247,6 +285,13 @@ class All_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
+	public function getHeaderPengeluaransByAdmin($month, $year){
+		$query = "select hp.*, u.* from header_pengeluaran hp left join user u on u.id_user = hp.created_by 
+				 where hp.status_delete = 0 and month(hp.tgl_pengeluaran) = '".$month."' 
+				 and day(hp.tgl_pengeluaran) = '".$year."'";
+		return $this->db->query($query);
+	}
+
 	public function getPengeluaranByDesc(){
 		$query = "select p.* from header_pengeluaran p order by p.id_header_pengeluaran desc";
 		return $this->db->query($query);
@@ -259,6 +304,19 @@ class All_model extends CI_Model {
 
 	public function getLocationByUser($id){
 		$query = "select u.*, l.* from user u left join location l on u.id_location = l.id_location where u.id_user = " . $id;
+		return $this->db->query($query);
+	}
+
+	public function getHistoryItem(){
+		$query = "select h.*, u.*, i.* from history_price h left join user u on u.id_user = h.updated_by
+				 left join item i on i.id_item = h.id_item";
+		return $this->db->query($query);
+	}
+
+	public function getHistoryItemById($id){
+		$query = "select h.*, u.*, i.* from history_price h left join user u on u.id_user = h.updated_by
+				 left join item i on i.id_item = h.id_item
+				 where id_history = " . $id;
 		return $this->db->query($query);
 	}
 }

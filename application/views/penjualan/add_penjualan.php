@@ -319,6 +319,7 @@
 					            	<div class="col-sm-12 form-group">
 										<label>Nama Item</label>
 										<select name="id_item" class="select2 id_item" data-placeholder="Click to Choose..." class="form-control" style="width: 100%" required>
+											<option value="">Pilih Item</option>
 											<?php 
 												foreach ($item as $key => $value) {
 											?>
