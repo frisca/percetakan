@@ -113,18 +113,20 @@
 														}else if($value->dp1 != 0 && $value->dp2 == 0){
 															if($this->session->userdata('role') == 3 && ($value->counter_dp1 == 0 || empty($value->counter_dp1))){
 												?>
-													<button type="button" class="btn btn-sm btn-success" id="prints_dp1" style="margin-bottom: 10px;" 
+													<!-- <button type="button" class="btn btn-sm btn-success" id="prints_dp1" style="margin-bottom: 10px;" 
 													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 														Print
-													</button>
+													</button> -->
+													
 													<p class="prints_dp1">Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', ','); } ?></p>
 												<?php 
 															}else if($this->session->userdata('role') != 3 && ($value->counter_dp1 >= 0 || empty($value->counter_dp1))){
 												?>
-													<button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_dp1" 
+													<!-- <button type="button" class="btn btn-sm btn-success" style="margin-bottom: 10px;" id="prints_dp1" 
 													data-nmr="<?php echo $value->nomor_penjualan;?>" data-id="<?php echo $value->id_header_penjualan;?>">
 														Print
-													</button>
+													</button> -->
+													<a href="<?php echo base_url('penjualan/prints_dp1/1');?>" target="_blank">CETAK</a>
 													<p>Total : <?php if(!empty($value->dp1)){ echo number_format($value->dp1, 0, '', ','); } ?></p>
 												<?php
 															}

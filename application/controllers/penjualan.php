@@ -655,238 +655,239 @@ class Penjualan extends CI_Controller {
 	}
 
 	public function prints_dp1($id){
-		$count = 0;
+		$this->load->view('penjualan/print_dp1');
+		// $count = 0;
 
-		$con = array('id_header_penjualan' => $id);
-		$penjualan = $this->all_model->getDataByCondition('header_penjualan', $con)->row();
+		// $con = array('id_header_penjualan' => $id);
+		// $penjualan = $this->all_model->getDataByCondition('header_penjualan', $con)->row();
 
-		$penjualans = $this->all_model->getCountHeaderPenjualan($penjualan->nomor_penjualan)->num_rows();
+		// $penjualans = $this->all_model->getCountHeaderPenjualan($penjualan->nomor_penjualan)->num_rows();
 		
-		if($penjualans > 1){
-			$this->session->set_flashdata('error', 'Data gagal di print');
-			redirect(base_url() . 'penjualan/index/');
-		}else{
-			if(empty($penjualan)){
-				$count = 1;
-				$dataHeaderPenjualan = array("counter_dp1" => (int)$count);
-				$res = $this->all_model->updateData('header_penjualan', $con, $dataHeaderPenjualan);
-			}else{
-				$count = (int)$penjualan->counter_dp1 + 1;
-				$dataHeaderPenjualan = array("counter_dp1" => (int)$count);
-				$res = $this->all_model->updateData('header_penjualan', $con, $dataHeaderPenjualan);
-			}
+		// if($penjualans > 1){
+		// 	$this->session->set_flashdata('error', 'Data gagal di print');
+		// 	redirect(base_url() . 'penjualan/index/');
+		// }else{
+		// 	if(empty($penjualan)){
+		// 		$count = 1;
+		// 		$dataHeaderPenjualan = array("counter_dp1" => (int)$count);
+		// 		$res = $this->all_model->updateData('header_penjualan', $con, $dataHeaderPenjualan);
+		// 	}else{
+		// 		$count = (int)$penjualan->counter_dp1 + 1;
+		// 		$dataHeaderPenjualan = array("counter_dp1" => (int)$count);
+		// 		$res = $this->all_model->updateData('header_penjualan', $con, $dataHeaderPenjualan);
+		// 	}
 			
-			if($res == true){
-				$this->load->library('pdf');
+		// 	if($res == true){
+		// 		$this->load->library('pdf');
 
-				$descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata";
-				// $descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau kalimat tertentu saja di mana kalimat tersebut harus kamu blok atau kamu seleksi terlebih dahulu. Jika tidak ada yang dibloksasaasasas";
-				$nama = "Bapak Hendra Kusuma Saassdsdadasqwqqsdsdssdas";
+		// 		$descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata atau huruf sesuai dengan kata";
+		// 		// $descrip = "Kamu pun dapat menghitung kata atau huruf sesuai dengan kata atau kalimat tertentu saja di mana kalimat tersebut harus kamu blok atau kamu seleksi terlebih dahulu. Jika tidak ada yang dibloksasaasasas";
+		// 		$nama = "Bapak Hendra Kusuma Saassdsdadasqwqqsdsdssdas";
 				
-				// $this->load->view('laporan_pdf');
-				// set header and footer fonts
-				$pdf = new PDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+		// 		// $this->load->view('laporan_pdf');
+		// 		// set header and footer fonts
+		// 		$pdf = new PDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-				// set header and footer fonts
-				$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-				$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		// 		// set header and footer fonts
+		// 		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		// 		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
-				// set default monospaced font
-				$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+		// 		// set default monospaced font
+		// 		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-				// set margins
-				if((strlen($descrip) <= 120 && strlen($nama) <= 36) || (strlen($descrip) <= 120 && strlen($nama) > 36)){
-					$pdf->SetMargins(PDF_MARGIN_LEFT, 65, PDF_MARGIN_RIGHT);
-				}
+		// 		// set margins
+		// 		if((strlen($descrip) <= 120 && strlen($nama) <= 36) || (strlen($descrip) <= 120 && strlen($nama) > 36)){
+		// 			$pdf->SetMargins(PDF_MARGIN_LEFT, 65, PDF_MARGIN_RIGHT);
+		// 		}
 
-				if(strlen($descrip) > 120 && strlen($nama) <= 36){
-					$pdf->SetMargins(PDF_MARGIN_LEFT, 73, PDF_MARGIN_RIGHT);
-				}
+		// 		if(strlen($descrip) > 120 && strlen($nama) <= 36){
+		// 			$pdf->SetMargins(PDF_MARGIN_LEFT, 73, PDF_MARGIN_RIGHT);
+		// 		}
 
-				if(strlen($descrip) > 120 && strlen($nama) > 36){
-					$pdf->SetMargins(PDF_MARGIN_LEFT, 76, PDF_MARGIN_RIGHT);
-				}
+		// 		if(strlen($descrip) > 120 && strlen($nama) > 36){
+		// 			$pdf->SetMargins(PDF_MARGIN_LEFT, 76, PDF_MARGIN_RIGHT);
+		// 		}
 
-				$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-				$pdf->SetFooterMargin(10);
+		// 		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		// 		$pdf->SetFooterMargin(10);
 
-				// set auto page breaks
-				$pdf->SetAutoPageBreak(TRUE, 45);
+		// 		// set auto page breaks
+		// 		$pdf->SetAutoPageBreak(TRUE, 45);
 
-				// set font
-				$pdf->SetFont('helvetica', 'B', 20);
+		// 		// set font
+		// 		$pdf->SetFont('helvetica', 'B', 20);
 
-				// add a page
-				$pdf->AddPage();
+		// 		// add a page
+		// 		$pdf->AddPage();
 
-				$pdf->SetFont('helvetica', '', 8);
-				// -----------------------------------------------------------------------------
-				$tbl = '
-					<table border="0" nobr="true" align="center" cellspacing="0" cellpadding="5" style="font-size:9px;
-					padding:10px 10px 10px 10px;">
-						<thead>
-							<tr nobr="true">
-								<td width="30" align="center" border="1">No.</td>
-								<td width="250" align="center" border="1">Nama Barang</td>
-								<td width="90" align="center" colspan="2" border="1">Qty</td>
-								<td width="70" align="center" border="1">Harga Stn</td>
-								<td width="70" align="center" border="1">Jumlah</td>
-							</tr>
-						</thead>
-						<tr nobr="true">
-							<td width="30" border="1">1</td>
-							<td width="250" align="left" border="1">
-								Nota 3 Rangkap, 2 Warna, Cacah, Nomorator <br>
-								PT. ABCD | NCR Putih-Merah-Kuning Cetak Warna Merah-Biru | Nomor : 00001
-							</td>
-							<td width="45" border="1">1.00</td>
-							<td width="45" border="1">Rim</td>
-							<td width="70" align="right" border="1">250.000</td>
-							<td width="70" align="right" border="1">250.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">2</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">2</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">2</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">2</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-						<tr nobr="true">
-							<td border="1">3</td>
-							<td align="left" border="1">
-								Spanduk Flx Biasa <br>
-								PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
-							</td>
-							<td border="1">3.00</td>
-							<td border="1">M2</td>
-							<td align="right" border="1">35.000</td>
-							<td align="right" border="1">105.000</td>
-						</tr>
-					</table>';
+		// 		$pdf->SetFont('helvetica', '', 8);
+		// 		// -----------------------------------------------------------------------------
+		// 		$tbl = '
+		// 			<table border="0" nobr="true" align="center" cellspacing="0" cellpadding="5" style="font-size:9px;
+		// 			padding:10px 10px 10px 10px;">
+		// 				<thead>
+		// 					<tr nobr="true">
+		// 						<td width="30" align="center" border="1">No.</td>
+		// 						<td width="250" align="center" border="1">Nama Barang</td>
+		// 						<td width="90" align="center" colspan="2" border="1">Qty</td>
+		// 						<td width="70" align="center" border="1">Harga Stn</td>
+		// 						<td width="70" align="center" border="1">Jumlah</td>
+		// 					</tr>
+		// 				</thead>
+		// 				<tr nobr="true">
+		// 					<td width="30" border="1">1</td>
+		// 					<td width="250" align="left" border="1">
+		// 						Nota 3 Rangkap, 2 Warna, Cacah, Nomorator <br>
+		// 						PT. ABCD | NCR Putih-Merah-Kuning Cetak Warna Merah-Biru | Nomor : 00001
+		// 					</td>
+		// 					<td width="45" border="1">1.00</td>
+		// 					<td width="45" border="1">Rim</td>
+		// 					<td width="70" align="right" border="1">250.000</td>
+		// 					<td width="70" align="right" border="1">250.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">2</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">2</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">2</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">2</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 				<tr nobr="true">
+		// 					<td border="1">3</td>
+		// 					<td align="left" border="1">
+		// 						Spanduk Flx Biasa <br>
+		// 						PT. ABCD | Uk. 3 x 1 m | MA A4 B2 <br>
+		// 					</td>
+		// 					<td border="1">3.00</td>
+		// 					<td border="1">M2</td>
+		// 					<td align="right" border="1">35.000</td>
+		// 					<td align="right" border="1">105.000</td>
+		// 				</tr>
+		// 			</table>';
 				
-				$pdf->writeHTML($tbl, true, false, false, false, '');
+		// 		$pdf->writeHTML($tbl, true, false, false, false, '');
 				
-				//Close and output PDF document
-				$pdf->Output('example_048.pdf', 'I');
-			}else{
-				$this->session->set_flashdata('error', 'Data gagal di print');
-				redirect(base_url() . 'penjualan/index/');
-			}
-		}
+		// 		//Close and output PDF document
+		// 		$pdf->Output('example_048.pdf', 'I');
+		// 	}else{
+		// 		$this->session->set_flashdata('error', 'Data gagal di print');
+		// 		redirect(base_url() . 'penjualan/index/');
+		// 	}
+		// }
 	}
 
 	public function prints_dp2($id){
