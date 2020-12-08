@@ -116,6 +116,10 @@
 													<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
 										<?php 
 													}
+												}else{
+										?>
+													<option value="<?php echo $value->id_location;?>"><?php echo $value->name_location;?></option>
+										<?php
 												}
 											}
 										?>

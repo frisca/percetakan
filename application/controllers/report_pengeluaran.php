@@ -18,6 +18,7 @@ class Report_Pengeluaran extends CI_Controller {
 		} else {
 			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
 			$data['report'] = $this->all_model->getReportPengeluaranDateByAdmin($from, $to, $user->id_location)->result();
+			$data['location'] = $user->id_location;
 		}
 		
 		$data['user'] = $this->all_model->getAllData('user')->result();
@@ -26,7 +27,6 @@ class Report_Pengeluaran extends CI_Controller {
 		$data['status'] = -99;
 		$condition = array('status' => 1, 'is_deleted' => 0);
 		$data['locations'] = $this->all_model->getDataByCondition('location', $condition)->result();
-		$data['location'] = $user->id_location;
 		$this->load->view('report-pengeluaran/index', $data);
 	}
 
@@ -35,7 +35,13 @@ class Report_Pengeluaran extends CI_Controller {
 		$from = date('Y-m-d', strtotime($this->input->post('from_date')));
 		$to = date('Y-m-d', strtotime(strtr($this->input->post('to_date'), '-', '-')));
 		$status = ($this->input->post('status')  == -99) ? 0 : $this->input->post('status');
-		$location = $this->input->post('id_location');
+		// $location = $this->input->post('id_location');
+		if ($this->session->userdata('role') == 1){
+			$location = $this->input->post('id_location');
+		}else{
+			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+			$location = $user->id_location;
+		}
 		// var_dump($invoice);exit();
 		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->post('status') == -99 && $location){
 			$data['report'] = $this->all_model->getReportPengeluaranDate($from, $to)->result();
@@ -86,7 +92,13 @@ class Report_Pengeluaran extends CI_Controller {
 		$from = date('Y-m-d', strtotime($this->input->get('from_date')));
 		$to = date('Y-m-d', strtotime(strtr($this->input->get('to_date'), '-', '-')));
 		$status = ($this->input->get('status')  == -99) ? 0 : $this->input->get('status');
-		$location = $this->input->get('location');
+		// $location = $this->input->get('location');
+		if ($this->session->userdata('role') == 1){
+			$location = $this->input->post('id_location');
+		}else{
+			$user = $this->all_model->getLocationByUser($this->session->userdata('id'))->row();
+			$location = $user->id_location;
+		}
 		// var_dump($invoice);exit();
 		if($from != '1970-01-01' && $to != '1970-01-01' && $this->input->get('status') == -99){
 			$report = $this->all_model->getReportPengeluaranDate($from, $to)->result();
